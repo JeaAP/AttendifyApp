@@ -14,23 +14,27 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        try {
+            enableEdgeToEdge()
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home -> {
-//                    replaceFragment(HomeFragment())
-                    true
+            binding.bottomNavigationView.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.home -> {
+                        replaceFragment(HomeFragment())
+                        true
+                    }
+                    R.id.people -> {
+                        replaceFragment(PeopleFragment())
+                        true
+                    }
+                    else -> false
                 }
-                R.id.people -> {
-//                    replaceFragment(PeopleFragment())
-                    true
-                }
-//                replaceFragment(HomeFragment())
             }
-//            replaceFragment(HomeFragment())
+            replaceFragment(HomeFragment()) // Set HomeFragment as the default fragment
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
 //        binding.fab.setOnClickListener {

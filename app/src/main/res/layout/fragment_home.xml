@@ -133,24 +133,48 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/location"
-                        android:layout_marginTop="8dp"
+                        android:layout_margin="8dp"
                         android:background="@drawable/rectangle"
                         android:text="Absensi"
                         app:backgroundTint="@color/text"/>
 
-                    <Button
-                        android:id="@+id/btnSchedule"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardSchedule"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/btnAbcent"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardElevation="4dp"
+                        app:cardCornerRadius="8dp"
+                        android:layout_margin="8dp"
                         android:padding="8dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/rounded_button"
-                        android:text="Jadwal"
-                        android:textColor="@color/black"
-                        android:drawableRight="@drawable/round_school_24"
-                        app:backgroundTint="@color/design_default_color_background"/>
+                        app:cardBackgroundColor="@color/design_default_color_background">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/txtSchedule"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:text="Jadwal"
+                                android:textColor="@color/black" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/round_school_24"/>
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
 
 
                 </RelativeLayout>
@@ -175,24 +199,12 @@
                 android:text="View all"
                 android:textColor="@color/link"/>
 
-            <LinearLayout
-                android:id="@+id/activityLinear"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activityContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_below="@id/linkText"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
-                android:layout_marginTop="12dp">
-
-               <FrameLayout
-                   android:id="@+id/frameLayout"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:background="@color/white"/>
-
-            </LinearLayout>
+                android:padding="16dp"/>
 
         </RelativeLayout>
 
