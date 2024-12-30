@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="attendify">#3A3A3A</color>
     <color name="RichBlack">#000814</color>
     <color name="OxfordBlue">#001D3D</color>
     <color name="YaleBlue">#003566</color>
