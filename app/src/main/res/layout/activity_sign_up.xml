@@ -5,19 +5,19 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".SignUpActivity">
 
     <TextView
-        android:id="@+id/login"
+        android:id="@+id/signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:text="Login"
+        android:text="Sign Up"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:fontFamily="@font/inter_medium"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="160dp"/>
+        android:layout_marginTop="100dp"/>
 
     <TextView
         android:id="@+id/nisn"
@@ -26,12 +26,12 @@
         android:textColor="@color/text2"
         android:text="NISN"
         android:textSize="22sp"
-        android:layout_below="@id/login"
+        android:layout_below="@id/signup"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"/>
 
     <EditText
-        android:id="@+id/edNISN"
+        android:id="@+id/sgNISN"
         android:layout_width="380dp"
         android:layout_height="50dp"
         android:hint="Masukkan NIS"
@@ -54,12 +54,12 @@
         android:textColor="@color/text2"
         android:text="Password"
         android:textSize="22sp"
-        android:layout_below="@id/edNISN"
+        android:layout_below="@id/sgNISN"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"/>
 
     <EditText
-        android:id="@+id/edPassword"
+        android:id="@+id/sgPassword"
         android:layout_width="380dp"
         android:layout_height="50dp"
         android:hint="Masukkan Password"
@@ -78,15 +78,34 @@
         android:drawableEnd="@drawable/baseline_visibility_off_24"/>
 
     <TextView
-        android:id="@+id/forgotPassword"
+        android:id="@+id/cpass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/kuning"
-        android:text="Forgot Password?"
+        android:textColor="@color/text2"
+        android:text="Confirm Password"
         android:textSize="22sp"
-        android:layout_below="@id/edPassword"
+        android:layout_below="@id/sgPassword"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/sgCPassword"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="Confirm Password"
+        android:background="@drawable/ed"
+        android:paddingStart="20dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="16sp"
+        android:textColorHint="#A9A9A9"
+        android:textColor="#000000"
+        android:inputType="textPassword"
+        android:layout_below="@id/cpass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:drawableEnd="@drawable/baseline_visibility_off_24"/>
 
     <Button
         android:id="@+id/btnLogin"
@@ -95,15 +114,15 @@
         android:text="Login"
         android:background="@drawable/rectangle"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/forgotPassword"
+        android:layout_below="@id/sgCPassword"
         android:layout_marginTop="40dp"
         app:backgroundTint="@color/text"/>
 
     <TextView
-        android:id="@+id/register"
+        android:id="@+id/txtLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Don't have an account? Sign up now."
+        android:text="Already have an account? Login."
         android:textSize="16sp"
         android:gravity="center"
         android:layout_below="@id/btnLogin"
