@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateProfileActivity">
+
+    <TextView
+        android:id="@+id/head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="Buat Profil"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_medium"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"/>
+
+    <TextView
+        android:id="@+id/nama"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text2"
+        android:text="Nama"
+        android:textSize="22sp"
+        android:layout_below="@id/head"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/edNama"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="Masukkan Nama"
+        android:background="@drawable/ed"
+        android:paddingStart="20dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="16sp"
+        android:textColorHint="#A9A9A9"
+        android:textColor="#000000"
+        android:layout_below="@id/nama"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text2"
+        android:text="Username"
+        android:textSize="22sp"
+        android:layout_below="@id/edNama"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/edUsername"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="Masukkan Username"
+        android:background="@drawable/ed"
+        android:paddingStart="20dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="16sp"
+        android:textColorHint="#A9A9A9"
+        android:textColor="#000000"
+        android:layout_below="@id/username"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/kelas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text2"
+        android:text="Kelas"
+        android:textSize="22sp"
+        android:layout_below="@id/edUsername"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp" />
+
+    <Spinner
+        android:id="@+id/spinnerKelas"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="16dp"
+        android:textSize="16sp"
+        android:background="@drawable/ed"
+        android:layout_below="@id/kelas"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp" />
+
+    <TextView
+        android:id="@+id/absen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text2"
+        android:text="Absen"
+        android:textSize="22sp"
+        android:layout_alignTop="@id/kelas"
+        android:layout_toEndOf="@id/spinnerKelas"
+        android:layout_marginStart="20dp" />
+
+    <EditText
+        android:id="@+id/edAbsen"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ed"
+        android:paddingStart="20dp"
+        android:paddingEnd="16dp"
+        android:textSize="16sp"
+        android:textColorHint="#A9A9A9"
+        android:inputType="number"
+        android:hint="Absen"
+        android:layout_alignTop="@id/spinnerKelas"
+        android:layout_toEndOf="@id/spinnerKelas"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/nisn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text2"
+        android:text="NISN"
+        android:textSize="22sp"
+        android:layout_below="@id/spinnerKelas"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:id="@+id/edNisn"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="Masukkan NISN"
+        android:background="@drawable/ed"
+        android:paddingStart="20dp"
+        android:paddingEnd="16dp"
+        android:textSize="16sp"
+        android:textColorHint="#A9A9A9"
+        android:textColor="#000000"
+        android:layout_below="@id/nisn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:text="Create"
+        android:background="@drawable/rectangle"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/edNisn"
+        android:layout_marginTop="40dp"
+        app:backgroundTint="@color/text" />
+
+</RelativeLayout>
