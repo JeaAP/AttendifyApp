@@ -18,7 +18,7 @@
         android:id="@+id/head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About"
+        android:text="Absensi"
         android:textSize="23sp"
         android:layout_toEndOf="@+id/back"
         android:layout_marginTop="36dp"
@@ -26,14 +26,13 @@
         android:textColor="@color/black"/>
 
     <TextView
-        android:id="@+id/bodytext"
+        android:id="@+id/body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/head"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="84dp"
+        android:layout_toEndOf="@+id/back"
         android:text="About Developer"
         android:textSize="16sp"
-        android:layout_toEndOf="@+id/back"
         android:textStyle="bold"
         android:textColor="@color/black"/>
     
@@ -41,7 +40,7 @@
         android:id="@+id/ceoCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bodytext"
+        android:layout_below="@id/body"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="36dp"
         android:layout_marginTop="36dp"
