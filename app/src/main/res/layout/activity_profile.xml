@@ -72,13 +72,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/card"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        android:padding="16dp">
 
         <LinearLayout
+            android:id="@+id/PersonalInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -92,13 +95,47 @@
                 android:layout_marginStart="12dp"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="Personal Info"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:layout_marginStart="20dp"
-                />
+                android:layout_marginStart="20dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_forward_ios_24"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/About"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="60dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/round_info_24"
+                android:layout_marginStart="12dp"/>
+
+            <TextView
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:text="About"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_forward_ios_24"/>
 
         </LinearLayout>
 
