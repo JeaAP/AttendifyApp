@@ -162,15 +162,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
+                                android:layout_centerHorizontal="true"
                                 android:text="Jadwal"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/inter_medium"/>
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
+                                android:layout_marginLeft="4dp"
+                                android:layout_toEndOf="@id/txtSchedule"
                                 android:layout_centerVertical="true"
-                                android:src="@drawable/round_school_24"/>
+                                android:src="@drawable/menu_book"/>
 
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>

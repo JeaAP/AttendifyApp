@@ -19,9 +19,6 @@
         android:theme="@style/Theme.Attendify"
         tools:targetApi="31">
         <activity
-            android:name=".Scan"
-            android:exported="false" />
-        <activity
             android:name=".ScanActivity"
             android:exported="false" />
         <activity
