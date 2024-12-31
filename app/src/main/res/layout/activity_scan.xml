@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScanActivity">
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_left_black"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp" />
+
+    <TextView
+        android:id="@+id/head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan"
+        android:textSize="23sp"
+        android:layout_toEndOf="@+id/back"
+        android:layout_marginTop="36dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="kamu harus memindai QR terlebih dahulu\nuntuk melakukan absensi."
+        android:layout_below="@+id/head"
+        android:layout_toEndOf="@id/back"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/attendify"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:text="Scan QR"
+        android:background="@drawable/rectangle"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/info"
+        android:layout_marginTop="40dp"
+        app:backgroundTint="@color/text" />
+
+</RelativeLayout>
