@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanActivity">
+    tools:context=".ProfileActivity">
 
     <ImageView
         android:id="@+id/back"
@@ -19,34 +19,11 @@
         android:id="@+id/head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scan"
+        android:text="Profile"
         android:textSize="23sp"
         android:layout_toEndOf="@+id/back"
         android:layout_marginTop="36dp"
         android:textStyle="bold"
         android:textColor="@color/black"/>
-
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="kamu harus memindai QR terlebih dahulu\nuntuk melakukan absensi."
-        android:layout_below="@+id/head"
-        android:layout_toEndOf="@id/back"
-        android:layout_marginTop="50dp"
-        android:textColor="@color/attendify"
-        android:textSize="16sp"/>
-
-    <Button
-        android:id="@+id/btnScan"
-        android:layout_width="370dp"
-        android:layout_height="wrap_content"
-        android:text="Scan QR"
-        android:background="@drawable/rectangle"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/info"
-        android:layout_marginTop="40dp"
-        app:backgroundTint="@color/text"
-        android:drawableEnd="@drawable/baseline_qr_code_scanner_24"/>
 
 </RelativeLayout>
