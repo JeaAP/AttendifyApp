@@ -26,4 +26,82 @@
         android:textStyle="bold"
         android:textColor="@color/black"/>
 
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/head"
+        android:padding="16dp"
+        android:layout_marginTop="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:cardElevation="8dp"
+            android:layout_centerVertical="true"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="50dp">
+
+            <ImageView
+                android:id="@+id/FotoProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/account_circle"
+                app:tint="@color/black"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/Nama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[nama]"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="110dp"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/card"
+        app:cardCornerRadius="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/baseline_person_24"
+                android:layout_marginStart="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Personal Info"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 </RelativeLayout>
