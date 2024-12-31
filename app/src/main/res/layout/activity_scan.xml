@@ -47,6 +47,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/info"
         android:layout_marginTop="40dp"
-        app:backgroundTint="@color/text" />
+        app:backgroundTint="@color/text"
+        android:drawableEnd="@drawable/baseline_qr_code_scanner_24"/>
 
 </RelativeLayout>
