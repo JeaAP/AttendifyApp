@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/arrow_left_black"
         android:layout_marginTop="40dp"
-        android:layout_marginStart="20dp" />
 
     <TextView
         android:id="@+id/head"
@@ -46,6 +45,5 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/info"
         android:layout_marginTop="40dp"
-        app:backgroundTint="@color/text" />
 
 </RelativeLayout>
