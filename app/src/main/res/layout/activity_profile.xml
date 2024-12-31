@@ -46,10 +46,10 @@
 
             <ImageView
                 android:id="@+id/FotoProfile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/account_circle"
+                app:srcCompat="@drawable/round_image_24"
                 app:tint="@color/black"
                 />
         </androidx.cardview.widget.CardView>
