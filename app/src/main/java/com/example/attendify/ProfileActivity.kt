@@ -27,12 +27,12 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.PersonalInfoBtn.setOnClickListener{
+        binding.PersonalInfo.setOnClickListener{
             val intent = Intent(this, PersonalInfoActivity::class.java)
             startActivity(intent)
         }
 
-        binding.AboutBtn.setOnClickListener{
+        binding.About.setOnClickListener{
             val intent = Intent(this, aboutApp::class.java)
             startActivity(intent)
         }

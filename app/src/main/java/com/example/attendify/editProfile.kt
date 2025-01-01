@@ -79,6 +79,11 @@ class editProfile : AppCompatActivity() {
             binding.edUsername.setText(profile.username)
             binding.edAbsen.setText(profile.absen.toString())
             binding.edNisn.setText(profile.nisn)
+            if (!profile.bio.isNullOrEmpty() && profile.bio != "null") {
+                binding.edBio.setText(profile.bio)
+            } else {
+                binding.edBio.setText("No Bio Yet")
+            }
 
             // Load photo if available
             if (profile.foto != null) {
@@ -133,6 +138,7 @@ class editProfile : AppCompatActivity() {
         }
         val absen = binding.edAbsen.text.toString().toIntOrNull() ?: 0
         val nisn = binding.edNisn.text.toString()
+        val bio = binding.edBio.text.toString()
 
         // Convert image to byte array
         val foto = dbHelper.imageViewToByte(binding.imageView)
@@ -146,7 +152,7 @@ class editProfile : AppCompatActivity() {
             absen = absen,
             nisn = nisn,
             foto = foto,
-            bio = null
+            bio = bio
         )
 
         // Update profile in database

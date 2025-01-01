@@ -210,4 +210,31 @@
         android:focusable="false"
         android:inputType="none"/>
 
+    <TextView
+        android:id="@+id/bio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_medium"
+        android:text="BIO"
+        android:textSize="16sp"
+        android:layout_below="@id/edNisn"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/edBio"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:hint="Ubah bio"
+        android:background="@drawable/ed"
+        android:paddingStart="20dp"
+        android:paddingEnd="16dp"
+        android:textSize="16sp"
+        android:textColorHint="#A9A9A9"
+        android:textColor="#000000"
+        android:layout_below="@id/bio"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
+
 </RelativeLayout>
