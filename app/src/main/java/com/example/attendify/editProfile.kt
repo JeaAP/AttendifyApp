@@ -126,7 +126,7 @@ class editProfile : AppCompatActivity() {
         if (!checkStoragePermission()) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 STORAGE_PERMISSION
             )
         } else {
@@ -141,7 +141,7 @@ class editProfile : AppCompatActivity() {
     private fun checkStoragePermission(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.READ_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
     }
 
