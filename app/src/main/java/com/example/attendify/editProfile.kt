@@ -100,7 +100,11 @@ class editProfile : AppCompatActivity() {
     }
 
     private fun setupSpinner() {
-        val kelasArray = resources.getStringArray(R.array.kelas_array)
+        val kelasArray = arrayOf(
+            "Kelas", "X PPL 1", "X PPL 2", "X TBS 1", "X TBS 2", "X TBS 3", "X KUL 1", "X KUL 2", "X KUL 3", "X PH 1", "X PH 2", "X PH 3", "X ULW 1",
+            "XI PPL 1", "XI PPL 2", "XI TBS 1", "XI TBS 2", "XI TBS 3", "XI KUL 1", "XI KUL 2", "XI KUL 3", "XI PH 1", "XI PH 2", "XI PH 3", "XI ULW 1",
+            "XII PPL 1", "XII PPL 2", "XII TBS 1", "XII TBS 2", "XII TBS 3", "XII KUL 1", "XII KUL 2", "XII KUL 3", "XII PH 1", "XII PH 2", "XII PH 3", "XII ULW 1"
+        )
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
@@ -115,7 +119,7 @@ class editProfile : AppCompatActivity() {
         val username = binding.edUsername.text.toString()
         val kelas = binding.spinnerKelas.selectedItem.toString()
 
-        if (kelas == "Pilih Kelas") {
+        if (kelas == "Kelas") {
             Toast.makeText(this, "Silakan pilih kelas yang valid.", Toast.LENGTH_SHORT).show()
             return
         }
