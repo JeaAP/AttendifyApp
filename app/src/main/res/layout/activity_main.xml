@@ -33,7 +33,8 @@
             app:menu="@menu/bottom_navigation"
             app:itemIconTint="@color/white"
             app:itemIconSize="28dp"
-            app:labelVisibilityMode="unlabeled" />
+            app:labelVisibilityMode="unlabeled"
+            app:elevation="0dp"/>
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 
