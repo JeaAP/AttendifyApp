@@ -42,7 +42,11 @@ class ProfileActivity : AppCompatActivity() {
         val profile = dbHelper.getProfile()
         if (profile != null) {
             binding.nama.text = profile.nama
-            binding.bio.text = profile.bio
+            if(profile.bio != null) {
+                binding.bio.text = profile.bio
+            } else {
+                binding.bio.text = "No Bio Yet"
+            }
 
             val bitmap = profile.foto?.let {
                 DatabaseHelperProfile.byteArrayToBitmap(it)

@@ -8,5 +8,5 @@ data class Profile(
     val absen: Int,
     val nisn: String,
     val foto: ByteArray? = null,
-    val bio: String
+    val bio: String? = null
 )

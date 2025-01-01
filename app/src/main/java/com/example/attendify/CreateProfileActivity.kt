@@ -95,7 +95,7 @@ class CreateProfileActivity : AppCompatActivity() {
             absen = absenInt,
             nisn = nisn,
             foto = null,
-            bio = null.toString()
+            bio = null
         )
 
         db.upsertProfile(profile)

@@ -146,7 +146,7 @@ class editProfile : AppCompatActivity() {
             absen = absen,
             nisn = nisn,
             foto = foto,
-            bio = null.toString()
+            bio = null
         )
 
         // Update profile in database

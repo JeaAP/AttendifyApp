@@ -39,7 +39,7 @@ class PersonalInfoActivity : AppCompatActivity() {
             binding.kelas.text = profile.kelas
             binding.abcent.text = profile.absen.toString()
             binding.nisn.text = profile.nisn
-            if(profile.bio.isNotEmpty()) {
+            if(profile.bio != null) {
                 binding.bio.text = profile.bio
             } else {
                 binding.bio.text = "No Bio Yet"
