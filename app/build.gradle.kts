@@ -50,9 +50,14 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:${camerax_version}")
     implementation("androidx.camera:camera-view:${camerax_version}")
 
-    //kamera sama crop
-    api("com.vanniktech:android-image-cropper:4.3.3")
+    //Crop Image
+    implementation("com.vanniktech:android-image-cropper:4.6.0")
+    //Loading image in ImageView
     implementation("com.squareup.picasso:picasso:2.8")
+
+    //Geofance
+    implementation("androidx.core:core-ktx:1.15.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

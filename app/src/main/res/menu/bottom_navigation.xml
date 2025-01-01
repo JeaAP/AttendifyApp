@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home"
-        android:icon="@drawable/round_image_24"
+        android:icon="@drawable/baseline_home_filled_24"
         android:title="home"/>
     <item
         android:id="@+id/middle"
@@ -10,6 +10,6 @@
         android:enabled="false"/>
     <item
         android:id="@+id/people"
-        android:icon="@drawable/round_image_24"
+        android:icon="@drawable/round_people_alt_24"
         android:title="people"/>
 </menu>

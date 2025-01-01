@@ -146,17 +146,21 @@ class editProfile : AppCompatActivity() {
         startActivity(intent)
     }
 
+    //------------------------------
     private fun requestStoragePermission() {
         requestPermissions(storagePermissions, STORAGE_PERMISSION)
     }
 
     private fun checkStoragePermission(): Boolean {
-        val result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED)
+        val result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED)
         return result
     }
 
     private fun pickFromGallery() {
         cropImageLauncher.launch(CropImageContractOptions(null, CropImageOptions()))
+//        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+
     }
 
     private fun requestCameraPersmission() {
@@ -164,10 +168,11 @@ class editProfile : AppCompatActivity() {
     }
 
     private fun checkCameraPermission(): Boolean {
-        val result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED)
-        val result2 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED)
-        return result && result2
+        val result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED)
+        val camera = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED)
+        return result && camera
     }
+    //------------------------------
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

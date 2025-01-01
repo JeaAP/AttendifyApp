@@ -45,7 +45,9 @@
         android:contentDescription="@string/fab_for_scan_qr_code"
         app:layout_anchor="@id/bottomAppBar"
         app:layout_anchorGravity="center"
-        app:backgroundTint="@color/white"
+        android:src="@drawable/baseline_qr_code_scanner_24"
+        app:tint="@android:color/white"
+        app:backgroundTint="@color/MikadoYellow"
         app:maxImageSize="28dp" />
 
 

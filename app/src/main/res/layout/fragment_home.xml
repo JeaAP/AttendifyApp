@@ -81,8 +81,10 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="555dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
         android:layout_alignParentBottom="true"
+        android:layout_below="@id/motivations"
         app:cardCornerRadius="12dp">
 
         <RelativeLayout
@@ -106,7 +108,7 @@
                         android:id="@+id/time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="[waktu]"
+                        android:text="00:00 WIB"
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:fontFamily="@font/inter_medium"/>
@@ -116,7 +118,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:text="[tanggal]"
+                        android:text="Loading date..."
                         android:textColor="@color/black"
                         android:fontFamily="@font/inter_medium"/>
 
@@ -126,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/time"
                         android:layout_marginTop="4dp"
-                        android:text="[lokasi]"/>
+                        android:text="Loading location..."/>
 
                     <LinearLayout
                         android:id="@+id/tombolLayout"

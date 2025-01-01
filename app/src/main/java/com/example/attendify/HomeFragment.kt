@@ -1,17 +1,47 @@
 package com.example.attendify
 
+import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer.OnPreparedListener
 import android.os.Bundle
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import com.example.attendify.databinding.FragmentHomeBinding
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.logging.Handler
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var dbHelper: DatabaseHelperProfile
+    private val handler = android.os.Handler(Looper.getMainLooper())
+    private lateinit var timeUpdater: Runnable
+
+    interface FragmentInteractionListener {
+//        fun onButtonClicked()
+        fun updateLocationText(text: String)
+        fun isUserInGeofence(): Boolean
+    }
+
+
+    private var listener: FragmentInteractionListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as? FragmentInteractionListener
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("CURRENT_LOCATION", binding.location.text.toString())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +61,12 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnAbcent.setOnClickListener {
-            val intent = Intent(requireContext(), ScanActivity::class.java)
-            startActivity(intent)
+            if (listener?.isUserInGeofence() == true) {
+                val intent = Intent(requireContext(), ScanActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
+            }
         }
 
         binding.btnIzin.setOnClickListener {
@@ -51,6 +85,37 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        savedInstanceState?.getString("CURRENT_LOCATION")?.let {
+            binding.location.text = it
+        }
+        setupTimeUpdater()
+        updateDate()
+    }
+
+    private fun setupTimeUpdater() {
+        timeUpdater = object : Runnable {
+            override fun run() {
+                updateCurrentTime()
+                handler.postDelayed(this, 60000)  // Update time every minute
+            }
+        }
+        handler.post(timeUpdater)
+    }
+
+    private fun updateCurrentTime() {
+        val timeFormat = SimpleDateFormat("HH:mm 'WIB'", Locale.getDefault())
+        val currentTime = timeFormat.format(Date())
+        binding.time.text = currentTime
+    }
+
+    private fun updateDate() {
+        val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.ENGLISH)
+        val currentDate = dateFormat.format(Date())
+        binding.date.text = currentDate
     }
 
     private fun loadProfileData() {
@@ -78,5 +143,9 @@ class HomeFragment : Fragment() {
             binding.greetings.text = "[Greetings]"
             binding.motivations.text = "[Motivasi]"
         }
+    }
+
+    fun updateLocationText(text: String) {
+        binding.location.text = text
     }
 }
