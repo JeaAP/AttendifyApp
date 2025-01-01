@@ -3,44 +3,34 @@ package com.example.attendify
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.example.attendify.databinding.ActivityEditProfileBinding
+import com.squareup.picasso.Picasso
+import androidx.core.app.ActivityCompat
 
 class editProfile : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var dbHelper: DatabaseHelperProfile
+    val CAMERA_REQUEST = 100
+    val STORAGE_PERMISSION = 101
 
-    private val cameraPermissions = arrayOf(
-        Manifest.permission.CAMERA,
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            Manifest.permission.READ_MEDIA_IMAGES
-        } else {
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        }
-    )
-
-    private val storagePermissions = arrayOf(
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            Manifest.permission.READ_MEDIA_IMAGES
-        } else {
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        }
-    )
+    val cameraPermissions: Array<String> = arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    val storagePermissions: Array<String> = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     private val cropImageLauncher = registerForActivityResult(CropImageContract()) { result ->
         if (result.isSuccessful) {
             val uri: Uri? = result.uriContent
-            binding.imageView.setImageURI(uri)
+            binding.imageView.setImageURI(uri) // Display the cropped image in ImageView
         } else {
             Toast.makeText(this, "Image cropping failed: ${result.error?.message}", Toast.LENGTH_SHORT).show()
         }
@@ -55,7 +45,8 @@ class editProfile : AppCompatActivity() {
         loadProfileData()
 
         binding.back.setOnClickListener {
-            startActivity(Intent(this, PersonalInfoActivity::class.java))
+            val intent = Intent(this, PersonalInfoActivity::class.java)
+            startActivity(intent)
         }
 
         setupSpinner()
@@ -65,10 +56,19 @@ class editProfile : AppCompatActivity() {
         }
 
         binding.imageView.setOnClickListener {
-            if (!checkCameraPermission()) {
-                requestCameraPermission()
-            } else {
-                pickFromGallery()
+            var avatar = 0
+            if (avatar == 0) {
+                if (!checkCameraPermission()) {
+                    requestCameraPersmission()
+                } else {
+                    pickFromGallery()
+                }
+            } else if (avatar == 1) {
+                if (!checkStoragePermission()) {
+                    requestStoragePermission()
+                } else {
+                    pickFromGallery()
+                }
             }
         }
     }
@@ -81,6 +81,7 @@ class editProfile : AppCompatActivity() {
             binding.edAbsen.setText(profile.absen.toString())
             binding.edNisn.setText(profile.nisn)
 
+            // Load photo if available
             if (profile.foto != null) {
                 val bitmap = DatabaseHelperProfile.byteArrayToBitmap(profile.foto)
                 binding.imageView.setImageBitmap(bitmap)
@@ -88,6 +89,7 @@ class editProfile : AppCompatActivity() {
                 binding.imageView.setImageResource(R.drawable.baseline_camera_24)
             }
 
+            // Set spinner selection
             val kelasArray = resources.getStringArray(R.array.kelas_array)
             val selectedIndex = kelasArray.indexOf(profile.kelas)
             if (selectedIndex >= 0) {
@@ -114,10 +116,12 @@ class editProfile : AppCompatActivity() {
         val absen = binding.edAbsen.text.toString().toIntOrNull() ?: 0
         val nisn = binding.edNisn.text.toString()
 
+        // Convert image to byte array
         val foto = dbHelper.imageViewToByte(binding.imageView)
 
+        // Create Profile object
         val profile = Profile(
-            id = 1,
+            id = 1, // Assuming there's only one profile, use ID = 1
             nama = nama,
             username = username,
             kelas = kelas,
@@ -126,25 +130,37 @@ class editProfile : AppCompatActivity() {
             foto = foto
         )
 
+        // Update profile in database
         dbHelper.upsertProfile(profile)
 
         Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
 
-        startActivity(Intent(this, PersonalInfoActivity::class.java))
+        // Return to previous activity
+        val intent = Intent(this, PersonalInfoActivity::class.java)
+        startActivity(intent)
     }
 
-    private fun checkCameraPermission(): Boolean {
-        return cameraPermissions.all {
-            ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
-        }
+    private fun requestStoragePermission() {
+        requestPermissions(storagePermissions, STORAGE_PERMISSION)
     }
 
-    private fun requestCameraPermission() {
-        ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST)
+    private fun checkStoragePermission(): Boolean {
+        val result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED)
+        return result
     }
 
     private fun pickFromGallery() {
         cropImageLauncher.launch(CropImageContractOptions(null, CropImageOptions()))
+    }
+
+    private fun requestCameraPersmission() {
+        requestPermissions(cameraPermissions, CAMERA_REQUEST)
+    }
+
+    private fun checkCameraPermission(): Boolean {
+        val result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED)
+        val result2 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED)
+        return result && result2
     }
 
     override fun onRequestPermissionsResult(
@@ -155,24 +171,25 @@ class editProfile : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             CAMERA_REQUEST -> {
-                if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                    pickFromGallery()
-                } else {
-                    Toast.makeText(this, "Enable Camera and Storage Permissions", Toast.LENGTH_SHORT).show()
+                if (grantResults.size > 0) {
+                    val cameraAccept = grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    if (cameraAccept) {
+                        pickFromGallery()
+                    } else {
+                        Toast.makeText(this, "Enable Camera and Storage Permissions", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             STORAGE_PERMISSION -> {
-                if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                    pickFromGallery()
-                } else {
-                    Toast.makeText(this, "Enable Storage Permission", Toast.LENGTH_SHORT).show()
+                if (grantResults.size > 0) {
+                    val storegaAccept = grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    if (storegaAccept) {
+                        pickFromGallery()
+                    } else {
+                        Toast.makeText(this, "Enable Storage Permission", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
-    }
-
-    companion object {
-        private const val CAMERA_REQUEST = 100
-        private const val STORAGE_PERMISSION = 101
     }
 }
