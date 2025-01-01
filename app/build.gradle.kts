@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.attendify"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
