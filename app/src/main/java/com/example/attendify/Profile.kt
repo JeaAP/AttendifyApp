@@ -7,5 +7,6 @@ data class Profile(
     val kelas: String,
     val absen: Int,
     val nisn: String,
-    val foto: ByteArray? = null
+    val foto: ByteArray? = null,
+    val bio: String
 )

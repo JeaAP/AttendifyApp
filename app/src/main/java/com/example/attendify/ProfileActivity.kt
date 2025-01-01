@@ -11,12 +11,16 @@ import com.example.attendify.databinding.ActivityProfileBinding
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var dbHelper: DatabaseHelperProfile
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        dbHelper = DatabaseHelperProfile(this)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loadProfileData()
 
         binding.back.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -31,6 +35,27 @@ class ProfileActivity : AppCompatActivity() {
         binding.AboutBtn.setOnClickListener{
             val intent = Intent(this, aboutApp::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun loadProfileData() {
+        val profile = dbHelper.getProfile()
+        if (profile != null) {
+            binding.nama.text = profile.nama
+            binding.bio.text = profile.bio
+
+            val bitmap = profile.foto?.let {
+                DatabaseHelperProfile.byteArrayToBitmap(it)
+            }
+            if (bitmap != null) {
+                binding.FotoProfile.setImageBitmap(bitmap)
+            } else {
+                binding.FotoProfile.setImageResource(R.drawable.round_person_24)
+            }
+
+        } else {
+            binding.nama.text = "[Nama tidak ditemukan]"
+            binding.bio.text = "[Bio tidak ditemukan]"
         }
     }
 }

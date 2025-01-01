@@ -24,6 +24,7 @@ class DatabaseHelperProfile(context: Context) : SQLiteOpenHelper(context, DATABA
         private const val COLUMN_ABSEN = "absen"
         private const val COLUMN_NISN = "nisn"
         private const val COLUMN_PHOTO = "foto"
+        private const val COLUMN_BIO = "bio"
 
         fun byteArrayToBitmap(byteArray: ByteArray): Bitmap? {
             return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
@@ -39,7 +40,8 @@ class DatabaseHelperProfile(context: Context) : SQLiteOpenHelper(context, DATABA
                 $COLUMN_CLASS TEXT,
                 $COLUMN_ABSEN INTEGER,
                 $COLUMN_NISN TEXT,
-                $COLUMN_PHOTO BLOB
+                $COLUMN_PHOTO BLOB,
+                $COLUMN_BIO TEXT
             )
         """.trimIndent()
         db?.execSQL(createTableQuery)
@@ -60,6 +62,7 @@ class DatabaseHelperProfile(context: Context) : SQLiteOpenHelper(context, DATABA
             put(COLUMN_ABSEN, profile.absen)
             put(COLUMN_NISN, profile.nisn)
             put(COLUMN_PHOTO, profile.foto)
+            put(COLUMN_BIO, profile.bio)
         }
 
         val cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
@@ -87,10 +90,11 @@ class DatabaseHelperProfile(context: Context) : SQLiteOpenHelper(context, DATABA
             val absen = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ABSEN))
             val nisn = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NISN))
             val foto = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_PHOTO))
+            val bio = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIO))
             cursor.close()
             db.close()
 
-            return Profile(id, nama, username, kelas, absen, nisn, foto)
+            return Profile(id, nama, username, kelas, absen, nisn, foto, bio)
         }
 
         cursor.close()

@@ -50,7 +50,7 @@
         app:cardCornerRadius="120dp"
         android:elevation="8dp">
         <ImageView
-            android:id="@+id/profileImage"
+            android:id="@+id/FotoProfile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/baseline_camera_24"
