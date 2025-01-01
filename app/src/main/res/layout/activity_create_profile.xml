@@ -100,7 +100,7 @@
         android:layout_below="@id/kelas"
         android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
-        android:prompt="Pilih Kelas" />
+        android:prompt="@string/pilih_kelas" />
 
     <TextView
         android:id="@+id/absen"
