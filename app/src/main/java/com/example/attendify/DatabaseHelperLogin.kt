@@ -94,4 +94,18 @@ class DatabaseHelperLogin(private val context: Context) :
         val rowsUpdated = db.update(TABLE_NAME, values, selection, selectionArgs)
         return rowsUpdated > 0
     }
+
+    fun getLoggedInNisn(): String? {
+        val db = readableDatabase
+        val cursor = db.query(TABLE_NAME, arrayOf(COLUMN_USERNAME), null, null, null, null, null)
+        return if (cursor.moveToFirst()) {
+            val nisn = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME))
+            cursor.close()
+            nisn
+        } else {
+            cursor.close()
+            null
+        }
+    }
+
 }

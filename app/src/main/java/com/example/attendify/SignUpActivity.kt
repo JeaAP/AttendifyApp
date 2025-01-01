@@ -37,6 +37,9 @@ class SignUpActivity : AppCompatActivity() {
                 passwordSG != passwordCheck -> {
                     Toast.makeText(this, "Konfirmasi Password salah!", Toast.LENGTH_SHORT).show()
                 }
+                binding.sgNISN.length() < 10 -> {
+                    Toast.makeText(this, "NISN harus terdiri dari minimal 10 digit.", Toast.LENGTH_SHORT).show()
+                }
                 else -> {
                     signupDatabase(usernameSG, passwordSG)
                 }

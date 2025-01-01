@@ -1,5 +1,6 @@
 package com.example.attendify
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -9,11 +10,23 @@ import com.example.attendify.databinding.ActivityCreateProfileBinding
 
 class CreateProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateProfileBinding
+    private lateinit var db: DatabaseHelperProfile
+    private lateinit var dbLogin: DatabaseHelperLogin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        db = DatabaseHelperProfile(this)
+        dbLogin = DatabaseHelperLogin(this)
+
+        val nisn = dbLogin.getLoggedInNisn()
+        if (nisn != null) {
+            binding.edNisn.setText(nisn)
+            binding.edNisn.isEnabled = false
+        } else {
+            Toast.makeText(this, "Gagal memuat NISN.", Toast.LENGTH_SHORT).show()
+        }
 
         // Data kelas
         val kelasArray = arrayOf(
@@ -59,5 +72,46 @@ class CreateProfileActivity : AppCompatActivity() {
                 // Tidak ada aksi ketika tidak ada item dipilih
             }
         }
+
+        binding.btnCreate.setOnClickListener {
+            saveProfile()
+        }
     }
+
+    private fun saveProfile() {
+        val nama = binding.edNama.text.toString().trim()
+        val username = binding.edUsername.text.toString().trim()
+        val kelas = binding.spinnerKelas.selectedItem.toString()
+        val absen = binding.edAbsen.text.toString().trim()
+        val nisn = binding.edNisn.text.toString().trim()
+
+        if (nama.isEmpty() || username.isEmpty() || kelas == "Kelas" || absen.isEmpty() || nisn.isEmpty()) {
+            Toast.makeText(this, "Harap lengkapi semua data.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val absenInt = absen.toIntOrNull()
+        if (absenInt == null) {
+            Toast.makeText(this, "Absen harus berupa angka.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val profile = Profile(
+            id = 0,
+            nama = nama,
+            username = username,
+            kelas = kelas,
+            absen = absenInt,
+            nisn = nisn,
+            foto = null
+        )
+
+        db.upsertProfile(profile)
+        Toast.makeText(this, "Profil berhasil dibuat.", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 }

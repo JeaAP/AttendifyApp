@@ -24,10 +24,16 @@ class LoginActivity : AppCompatActivity() {
             val usernameLG = binding.edNISN.text.toString()
             val passwordLG = binding.edPassword.text.toString()
 
-            if (usernameLG.isEmpty() || passwordLG.isEmpty()) {
-                Toast.makeText(this, "Username dan Password tidak boleh kosong", Toast.LENGTH_LONG).show()
-            } else {
-                loginDatabase(usernameLG, passwordLG)
+            when {
+                usernameLG.isEmpty() || passwordLG.isEmpty() -> {
+                    Toast.makeText(this, "Username dan Password tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+                }
+                binding.edNISN.length() < 10 -> {
+                    Toast.makeText(this, "NISN harus terdiri dari minimal 10 digit.", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    loginDatabase(usernameLG, passwordLG)
+                }
             }
         }
 
@@ -68,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
             editor.apply()
 
             Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, CreateProfileActivity::class.java)
             startActivity(intent)
             finish()
         } else {

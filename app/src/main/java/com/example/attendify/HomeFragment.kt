@@ -8,47 +8,75 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.attendify.databinding.FragmentHomeBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var dbHelper: DatabaseHelperProfile
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater)
+        dbHelper = DatabaseHelperProfile(requireContext())
 
-        binding.accountImage.setOnClickListener{
+        // Load data from the database and update UI
+        loadProfileData()
+
+        // Set listeners for buttons and views
+        binding.accountImage.setOnClickListener {
             val intent = Intent(requireContext(), ProfileActivity::class.java)
             startActivity(intent)
         }
 
-        binding.btnAbcent.setOnClickListener{
+        binding.btnAbcent.setOnClickListener {
             val intent = Intent(requireContext(), ScanActivity::class.java)
             startActivity(intent)
         }
 
-        binding.btnIzin.setOnClickListener{
+        binding.btnIzin.setOnClickListener {
             val intent = Intent(requireContext(), coomingSoon::class.java)
             startActivity(intent)
         }
 
-        binding.cardSchedule.setOnClickListener{
+        binding.cardSchedule.setOnClickListener {
             val intent = Intent(requireContext(), coomingSoon::class.java)
             startActivity(intent)
         }
 
-        binding.linkText.setOnClickListener{
+        binding.linkText.setOnClickListener {
             val intent = Intent(requireContext(), viewAllAbsensi::class.java)
             startActivity(intent)
         }
 
         return binding.root
+    }
+
+    private fun loadProfileData() {
+        val profile = dbHelper.getProfile()
+        if (profile != null) {
+            binding.accountName.text = profile.nama
+            binding.accountClass.text = profile.kelas
+            binding.username.text = "Hi ${profile.nama},"
+            binding.greetings.text = "Selamat datang!"
+            binding.motivations.text = "Tetap semangat belajar!"
+
+            val bitmap = profile.foto?.let {
+                DatabaseHelperProfile.byteArrayToBitmap(it)
+            }
+            if (bitmap != null) {
+                binding.accountImage.setImageBitmap(bitmap)
+            } else {
+                binding.accountImage.setImageResource(R.drawable.account_circle)
+            }
+
+        } else {
+            binding.accountName.text = "[Nama tidak ditemukan]"
+            binding.accountClass.text = "[Kelas tidak ditemukan]"
+            binding.username.text = "Hi [Nama],"
+            binding.greetings.text = "[Greetings]"
+            binding.motivations.text = "[Motivasi]"
+        }
     }
 }
