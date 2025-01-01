@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Attendify"
         tools:targetApi="31">
         <activity
+            android:name=".WebViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".coomingSoon"
             android:exported="false"
             android:theme="@style/Theme.Attendify" />
