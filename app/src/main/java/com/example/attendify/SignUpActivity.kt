@@ -43,6 +43,38 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
+        binding.showP.setOnClickListener {
+            // Periksa apakah password sedang ditampilkan
+            if (binding.sgPassword.inputType == android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                // Sembunyikan password
+                binding.sgPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.showP.setImageResource(R.drawable.baseline_visibility_off_24) // Ganti dengan icon 'visibility_off'
+            } else {
+                // Tampilkan password
+                binding.sgPassword.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                binding.showP.setImageResource(R.drawable.baseline_visibility_24) // Ganti dengan icon 'visibility'
+            }
+
+            // Set kursor ke posisi akhir
+            binding.sgPassword.setSelection(binding.sgPassword.text.length)
+        }
+
+        binding.showPs.setOnClickListener {
+            // Periksa apakah password sedang ditampilkan
+            if (binding.sgCPassword.inputType == android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                // Sembunyikan password
+                binding.sgCPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.showPs.setImageResource(R.drawable.baseline_visibility_off_24) // Ganti dengan icon 'visibility_off'
+            } else {
+                // Tampilkan password
+                binding.sgCPassword.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                binding.showPs.setImageResource(R.drawable.baseline_visibility_24) // Ganti dengan icon 'visibility'
+            }
+
+            // Set kursor ke posisi akhir
+            binding.sgCPassword.setSelection(binding.sgCPassword.text.length)
+        }
+
         binding.txtLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

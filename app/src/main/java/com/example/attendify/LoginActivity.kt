@@ -103,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handlePasswordReset(username: String) {
-        val userExists = db.readUser(username, "") // Check if user exists
+        val userExists = db.isUserExists(username) // Periksa hanya berdasarkan NISN
         if (userExists) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Enter New Password")

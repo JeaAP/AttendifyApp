@@ -33,12 +33,6 @@ class DatabaseHelperLogin(private val context: Context) :
         onCreate(db)
     }
 
-    /**
-     * Menambahkan user baru ke database. Jika tabel sudah memiliki data, proses ini akan dibatalkan.
-     * @param username Nama pengguna
-     * @param password Kata sandi
-     * @return ID baris jika berhasil, atau -1 jika tabel sudah penuh.
-     */
     fun insertUser(username: String, password: String): Long {
         val db = readableDatabase
 
@@ -59,13 +53,6 @@ class DatabaseHelperLogin(private val context: Context) :
         return writableDb.insert(TABLE_NAME, null, values)
     }
 
-    /**
-     * Membaca data user berdasarkan username dan password.
-     * Digunakan untuk autentikasi login.
-     * @param username Nama pengguna
-     * @param password Kata sandi
-     * @return True jika user ditemukan, false jika tidak.
-     */
     fun readUser(username: String, password: String): Boolean {
         val db = readableDatabase
         val selection = "$COLUMN_USERNAME = ? AND $COLUMN_PASSWORD = ?"
@@ -77,10 +64,6 @@ class DatabaseHelperLogin(private val context: Context) :
         return userExists
     }
 
-    /**
-     * Mengecek apakah database sudah penuh (hanya bisa menyimpan 1 data).
-     * @return True jika tabel sudah penuh, false jika kosong.
-     */
     fun isDatabaseFull(): Boolean {
         val db = readableDatabase
         val cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
@@ -89,12 +72,17 @@ class DatabaseHelperLogin(private val context: Context) :
         return isFull
     }
 
-    /**
-     * Mengubah password berdasarkan username (nisn).
-     * @param username Nama pengguna (nisn)
-     * @param newPassword Kata sandi baru
-     * @return True jika password berhasil diubah, false jika username tidak ditemukan.
-     */
+    fun isUserExists(username: String): Boolean {
+        val db = readableDatabase
+        val selection = "$COLUMN_USERNAME = ?"
+        val selectionArgs = arrayOf(username)
+        val cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null)
+
+        val userExists = cursor.count > 0
+        cursor.close()
+        return userExists
+    }
+
     fun updatePassword(username: String, newPassword: String): Boolean {
         val db = writableDatabase
         val values = ContentValues().apply {
