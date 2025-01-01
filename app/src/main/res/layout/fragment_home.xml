@@ -7,13 +7,25 @@
     android:background="@color/OxfordBlue"
     tools:context=".HomeFragment">
 
-    <ImageView
-        android:id="@+id/accountImage"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="20dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="25dp"
         android:layout_marginTop="30dp"
-        android:src="@drawable/account_circle" />
+        android:layout_marginStart="20dp">
+
+        <ImageView
+            android:id="@+id/FotoProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            app:srcCompat="@drawable/round_image_24"
+            app:tint="@color/black"
+            />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/accountName"
@@ -21,7 +33,7 @@
         android:layout_height="25dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
-        android:layout_toEndOf="@+id/accountImage"
+        android:layout_toEndOf="@+id/cardView3"
         android:text="[nama]"
         android:textStyle="bold"
         android:textColor="@color/white"/>
@@ -31,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_marginStart="10dp"
-        android:layout_toEndOf="@+id/accountImage"
+        android:layout_toEndOf="@+id/cardView3"
         android:layout_below="@+id/accountName"
         android:text="[kelas]"
         android:textColor="@color/white"/>
@@ -42,7 +54,7 @@
         android:layout_height="25dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
-        android:layout_below="@+id/accountImage"
+        android:layout_below="@+id/cardView3"
         android:text="Hi [nama],"
         android:textColor="@color/white"
         android:textSize="18sp"/>
@@ -54,7 +66,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/username"
-        android:layout_below="@+id/accountImage"
+        android:layout_below="@+id/cardView3"
         android:text="[greetings]"
         android:textStyle="bold"
         android:textColor="@color/white"
