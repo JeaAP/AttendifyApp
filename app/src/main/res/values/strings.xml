@@ -11,6 +11,46 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string-array name="kelas_array">
+        <item>Kelas</item>
+        <item>X PPL 1</item>
+        <item>X PPL 2</item>
+        <item>X TBS 1</item>
+        <item>X TBS 2</item>
+        <item>X TBS 3</item>
+        <item>X KUL 1</item>
+        <item>X KUL 2</item>
+        <item>X KUL 3</item>
+        <item>X PH 1</item>
+        <item>X PH 2</item>
+        <item>X PH 3</item>
+        <item>X ULW 1</item>
+        <item>XI PPL 1</item>
+        <item>XI PPL 2</item>
+        <item>XI TBS 1</item>
+        <item>XI TBS 2</item>
+        <item>XI TBS 3</item>
+        <item>XI KUL 1</item>
+        <item>XI KUL 2</item>
+        <item>XI KUL 3</item>
+        <item>XI PH 1</item>
+        <item>XI PH 2</item>
+        <item>XI PH 3</item>
+        <item>XI ULW 1</item>
+        <item>XII PPL 1</item>
+        <item>XII PPL 2</item>
+        <item>XII TBS 1</item>
+        <item>XII TBS 2</item>
+        <item>XII TBS 3</item>
+        <item>XII KUL 1</item>
+        <item>XII KUL 2</item>
+        <item>XII KUL 3</item>
+        <item>XII PH 1</item>
+        <item>XII PH 2</item>
+        <item>XII PH 3</item>
+        <item>XII ULW 1</item>
+    </string-array>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
