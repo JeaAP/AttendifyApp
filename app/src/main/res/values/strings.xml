@@ -12,7 +12,6 @@
     <string name="previous">Previous</string>
 
     <string-array name="kelas_array">
-        <item>Kelas</item>
         <item>X PPL 1</item>
         <item>X PPL 2</item>
         <item>X TBS 1</item>

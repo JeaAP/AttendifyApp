@@ -27,12 +27,13 @@ class editProfile : AppCompatActivity() {
     val cameraPermissions: Array<String> = arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
     val storagePermissions: Array<String> = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
-    private val cropImageLauncher = registerForActivityResult(CropImageContract()) { result ->
+    val cropImageLauncher = registerForActivityResult(CropImageContract()) { result ->
         if (result.isSuccessful) {
             val uri: Uri? = result.uriContent
-            binding.imageView.setImageURI(uri) // Display the cropped image in ImageView
+            Picasso.get().load(uri).into(binding.imageView)
         } else {
-            Toast.makeText(this, "Image cropping failed: ${result.error?.message}", Toast.LENGTH_SHORT).show()
+            val error = result.error
+            error?.printStackTrace()
         }
     }
 
@@ -113,6 +114,11 @@ class editProfile : AppCompatActivity() {
         val nama = binding.edNama.text.toString()
         val username = binding.edUsername.text.toString()
         val kelas = binding.spinnerKelas.selectedItem.toString()
+
+        if (kelas == "Pilih Kelas") {
+            Toast.makeText(this, "Silakan pilih kelas yang valid.", Toast.LENGTH_SHORT).show()
+            return
+        }
         val absen = binding.edAbsen.text.toString().toIntOrNull() ?: 0
         val nisn = binding.edNisn.text.toString()
 
