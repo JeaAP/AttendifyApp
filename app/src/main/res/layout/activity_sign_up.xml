@@ -111,10 +111,10 @@
         android:drawableEnd="@drawable/baseline_visibility_off_24"/>
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnSignUp"
         android:layout_width="370dp"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Sign Up"
         android:background="@drawable/rectangle"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/sgCPassword"
@@ -128,7 +128,7 @@
         android:text="Already have an account? Login."
         android:textSize="16sp"
         android:gravity="center"
-        android:layout_below="@id/btnLogin"
+        android:layout_below="@id/btnSignUp"
         android:layout_marginTop="20dp"/>
 
 </RelativeLayout>
