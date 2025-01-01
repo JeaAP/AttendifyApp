@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         if (profile != null) {
             binding.accountName.text = profile.nama
             binding.accountClass.text = profile.kelas
-            binding.username.text = "Hi ${profile.nama},"
+            binding.username.text = "Hi ${profile.username},"
             binding.greetings.text = "Selamat datang!"
             binding.motivations.text = "Tetap semangat belajar!"
 
