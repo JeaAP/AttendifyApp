@@ -31,6 +31,23 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        binding.showPass.setOnClickListener {
+            // Periksa apakah password sedang ditampilkan
+            if (binding.edPassword.inputType == android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                // Sembunyikan password
+                binding.edPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.showPass.setImageResource(R.drawable.baseline_visibility_off_24) // Ganti dengan icon 'visibility_off'
+            } else {
+                // Tampilkan password
+                binding.edPassword.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                binding.showPass.setImageResource(R.drawable.baseline_visibility_24) // Ganti dengan icon 'visibility'
+            }
+
+            // Set kursor ke posisi akhir
+            binding.edPassword.setSelection(binding.edPassword.text.length)
+        }
+
+
         binding.register.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
