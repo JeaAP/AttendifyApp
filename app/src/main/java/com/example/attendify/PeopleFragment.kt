@@ -34,20 +34,20 @@ class PeopleFragment : Fragment() {
             }
         }
 
-        binding.ceoMore.setOnClickListener{
-            val intent = Intent(requireContext(), aboutCEO::class.java)
+        binding.ceoMore.setOnClickListener{ //CEO ACTIVITY TIDAK TERDETEKSI
+            val intent = Intent(this@PeopleFragment.requireContext(), aboutCEO::class.java)
             startActivity(intent)
         }
 
-//        binding.ctoMore.setOnClickListener{
-//            val intent = Intent(requireContext(), aboutCTO::class.java)
-//            startActivity(intent)
-//        }
-//
-//        binding.cmoMore.setOnClickListener{
-//            val intent = Intent(requireContext(), aboutCMO::class.java)
-//            startActivity(intent)
-//        }
+        binding.ctoMore.setOnClickListener{
+            val intent = Intent(this@PeopleFragment.requireContext(), aboutCTO::class.java)
+            startActivity(intent)
+        }
+
+        binding.cmoMore.setOnClickListener{
+            val intent = Intent(this@PeopleFragment.requireContext(), aboutCMO::class.java)
+            startActivity(intent)
+        }
 
         return binding.root
     }

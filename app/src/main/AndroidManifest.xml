@@ -25,31 +25,29 @@
         android:theme="@style/Theme.Attendify"
         tools:targetApi="31">
         <activity
+            android:name=".aboutCMO"
+            android:exported="false"/>
+        <activity
             android:name=".aboutCTO"
-            android:exported="false"
-            android:theme="@style/Theme.Attendify" />
+            android:exported="false" />
         <activity
             android:name=".WebViewActivity"
             android:exported="false" />
         <activity
             android:name=".coomingSoon"
-            android:exported="false"
-            android:theme="@style/Theme.Attendify" />
+            android:exported="false" />
         <activity
             android:name=".deskripsiAbsen"
-            android:exported="false"
-            android:theme="@style/Theme.Attendify" />
+            android:exported="false" />
         <activity
             android:name=".aboutApp"
-            android:exported="false"
-            android:theme="@style/Theme.Attendify" />
+            android:exported="false" />
         <activity
             android:name=".PersonalInfoActivity"
             android:exported="false" />
         <activity
             android:name=".editProfile"
-            android:exported="false"
-            android:theme="@style/Theme.Attendify" />
+            android:exported="false" />
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
@@ -88,7 +86,8 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" /> <!-- CropImageActivity -->
+            android:exported="false" />
+        <!-- CropImageActivity -->
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
