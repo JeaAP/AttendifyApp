@@ -3,37 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".viewAllAbsensi">
+    android:fitsSystemWindows="true"
+    tools:context=".aboutApp">
 
     <ImageView
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
         android:src="@drawable/arrow_left_black"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="20dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp" />
 
     <TextView
         android:id="@+id/head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Absensi"
+        android:text="About"
         android:textSize="23sp"
         android:layout_toEndOf="@+id/back"
         android:layout_marginTop="36dp"
         android:textStyle="bold"
         android:textColor="@color/black"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activityContent"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/head"
-        android:padding="16dp"/>
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_medium"
+        android:text="Version 1.0.0"
+        android:textSize="16sp"/>
 
 </RelativeLayout>

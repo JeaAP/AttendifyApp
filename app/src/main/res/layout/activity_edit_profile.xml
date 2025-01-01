@@ -5,19 +5,71 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateProfileActivity">
+    tools:context=".editProfile">
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_left_black"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp" />
 
     <TextView
         android:id="@+id/head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="Buat Profil"
+        android:text="Edit Profile"
+        android:textSize="23sp"
+        android:layout_toEndOf="@+id/back"
+        android:layout_marginTop="36dp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/doneEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Done"
+        android:textSize="16sp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="36dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/head"
+        android:layout_marginTop="12dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp"/>
+        app:cardCornerRadius="120dp"
+        android:elevation="8dp">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/baseline_camera_24"
+            android:scaleType="center" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/uploadImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardImage"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Upload"
+        android:textSize="16sp"
+        android:layout_marginTop="2dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/nama"
@@ -27,9 +79,9 @@
         android:fontFamily="@font/inter_medium"
         android:text="Nama"
         android:textSize="16sp"
-        android:layout_below="@id/head"
+        android:layout_below="@id/uploadImage"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="12dp"/>
 
     <EditText
         android:id="@+id/edNama"
@@ -155,16 +207,5 @@
         android:layout_below="@id/nisn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp" />
-
-    <Button
-        android:id="@+id/btnCreate"
-        android:layout_width="370dp"
-        android:layout_height="wrap_content"
-        android:text="Create"
-        android:background="@drawable/rectangle"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/edNisn"
-        android:layout_marginTop="40dp"
-        app:backgroundTint="@color/text" />
 
 </RelativeLayout>

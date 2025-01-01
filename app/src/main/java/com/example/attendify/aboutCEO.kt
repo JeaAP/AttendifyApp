@@ -17,5 +17,17 @@ class aboutCEO : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAboutCeoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.back.setOnClickListener{
+            // Cek jika ada fragment dalam back stack, jika tidak, kembalikan ke Activity/Frament sebelumnya
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                supportFragmentManager.popBackStack()
+            } else {
+                super.onBackPressed() // Akan kembali ke Activity atau Fragment yang memulai ActivityA
+            }
+            /*  WARNING WARNING WARNING
+                 onBackPressed tidak terdeteksi
+             WARNING WARNING WARNING */
+        }
     }
 }

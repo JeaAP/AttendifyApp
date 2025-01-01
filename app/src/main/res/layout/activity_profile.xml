@@ -46,24 +46,37 @@
 
             <ImageView
                 android:id="@+id/FotoProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
                 app:srcCompat="@drawable/round_image_24"
                 app:tint="@color/black"
                 />
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/Nama"
+            android:id="@+id/nama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/cardView3"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:text="[nama]"
             android:textColor="@color/black"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="110dp"
             android:fontFamily="@font/inter_medium"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/cardView3"
+            android:layout_below="@id/nama"
+            android:layout_marginStart="20dp"
+            android:text="[bio]"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="18sp"/>
 
     </RelativeLayout>
 
@@ -89,7 +102,7 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="40dp"
+                android:layout_width="30dp"
                 android:layout_height="40dp"
                 android:src="@drawable/baseline_person_24"
                 android:layout_marginStart="12dp"/>
@@ -98,11 +111,13 @@
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="Personal Info"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/inter_medium"
                 android:layout_marginStart="20dp"/>
 
             <ImageView
+                android:id="@+id/PersonalInfoBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/baseline_arrow_forward_ios_24"/>
@@ -119,7 +134,7 @@
             android:layout_marginTop="60dp">
 
             <ImageView
-                android:layout_width="40dp"
+                android:layout_width="30dp"
                 android:layout_height="40dp"
                 android:src="@drawable/round_info_24"
                 android:layout_marginStart="12dp"/>
@@ -128,11 +143,13 @@
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="About"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/inter_medium"
                 android:layout_marginStart="20dp"/>
 
             <ImageView
+                android:id="@+id/AboutBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/baseline_arrow_forward_ios_24"/>
