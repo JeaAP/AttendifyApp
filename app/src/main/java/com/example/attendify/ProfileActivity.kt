@@ -42,7 +42,7 @@ class ProfileActivity : AppCompatActivity() {
         val profile = dbHelper.getProfile()
         if (profile != null) {
             binding.nama.text = profile.nama
-            if(profile.bio != null) {
+            if (!profile.bio.isNullOrEmpty() && profile.bio != "null") {
                 binding.bio.text = profile.bio
             } else {
                 binding.bio.text = "No Bio Yet"
