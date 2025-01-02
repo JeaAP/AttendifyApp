@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.attendify.databinding.FragmentHomeBinding
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.logging.Handler
@@ -65,11 +66,21 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnAbcent.setOnClickListener {
+            val now = Calendar.getInstance()
+            val cutOffTime = Calendar.getInstance()
+            cutOffTime.set(Calendar.HOUR_OF_DAY, 6)
+            cutOffTime.set(Calendar.MINUTE, 30)
+
             if (listener?.isUserInGeofence() == true) {
                 val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
                 if (!dbHelperAbsensi.hasAbsensiToday(today)) {
-                    val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
-                    startActivity(intent)
+                    if(now.after(cutOffTime)){
+                        Toast.makeText(context, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
+                        return@setOnClickListener
+                    } else{
+                        val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
+                        startActivity(intent)
+                    }
                 } else {
                     Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
                 }

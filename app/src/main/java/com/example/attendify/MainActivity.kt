@@ -32,6 +32,7 @@ import java.util.Locale
 class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListener {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var dbHelperAbsensi: DatabaseHelperAbsensi
     private val homeFragment: HomeFragment by lazy {
         supportFragmentManager.findFragmentById(R.id.frameLayout) as HomeFragment
     }
@@ -53,6 +54,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
             enableEdgeToEdge()
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
+
+            dbHelperAbsensi = DatabaseHelperAbsensi(this)
 
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
@@ -76,10 +79,15 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
 
             binding.fab.setOnClickListener {
                 if (isInsideGeofence) {
-//                    val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-//                    if(!dbHelper.hasAbsensiToday(today))
-                    val intent = Intent(this, Scan::class.java)
-                    startActivity(intent)
+                    val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                    if (!dbHelperAbsensi.hasAbsensiToday(today)) {
+                        val intent = Intent(this, Scan::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
+                    }
+//                    val intent = Intent(this, Scan::class.java)
+//                    startActivity(intent)
                 } else {
                     Toast.makeText(this, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
                 }
