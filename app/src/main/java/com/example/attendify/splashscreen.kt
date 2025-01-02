@@ -26,7 +26,7 @@ class splashscreen : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 // Jika belum login, pindah ke about1Activity
-                val intent = Intent(this@splashscreen, about1Activity::class.java)
+                val intent = Intent(this@splashscreen, NavigationActivity::class.java)
                 startActivity(intent)
             }
             finish()

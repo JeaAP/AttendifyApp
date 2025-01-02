@@ -67,28 +67,55 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnAbcent.setOnClickListener {
+            val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
             val now = Calendar.getInstance()
-            val cutOffTime = Calendar.getInstance()
-            cutOffTime.set(Calendar.HOUR_OF_DAY, 6)
-            cutOffTime.set(Calendar.MINUTE, 30)
 
-            if (listener?.isUserInGeofence() == true) {
+            val cutOffTimeMorning = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 6)
+                set(Calendar.MINUTE, 30)
+            }
+
+            val cutOffTimeAfternoon = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 15)
+                set(Calendar.MINUTE, 0)
+            }
+
+            binding.btnAbcent.setOnClickListener {
                 val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                if (!dbHelperAbsensi.hasAbsensiToday(today)) {
-                    if(now.after(cutOffTime)){
-                        Toast.makeText(context, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
-                        return@setOnClickListener
-                    } else{
-                        val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
-                        startActivity(intent)
+                val now = Calendar.getInstance()
+                val cutOffTimeMorning = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, 6)
+                    set(Calendar.MINUTE, 30)
+                }
+                val cutOffTimeAfternoon = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, 15)
+                    set(Calendar.MINUTE, 0)
+                }
+                val cutOffTimeEarlyMorning = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, 5)
+                    set(Calendar.MINUTE, 0)
+                }
+
+                if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
+                    if (!dbHelperAbsensi.hasAbsensiToday(today)) { // Jika hari ini belum absen
+                        if (now.before(cutOffTimeEarlyMorning)) {
+                            Toast.makeText(context, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
+                        } else if (now.after(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
+                            if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
+                                val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(context, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
+                            }
+                        } else {
+                            Toast.makeText(context, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
+                        }
+                    } else {
+                        Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
                     }
                 } else {
-                    Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
                 }
-//                val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
-//                startActivity(intent)
-            } else {
-                Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -115,6 +142,13 @@ class HomeFragment : Fragment() {
         binding.activityContent.apply {
             layoutManager = LinearLayoutManager(requireContext())
             this.adapter = adapter
+
+            val tvNoData = binding.tvNoData
+            if (adapter.itemCount == 0) {
+                tvNoData.visibility = View.VISIBLE
+            } else {
+                tvNoData.visibility = View.GONE
+            }
         }
 
         return binding.root

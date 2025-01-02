@@ -53,15 +53,45 @@ class DatabaseHelperLogin(private val context: Context) :
         return writableDb.insert(TABLE_NAME, null, values)
     }
 
-    fun readUser(username: String, password: String): Boolean {
-        val db = readableDatabase
-        val selection = "$COLUMN_USERNAME = ? AND $COLUMN_PASSWORD = ?"
-        val selectionArgs = arrayOf(username, password)
-        val cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null)
+//    fun readUser(username: String, password: String): Boolean {
+//        val db = readableDatabase
+//        val selection = "$COLUMN_USERNAME = ? AND $COLUMN_PASSWORD = ?"
+//        val selectionArgs = arrayOf(username, password)
+//        val cursor = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null)
+//
+//        val userExists = cursor.count > 0
+//        cursor.close()
+//        return userExists
+//    }
 
-        val userExists = cursor.count > 0
-        cursor.close()
-        return userExists
+    fun readUser(username: String, password: String): Int {
+        val db = readableDatabase
+        val userCursor = db.query(
+            TABLE_NAME,
+            arrayOf(COLUMN_USERNAME),
+            "$COLUMN_USERNAME = ?",
+            arrayOf(username),
+            null, null, null
+        )
+
+        if (userCursor.count <= 0) {
+            userCursor.close()
+            return 1 // User tidak ditemukan
+        }
+        userCursor.close()
+
+        val passwordCursor = db.query(
+            TABLE_NAME,
+            arrayOf(COLUMN_USERNAME, COLUMN_PASSWORD),
+            "$COLUMN_USERNAME = ? AND $COLUMN_PASSWORD = ?",
+            arrayOf(username, password),
+            null, null, null
+        )
+
+        val userExists = passwordCursor.count > 0
+        passwordCursor.close()
+
+        return if (userExists) 0 else 2
     }
 
     fun isDatabaseFull(): Boolean {

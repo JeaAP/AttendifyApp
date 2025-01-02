@@ -21,8 +21,8 @@
             android:id="@+id/FtProfile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="center"
-            app:srcCompat="@drawable/round_image_24"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/round_person_24"
             />
     </androidx.cardview.widget.CardView>
 
@@ -246,6 +246,20 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/linkText"
                 android:padding="16dp"/>
+
+            <TextView
+                android:id="@+id/tvNoData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linkText"
+                android:layout_alignTop="@id/activityContent"
+                android:layout_alignBottom="@id/activityContent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Tidak ada data"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"/>
 
         </RelativeLayout>
 

@@ -8,6 +8,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:backgroundTint="@color/OxfordBlue"
+        app:cardCornerRadius="0dp"/>
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"

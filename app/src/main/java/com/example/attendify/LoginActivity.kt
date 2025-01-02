@@ -72,22 +72,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginDatabase(username: String, password: String) {
-        val userExists = db.readUser(username, password)
-        if (userExists) {
-            // Simpan status login ke SharedPreferences
-            val sharedPreferences = getSharedPreferences("AttendifyPrefs", MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putBoolean("isLoggedIn", true)
-            editor.apply()
-
-            Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, CreateProfileActivity::class.java)
-            startActivity(intent)
-            finish()
-        } else {
-            Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
+        when (val result = db.readUser(username, password)) {
+            0 -> {  // Login successful
+                val sharedPreferences = getSharedPreferences("AttendifyPrefs", MODE_PRIVATE)
+                with(sharedPreferences.edit()) {
+                    putBoolean("isLoggedIn", true)
+                    apply()
+                }
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
+                startActivity(Intent(this, CreateProfileActivity::class.java))
+                finish()
+            }
+            1 -> Toast.makeText(this, "NISN tidak ditemukan", Toast.LENGTH_LONG).show()
+            2 -> Toast.makeText(this, "Password salah", Toast.LENGTH_LONG).show()
         }
     }
+
 
 
     private fun showForgotPasswordDialog() {

@@ -86,6 +86,13 @@
         sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+
     </string>
     <string name="xi_rpl_2">XI RPL 2</string>
+    <string name="screen1">Punctually</string>
+    <string name="screen1desc">Punctuality in attending school\nDemonstrates responsibility and discipline.</string>
+    <string name="screen2">Focus</string>
+    <string name="screen2desc">Focus ensures that students excel both\n in punctuality and in their studies.</string>
+    <string name="screen3">Self-Discipline</string>
+    <string name="screen3desc">Self-discipline helps students manage\n their time and excel in learning.</string>
 </resources>

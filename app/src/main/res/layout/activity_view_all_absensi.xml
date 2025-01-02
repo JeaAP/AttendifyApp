@@ -37,4 +37,14 @@
         android:padding="16dp"
         android:layout_marginTop="30dp"/>
 
+    <TextView
+        android:id="@+id/tvNoData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="Tidak ada data"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_medium" />
+
 </RelativeLayout>
