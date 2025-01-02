@@ -35,9 +35,9 @@ class deskripsiAbsen : AppCompatActivity() {
             }
         }
 
-        binding.Happy.setOnClickListener { saveAbsensi("Senang") }
-        binding.Good.setOnClickListener { saveAbsensi("Biasa Saja") }
-        binding.Bad.setOnClickListener { saveAbsensi("Sedih") }
+        binding.Happy.setOnClickListener { saveAbsensi("Happy") }
+        binding.Good.setOnClickListener { saveAbsensi("Good") }
+        binding.Bad.setOnClickListener { saveAbsensi("Bad") }
     }
 
     private fun saveAbsensi(mood: String) {
