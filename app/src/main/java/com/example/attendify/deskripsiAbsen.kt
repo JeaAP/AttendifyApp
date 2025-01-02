@@ -4,28 +4,59 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.attendify.databinding.ActivityDeskripsiAbsenBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class deskripsiAbsen : AppCompatActivity() {
 
     private lateinit var binding: ActivityDeskripsiAbsenBinding
+    private lateinit var dbHelper: DatabaseHelperAbsensi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDeskripsiAbsenBinding.inflate(layoutInflater)
+        dbHelper = DatabaseHelperAbsensi(this)
         setContentView(binding.root)
 
         val llSendMessage = binding.llSendMessage
         val llFeelings = binding.llFeelings
 
-        binding.btnSend.setOnClickListener { // MENGIRIM DATA edDescription KE DATABASE
-            llSendMessage.visibility = View.GONE
-            llFeelings.visibility = View.VISIBLE
+        binding.btnSend.setOnClickListener {
+            val perasaan = binding.edDescription.text.toString().trim()
+            if (perasaan.isEmpty()) {
+                Snackbar.make(binding.root, "Please describe your day!", Snackbar.LENGTH_SHORT).show()
+            } else {
+                llSendMessage.visibility = View.GONE
+                llFeelings.visibility = View.VISIBLE
+            }
+        }
+
+        binding.Happy.setOnClickListener { saveAbsensi("Senang") }
+        binding.Good.setOnClickListener { saveAbsensi("Biasa Saja") }
+        binding.Bad.setOnClickListener { saveAbsensi("Sedih") }
+    }
+
+    private fun saveAbsensi(mood: String) {
+        val currentTime = Calendar.getInstance()
+        val hariFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+        val tanggalFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val jamFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+
+        val hari = hariFormat.format(currentTime.time)
+        val tanggal = tanggalFormat.format(currentTime.time)
+        val jam = jamFormat.format(currentTime.time)
+        val perasaan = binding.edDescription.text.toString().trim()
+
+        val result = dbHelper.insertAbsensi(hari, tanggal, jam, mood, perasaan)
+
+        if (result != -1L) {
+            Snackbar.make(binding.root, "Absensi berhasil disimpan!", Snackbar.LENGTH_SHORT).show()
+            finish()
+        } else {
+            Snackbar.make(binding.root, "Gagal menyimpan absensi!", Snackbar.LENGTH_SHORT).show()
         }
     }
 }

@@ -1,12 +1,11 @@
 package com.example.attendify
 
+import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.attendify.databinding.ActivityWebViewBinding
 
 class WebViewActivity : AppCompatActivity() {
@@ -21,11 +20,25 @@ class WebViewActivity : AppCompatActivity() {
         val webView = findViewById<WebView>(R.id.webView)
         val url = intent.getStringExtra("url")
 
-        webView.webViewClient = WebViewClient()
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+
+                // Setelah halaman selesai dimuat, pindah ke deskripsiAbsen
+                navigateToDeskripsiAbsen()
+            }
+        }
+
         webView.settings.javaScriptEnabled = true
 
-        if(url != null) {
+        if (url != null) {
             webView.loadUrl(url)
         }
+    }
+
+    private fun navigateToDeskripsiAbsen() {
+        val intent = Intent(this, deskripsiAbsen::class.java)
+        startActivity(intent)
+        finish() // Menutup WebViewActivity agar tidak kembali lagi
     }
 }

@@ -103,15 +103,15 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/fell1"
+                        android:id="@+id/Happy"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="8dp"
-                        android:src="@drawable/bademote"
+                        android:src="@drawable/happyemote"
                         android:background="@drawable/rounded_button"/>
 
                     <ImageView
-                        android:id="@+id/fell2"
+                        android:id="@+id/Good"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="8dp"
@@ -119,11 +119,11 @@
                         android:src="@drawable/goodemote" />
 
                     <ImageView
-                        android:id="@+id/fell3"
+                        android:id="@+id/Bad"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="8dp"
-                        android:src="@drawable/happyemote"
+                        android:src="@drawable/bademote"
                         android:background="@drawable/rounded_button"/>
 
                 </LinearLayout>
