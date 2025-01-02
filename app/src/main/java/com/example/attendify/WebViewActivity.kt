@@ -4,14 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.attendify.databinding.ActivityWebViewBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class WebViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWebViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityWebViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -21,24 +28,14 @@ class WebViewActivity : AppCompatActivity() {
         webView.webViewClient = WebViewClient()
         webView.settings.javaScriptEnabled = true
 
-        if (url != null) {
+        if(url != null) {
             webView.loadUrl(url)
         }
 
-        // Tombol "done" listener
         binding.done.setOnClickListener {
-            navigateToDeskripsiAbsen()
+            val intent = Intent(this, deskripsiAbsen::class.java)
+            startActivity(intent)
+            finish()
         }
-    }
-
-    override fun onBackPressed() {
-        navigateToDeskripsiAbsen()
-        super.onBackPressed()
-    }
-
-    private fun navigateToDeskripsiAbsen() {
-        val intent = Intent(this, deskripsiAbsen::class.java)
-        startActivity(intent)
-        finish()
     }
 }
