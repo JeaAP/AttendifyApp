@@ -18,28 +18,34 @@ class PeopleFragment : Fragment() {
     private lateinit var binding: FragmentPeopleBinding
     private lateinit var mainActivity: MainActivity
 
+    override fun onAttach(context: android.content.Context) {
+        super.onAttach(context)
+        if (context is MainActivity) {
+            mainActivity = context
+        } else {
+            throw IllegalStateException("PeopleFragment must be attached to MainActivity")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?
+        savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentPeopleBinding.inflate(inflater)
 
-        binding.back.setOnClickListener{
+        binding.back.setOnClickListener {
             mainActivity.replaceFragment(HomeFragment())
         }
         binding.ceoMore.setOnClickListener {
-            val intent = Intent(this@PeopleFragment.requireContext(), aboutCEO::class.java)
+            val intent = Intent(requireContext(), aboutCEO::class.java)
             startActivity(intent)
         }
-
-        binding.ctoMore.setOnClickListener{
-            val intent = Intent(this@PeopleFragment.requireContext(), aboutCTO::class.java)
+        binding.ctoMore.setOnClickListener {
+            val intent = Intent(requireContext(), aboutCTO::class.java)
             startActivity(intent)
         }
-
-        binding.cmoMore.setOnClickListener{
-            val intent = Intent(this@PeopleFragment.requireContext(), aboutCMO::class.java)
+        binding.cmoMore.setOnClickListener {
+            val intent = Intent(requireContext(), aboutCMO::class.java)
             startActivity(intent)
         }
 
