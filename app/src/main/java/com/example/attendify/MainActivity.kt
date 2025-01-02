@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
                     if (!dbHelperAbsensi.hasAbsensiToday(today)) { // Jika hari ini belum absen
                         if (now.before(cutOffTimeEarlyMorning)) {
                             Toast.makeText(this@MainActivity, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
-                        } else if (now.after(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
+                        } else if (now.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
                             if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
                                 val intent = Intent(this@MainActivity, Scan::class.java)
                                 startActivity(intent)

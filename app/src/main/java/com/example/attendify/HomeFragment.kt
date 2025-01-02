@@ -1,5 +1,6 @@
 package com.example.attendify
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer.OnPreparedListener
@@ -10,8 +11,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.attendify.databinding.FragmentHomeBinding
 import java.text.SimpleDateFormat
@@ -27,6 +30,12 @@ class HomeFragment : Fragment() {
     private lateinit var dbHelperAbsensi: DatabaseHelperAbsensi
     private val handler = android.os.Handler(Looper.getMainLooper())
     private lateinit var timeUpdater: Runnable
+
+    private lateinit var dialog: Dialog
+    private lateinit var cancelImage: ImageView
+    private lateinit var time: TextView
+    private lateinit var timeText: TextView
+    private lateinit var btnAbcent: CardView
 
     interface FragmentInteractionListener {
 //        fun onButtonClicked()
@@ -51,6 +60,58 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater)
         dbHelperProfile = DatabaseHelperProfile(requireContext())
         dbHelperAbsensi = DatabaseHelperAbsensi(requireContext())
+
+        //POP UP NOTIFIKASI DIALOG ABSEN
+        dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.absenct_notification_dialog)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawableResource(R.drawable.custom_dialog_bg)
+        dialog.setCancelable(false)
+
+        cancelImage = dialog.findViewById(R.id.cancelImage)
+        time = dialog.findViewById(R.id.time)
+        timeText = dialog.findViewById(R.id.timeText)
+        btnAbcent = dialog.findViewById(R.id.btnAbcent)
+
+        cancelImage.setOnClickListener{
+            dialog.dismiss()
+        }
+
+        btnAbcent.setOnClickListener{
+            dialog.dismiss()
+            val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
+            startActivity(intent)
+        }
+
+        val nowTime = Calendar.getInstance()
+        val jamAbsen = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 6)
+            set(Calendar.MINUTE, 24)
+        }
+        val lewatJamAbsen = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 6)
+            set(Calendar.MINUTE, 30)
+        }
+
+        val remainingTimeInMinutes = ((lewatJamAbsen.timeInMillis - nowTime.timeInMillis) / 60000).toInt()
+
+        val currentTimeFormatted = SimpleDateFormat("HH:mm", Locale.getDefault()).format(nowTime.time)
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        if(nowTime.after(jamAbsen) && nowTime.before(lewatJamAbsen)){
+            time.text = currentTimeFormatted
+
+            val remainingTimeText = if (remainingTimeInMinutes > 0) {
+                "${numberToWords(remainingTimeInMinutes)} minutes left to absence"
+            } else {
+                "Time to absence has passed"
+            }
+            timeText.text = remainingTimeText
+
+            if (!dbHelperAbsensi.hasAbsensiToday(today)){
+                dialog.show()
+            }
+        }
+
 
         if (savedInstanceState != null) {
             currentLocation = savedInstanceState.getString("CURRENT_LOCATION")
@@ -100,7 +161,7 @@ class HomeFragment : Fragment() {
                     if (!dbHelperAbsensi.hasAbsensiToday(today)) { // Jika hari ini belum absen
                         if (now.before(cutOffTimeEarlyMorning)) {
                             Toast.makeText(context, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
-                        } else if (now.after(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
+                        } else if (now.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
                             if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
                                 val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
                                 startActivity(intent)
@@ -169,6 +230,18 @@ class HomeFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("CURRENT_LOCATION", binding.location.text.toString())
+    }
+
+    fun numberToWords(number: Int): String { //ANGKA DALAM HURUF BAHASA INGGRIS
+        val words = arrayOf(
+            "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+            "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
+            "twenty", "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine",
+            "thirty", "thirty-one", "thirty-two", "thirty-three", "thirty-four", "thirty-five", "thirty-six", "thirty-seven", "thirty-eight", "thirty-nine",
+            "forty", "forty-one", "forty-two", "forty-three", "forty-four", "forty-five", "forty-six", "forty-seven", "forty-eight", "forty-nine",
+            "fifty", "fifty-one", "fifty-two", "fifty-three", "fifty-four", "fifty-five", "fifty-six", "fifty-seven", "fifty-eight", "fifty-nine"
+        )
+        return if (number in 0..59) words[number] else "Invalid number"
     }
 
     fun updateLocationText(text: String) {
