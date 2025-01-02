@@ -1,5 +1,6 @@
 package com.example.attendify
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
@@ -53,10 +54,12 @@ class deskripsiAbsen : AppCompatActivity() {
         val result = dbHelper.insertAbsensi(hari, tanggal, jam, mood, perasaan)
 
         if (result != -1L) {
-            Snackbar.make(binding.root, "Absensi berhasil disimpan!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Absensi berhasil!", Snackbar.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         } else {
-            Snackbar.make(binding.root, "Gagal menyimpan absensi!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Absensi gagal!", Snackbar.LENGTH_SHORT).show()
         }
     }
 }
