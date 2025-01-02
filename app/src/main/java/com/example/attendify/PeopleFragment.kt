@@ -16,7 +16,7 @@ import com.example.attendify.databinding.FragmentPeopleBinding
 class PeopleFragment : Fragment() {
 
     private lateinit var binding: FragmentPeopleBinding
-    private var mainActivity: MainActivity? = null
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +26,7 @@ class PeopleFragment : Fragment() {
         binding = FragmentPeopleBinding.inflate(inflater)
 
         binding.back.setOnClickListener{
-            mainActivity?.replaceFragment(HomeFragment())
+            mainActivity.replaceFragment(HomeFragment())
         }
         binding.ceoMore.setOnClickListener {
             val intent = Intent(this@PeopleFragment.requireContext(), aboutCEO::class.java)
