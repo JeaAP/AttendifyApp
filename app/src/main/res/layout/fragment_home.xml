@@ -34,7 +34,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:layout_toEndOf="@+id/cardView3"
-        android:text="[nama]"
+        android:text="Memuat informasi pengguna..."
         android:textStyle="bold"
         android:textColor="@color/white"/>
 
@@ -45,7 +45,7 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/cardView3"
         android:layout_below="@+id/accountName"
-        android:text="[kelas]"
+        android:text="Memuat kelas..."
         android:textColor="@color/white"/>
 
     <TextView
@@ -55,7 +55,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_below="@+id/cardView3"
-        android:text="Hi [nama],"
+        android:text="Sedang memuat...."
         android:textColor="@color/white"
         android:textSize="18sp"/>
 
@@ -67,7 +67,7 @@
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/username"
         android:layout_below="@+id/cardView3"
-        android:text="[greetings]"
+        android:text="..."
         android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="18sp"/>
@@ -78,7 +78,7 @@
         android:layout_height="25dp"
         android:layout_marginStart="20dp"
         android:layout_below="@+id/username"
-        android:text="[motivasi]"
+        android:text="Pelajari inspirasi hari ini..."
         android:textColor="@color/white"
         android:textSize="18sp"/>
 

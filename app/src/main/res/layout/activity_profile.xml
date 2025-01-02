@@ -63,7 +63,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="5dp"
-            android:text="[nama]"
+            android:text="Memuat informasi pengguna..."
             android:textColor="@color/black"
             android:fontFamily="@font/inter_medium"
             android:textSize="18sp"/>
@@ -75,7 +75,7 @@
             android:layout_toEndOf="@id/cardView3"
             android:layout_below="@id/nama"
             android:layout_marginStart="20dp"
-            android:text="[bio]"
+            android:text="Menggali cerita Anda..."
             android:textColor="@color/black"
             android:fontFamily="@font/inter_medium"
             android:textSize="18sp"/>

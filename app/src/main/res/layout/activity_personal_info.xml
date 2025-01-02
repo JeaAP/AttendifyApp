@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/inter_medium"
-                    android:text="[nama]"
+                    android:text="Memuat nama siswa..."
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/inter_medium"
-                    android:text="[kelas]"
+                    android:text="Memuat data kelas..."
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -181,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/inter_medium"
-                    android:text="[absen]"
+                    android:text="Memuat absen siswa..."
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -210,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/inter_medium"
-                    android:text="[nisn]"
+                    android:text="Memuat nomor NISN..."
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -246,7 +246,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="[bio]"
+            android:text="Menggali cerita Anda..."
             android:textColor="@color/black"
             android:fontFamily="@font/inter_medium"/>
 
