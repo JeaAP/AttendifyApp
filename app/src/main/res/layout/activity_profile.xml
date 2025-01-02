@@ -51,7 +51,6 @@
                 android:layout_height="match_parent"
                 android:scaleType="center"
                 app:srcCompat="@drawable/round_image_24"
-                app:tint="@color/black"
                 />
         </androidx.cardview.widget.CardView>
 

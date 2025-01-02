@@ -26,6 +26,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -78,11 +79,21 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
             }
 
             binding.fab.setOnClickListener {
+                val now = Calendar.getInstance()
+                val cutOffTime = Calendar.getInstance()
+                cutOffTime.set(Calendar.HOUR_OF_DAY, 6)
+                cutOffTime.set(Calendar.MINUTE, 30)
+
                 if (isInsideGeofence) {
                     val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
                     if (!dbHelperAbsensi.hasAbsensiToday(today)) {
-                        val intent = Intent(this, Scan::class.java)
-                        startActivity(intent)
+                        if(now.after(cutOffTime)){
+                            Toast.makeText(this, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
+                            return@setOnClickListener
+                        } else{
+                            val intent = Intent(this, Scan::class.java)
+                            startActivity(intent)
+                        }
                     } else {
                         Toast.makeText(this, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
                     }
@@ -113,7 +124,6 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
                     }
                     val homeFragment = supportFragmentManager.findFragmentById(R.id.frameLayout) as? HomeFragment
                     homeFragment?.updateLocationText(locationMessage)
-
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.example.attendify
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -14,6 +15,12 @@ class deskripsiAbsen : AppCompatActivity() {
 
     private lateinit var binding: ActivityDeskripsiAbsenBinding
     private lateinit var dbHelper: DatabaseHelperAbsensi
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+//        super.onBackPressed()
+//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

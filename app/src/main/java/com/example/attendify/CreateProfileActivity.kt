@@ -1,5 +1,6 @@
 package com.example.attendify
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.AdapterView
@@ -12,6 +13,12 @@ class CreateProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateProfileBinding
     private lateinit var db: DatabaseHelperProfile
     private lateinit var dbLogin: DatabaseHelperLogin
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+//        super.onBackPressed()
+//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,6 +3,7 @@ package com.example.attendify
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer.OnPreparedListener
+import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
 import androidx.fragment.app.Fragment
@@ -97,7 +98,9 @@ class HomeFragment : Fragment() {
         }
 
         binding.cardSchedule.setOnClickListener {
-            val intent = Intent(this@HomeFragment.requireContext(), coomingSoon::class.java)
+            val url = "https://docs.google.com/spreadsheets/d/1eM7gvonky0HdSKDPUxjs9o9IZjeC28Ud/edit?pli=1&gid=1682312915#gid=1682312915"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
             startActivity(intent)
         }
 
@@ -115,6 +118,12 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupTimeUpdater()
+        updateDate()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -161,8 +170,8 @@ class HomeFragment : Fragment() {
             binding.accountName.text = profile.nama
             binding.accountClass.text = profile.kelas
             binding.username.text = "Hi ${profile.username},"
-            binding.greetings.text = "Selamat datang!"
-            binding.motivations.text = "Tetap semangat belajar!"
+            setGreetings()
+            setMotivations()
 
             val bitmap = profile.foto?.let {
                 DatabaseHelperProfile.byteArrayToBitmap(it)
@@ -181,4 +190,42 @@ class HomeFragment : Fragment() {
             binding.motivations.text = "[Motivasi]"
         }
     }
+
+    private fun setGreetings() {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+
+        // Cek apakah hari ini adalah hari libur
+        val isHoliday = dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
+
+        val greeting = when {
+            isHoliday -> "Selamat berlibur!"
+            hour < 12 -> "Selamat pagi!"
+            hour in 12..15 -> "Selamat siang!"
+            hour in 16..18 -> "Selamat sore!"
+            else -> "Selamat malam!"
+        }
+
+        binding.greetings.text = greeting
+    }
+
+    private fun setMotivations() {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+
+        val motivation = when {
+            dayOfWeek == Calendar.FRIDAY && hour >= 17 -> "Terima kasih untuk 5 hari kerja kerasmu, istirahat yang nyeyak."
+            dayOfWeek == Calendar.SATURDAY -> "Saatnya libur, gunakan waktumu untuk kegiatan kesukaanmu."
+            dayOfWeek == Calendar.SUNDAY -> "Pilihlah untuk bersantai atau bersiap untuk minggu baru, selamat libur"
+            hour < 12 -> "Pagi yang indah, hadapi dengan semangat dan kegembiraan yang baru."
+            hour in 12..16 -> "Lanjutkan energimu, kamu sudah melakukan banyak hal hari ini."
+            hour in 17..20 -> "Sore yang tenang, kamu telah bekerja keras hari ini."
+            else -> "Terima kasih telah berusaha hari ini, sekarang waktunya untuk istirahat yang nyenyak."
+        }
+
+        binding.motivations.text = motivation
+    }
+
 }

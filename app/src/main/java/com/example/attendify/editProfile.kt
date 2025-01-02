@@ -1,6 +1,7 @@
 package com.example.attendify
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -35,6 +36,12 @@ class editProfile : AppCompatActivity() {
             val error = result.error
             error?.printStackTrace()
         }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+//        super.onBackPressed()
+//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

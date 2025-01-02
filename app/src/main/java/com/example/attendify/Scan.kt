@@ -1,6 +1,7 @@
 package com.example.attendify
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Size
@@ -37,6 +38,12 @@ class Scan : AppCompatActivity() {
     private lateinit var resultTextView: TextView
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var barcodeScanner: BarcodeScanner
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+//        super.onBackPressed()
+//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
