@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.widget.ImageView
 import java.io.ByteArrayOutputStream
 
@@ -91,16 +92,20 @@ class DatabaseHelperProfile(context: Context) : SQLiteOpenHelper(context, DATABA
             val nisn = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NISN))
             val foto = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_PHOTO))
             val bio = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIO))
+
+            Log.d("DatabaseHelperProfile", "Retrieved profile: $nama, Photo Size: ${foto?.size} bytes")
             cursor.close()
             db.close()
 
             return Profile(id, nama, username, kelas, absen, nisn, foto, bio)
         }
 
+        Log.e("DatabaseHelperProfile", "No profile found in database.")
         cursor.close()
         db.close()
         return null
     }
+
 
     fun imageViewToByte(img: ImageView): ByteArray {
         val bitmap: Bitmap = if (img.drawable is BitmapDrawable) {

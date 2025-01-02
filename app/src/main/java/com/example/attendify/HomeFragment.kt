@@ -5,6 +5,7 @@ import android.content.Intent
 import android.media.MediaPlayer.OnPreparedListener
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -165,20 +166,25 @@ class HomeFragment : Fragment() {
             binding.motivations.text = "Tetap semangat belajar!"
 
             val bitmap = profile.foto?.let {
+                Log.d("HomeFragment", "Photo Size: ${it.size} bytes") // Debugging ukuran foto
                 DatabaseHelperProfile.byteArrayToBitmap(it)
             }
+
             if (bitmap != null) {
                 binding.FtProfile.setImageBitmap(bitmap)
             } else {
+                Log.e("HomeFragment", "Bitmap is null, using placeholder.")
                 binding.FtProfile.setImageResource(R.drawable.account_circle)
             }
-
         } else {
+            Log.e("HomeFragment", "Profile data is null.")
             binding.accountName.text = "[Nama tidak ditemukan]"
             binding.accountClass.text = "[Kelas tidak ditemukan]"
             binding.username.text = "Hi [Nama],"
             binding.greetings.text = "[Greetings]"
             binding.motivations.text = "[Motivasi]"
+            binding.FtProfile.setImageResource(R.drawable.account_circle) // Placeholder
         }
     }
+
 }

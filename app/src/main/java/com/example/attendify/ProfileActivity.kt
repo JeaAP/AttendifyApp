@@ -2,6 +2,7 @@ package com.example.attendify
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -42,6 +43,7 @@ class ProfileActivity : AppCompatActivity() {
         val profile = dbHelper.getProfile()
         if (profile != null) {
             binding.nama.text = profile.nama
+
             if (!profile.bio.isNullOrEmpty() && profile.bio != "null") {
                 binding.bio.text = profile.bio
             } else {
@@ -49,17 +51,22 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             val bitmap = profile.foto?.let {
+                Log.d("ProfileActivity", "Photo Size: ${it.size} bytes") // Debugging ukuran foto
                 DatabaseHelperProfile.byteArrayToBitmap(it)
             }
+
             if (bitmap != null) {
                 binding.FProfile.setImageBitmap(bitmap)
             } else {
+                Log.e("ProfileActivity", "Bitmap is null, using placeholder.")
                 binding.FProfile.setImageResource(R.drawable.round_person_24)
             }
-
         } else {
+            Log.e("ProfileActivity", "Profile data is null.")
             binding.nama.text = "[Nama tidak ditemukan]"
             binding.bio.text = "[Bio tidak ditemukan]"
+            binding.FProfile.setImageResource(R.drawable.round_person_24) // Placeholder
         }
     }
+
 }
