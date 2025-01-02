@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
         loadProfileData()
 
         // Set listeners for buttons and views
-        binding.FotoProfile.setOnClickListener {
+        binding.FtProfile.setOnClickListener {
             val intent = Intent(this@HomeFragment.requireContext(), ProfileActivity::class.java)
             startActivity(intent)
         }
@@ -168,9 +168,9 @@ class HomeFragment : Fragment() {
                 DatabaseHelperProfile.byteArrayToBitmap(it)
             }
             if (bitmap != null) {
-                binding.FotoProfile.setImageBitmap(bitmap)
+                binding.FtProfile.setImageBitmap(bitmap)
             } else {
-                binding.FotoProfile.setImageResource(R.drawable.account_circle)
+                binding.FtProfile.setImageResource(R.drawable.account_circle)
             }
 
         } else {

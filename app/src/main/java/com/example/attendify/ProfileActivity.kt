@@ -52,9 +52,9 @@ class ProfileActivity : AppCompatActivity() {
                 DatabaseHelperProfile.byteArrayToBitmap(it)
             }
             if (bitmap != null) {
-                binding.FotoProfile.setImageBitmap(bitmap)
+                binding.FProfile.setImageBitmap(bitmap)
             } else {
-                binding.FotoProfile.setImageResource(R.drawable.round_person_24)
+                binding.FProfile.setImageResource(R.drawable.round_person_24)
             }
 
         } else {
