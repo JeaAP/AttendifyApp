@@ -25,6 +25,9 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListener {
 
@@ -73,6 +76,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
 
             binding.fab.setOnClickListener {
                 if (isInsideGeofence) {
+//                    val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+//                    if(!dbHelper.hasAbsensiToday(today))
                     val intent = Intent(this, Scan::class.java)
                     startActivity(intent)
                 } else {
@@ -124,7 +129,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit()
     }
 

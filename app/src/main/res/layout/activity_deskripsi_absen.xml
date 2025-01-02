@@ -41,7 +41,6 @@
             android:id="@+id/edDescription"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_below="@id/head"
             android:layout_margin="24dp"
             android:padding="12dp"
             android:background="@drawable/ed"

@@ -71,8 +71,44 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         return absensiList
     }
 
+    fun getLimitedAbsensi(): List<Absensi> {
+        val absensiList = mutableListOf<Absensi>()
+        val db = readableDatabase
+        val cursor = db.query(TABLE_NAME, null, null, null, null, null, "$COLUMN_ID DESC", "3")
+
+        cursor?.use {
+            while (it.moveToNext()) {
+                val hari = it.getString(it.getColumnIndexOrThrow(COLUMN_HARI))
+                val tanggal = it.getString(it.getColumnIndexOrThrow(COLUMN_TANGGAL))
+                val mood = it.getString(it.getColumnIndexOrThrow(COLUMN_MOOD))
+                val jam = it.getString(it.getColumnIndexOrThrow(COLUMN_JAM))
+                val perasaan = it.getString(it.getColumnIndexOrThrow(COLUMN_PERASAAN))
+                absensiList.add(Absensi(hari, tanggal, mood, jam, perasaan))
+            }
+        }
+        return absensiList
+    }
+
     fun deleteOldAbsensi() {
         val db = writableDatabase
         db.execSQL("DELETE FROM $TABLE_NAME WHERE $COLUMN_ID NOT IN (SELECT $COLUMN_ID FROM $TABLE_NAME ORDER BY $COLUMN_ID DESC LIMIT 30)")
     }
+
+    //Cek data hari ini
+    fun hasAbsensiToday(date: String): Boolean {
+        val db = readableDatabase
+        val cursor = db.query(
+            TABLE_NAME,
+            arrayOf("id"),  // Cukup ambil kolom id atau kolom yang menunjukkan record
+            "tanggal = ?",   // Kolom 'tanggal' harus dalam format YYYY-MM-DD jika menggunakan SQLite
+            arrayOf(date),
+            null,
+            null,
+            null
+        )
+        val hasEntry = cursor.count > 0
+        cursor.close()
+        return hasEntry
+    }
+
 }

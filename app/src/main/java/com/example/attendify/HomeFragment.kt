@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.attendify.databinding.FragmentHomeBinding
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -20,7 +21,8 @@ import java.util.logging.Handler
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var dbHelper: DatabaseHelperProfile
+    private lateinit var dbHelperProfile: DatabaseHelperProfile
+    private lateinit var dbHelperAbsensi: DatabaseHelperAbsensi
     private val handler = android.os.Handler(Looper.getMainLooper())
     private lateinit var timeUpdater: Runnable
 
@@ -45,7 +47,8 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater)
-        dbHelper = DatabaseHelperProfile(requireContext())
+        dbHelperProfile = DatabaseHelperProfile(requireContext())
+        dbHelperAbsensi = DatabaseHelperAbsensi(requireContext())
 
         if (savedInstanceState != null) {
             currentLocation = savedInstanceState.getString("CURRENT_LOCATION")
@@ -57,32 +60,47 @@ class HomeFragment : Fragment() {
 
         // Set listeners for buttons and views
         binding.FotoProfile.setOnClickListener {
-            val intent = Intent(requireContext(), ProfileActivity::class.java)
+            val intent = Intent(this@HomeFragment.requireContext(), ProfileActivity::class.java)
             startActivity(intent)
         }
 
         binding.btnAbcent.setOnClickListener {
             if (listener?.isUserInGeofence() == true) {
-                val intent = Intent(requireContext(), ScanActivity::class.java)
-                startActivity(intent)
+                val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+                if (!dbHelperAbsensi.hasAbsensiToday(today)) {
+                    val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
+                }
+//                val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
+//                startActivity(intent)
             } else {
                 Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
             }
         }
 
         binding.btnIzin.setOnClickListener {
-            val intent = Intent(requireContext(), coomingSoon::class.java)
+            val intent = Intent(this@HomeFragment.requireContext(), coomingSoon::class.java)
             startActivity(intent)
         }
 
         binding.cardSchedule.setOnClickListener {
-            val intent = Intent(requireContext(), coomingSoon::class.java)
+            val intent = Intent(this@HomeFragment.requireContext(), coomingSoon::class.java)
             startActivity(intent)
         }
 
         binding.linkText.setOnClickListener {
-            val intent = Intent(requireContext(), viewAllAbsensi::class.java)
+            val intent = Intent(this@HomeFragment.requireContext(), viewAllAbsensi::class.java)
             startActivity(intent)
+        }
+
+        val absensiList = dbHelperAbsensi.getLimitedAbsensi()
+        val adapter = AbsensiAdapter(absensiList)
+
+        binding.activityContent.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            this.adapter = adapter
         }
 
         return binding.root
@@ -127,7 +145,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadProfileData() {
-        val profile = dbHelper.getProfile()
+        val profile = dbHelperProfile.getProfile()
         if (profile != null) {
             binding.accountName.text = profile.nama
             binding.accountClass.text = profile.kelas

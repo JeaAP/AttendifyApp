@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="Sharen Nathaniela Melodia Lesnau"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:fontFamily="@font/inter_medium"/>
@@ -89,8 +89,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="XI RPL 2"
-                    android:textSize="10sp"
+                    android:text="@string/xi_rpl_2"
+                    android:textSize="12sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/inter_medium"/>
                 <TextView
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="Absen 30"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/inter_medium"/>
             </LinearLayout>
@@ -170,7 +170,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Ananda Keizha Oktavia"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:fontFamily="@font/inter_medium"/>
@@ -178,8 +178,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="XI RPL 2"
-                            android:textSize="10sp"
+                            android:text="@string/xi_rpl_2"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                         <TextView
@@ -187,7 +187,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Absen 6"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                     </LinearLayout>
@@ -237,7 +237,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Andhika Dani Natawidjaja"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:fontFamily="@font/inter_medium"/>
@@ -245,8 +245,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="XI RPL 2"
-                            android:textSize="10sp"
+                            android:text="@string/xi_rpl_2"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                         <TextView
@@ -254,7 +254,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Absen 8"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                     </LinearLayout>
@@ -304,7 +304,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Jean Arby Putra"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:fontFamily="@font/inter_medium"/>
@@ -312,8 +312,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="XI RPL 2"
-                            android:textSize="10sp"
+                            android:text="@string/xi_rpl_2"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                         <TextView
@@ -321,7 +321,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Absen 14"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                     </LinearLayout>
@@ -371,7 +371,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Jeremi Aldi Sunarto"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:fontFamily="@font/inter_medium"/>
@@ -379,8 +379,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="XI RPL 2"
-                            android:textSize="10sp"
+                            android:text="@string/xi_rpl_2"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                         <TextView
@@ -388,7 +388,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Absen 15"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                     </LinearLayout>
@@ -439,7 +439,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Kirana Amanda Putri Firmansyah"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:fontFamily="@font/inter_medium"/>
@@ -447,8 +447,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="XI RPL 2"
-                            android:textSize="10sp"
+                            android:text="@string/xi_rpl_2"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                         <TextView
@@ -456,7 +456,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Absen 17"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                     </LinearLayout>
@@ -506,7 +506,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Luky Virya"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:fontFamily="@font/inter_medium"/>
@@ -514,8 +514,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="XI RPL 2"
-                            android:textSize="10sp"
+                            android:text="@string/xi_rpl_2"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                         <TextView
@@ -523,7 +523,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Absen 18"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                     </LinearLayout>
@@ -573,7 +573,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Syeria Hikmah"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:fontFamily="@font/inter_medium"/>
@@ -581,8 +581,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="XI RPL 2"
-                            android:textSize="10sp"
+                            android:text="@string/xi_rpl_2"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                         <TextView
@@ -590,7 +590,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Absen 31"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                     </LinearLayout>
@@ -640,7 +640,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Torda Ibrani Sitorus"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:fontFamily="@font/inter_medium"/>
@@ -648,8 +648,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
-                            android:text="XI RPL 2"
-                            android:textSize="10sp"
+                            android:text="@string/xi_rpl_2"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                         <TextView
@@ -657,7 +657,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Absen 32"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:textColor="@color/black"
                             android:fontFamily="@font/inter_medium"/>
                     </LinearLayout>

@@ -61,7 +61,7 @@ class Scan : AppCompatActivity() {
         requestPermissionLauncher.launch(Manifest.permission.CAMERA)
 
         binding.back.setOnClickListener {
-            val intent = Intent(this, ScanActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }

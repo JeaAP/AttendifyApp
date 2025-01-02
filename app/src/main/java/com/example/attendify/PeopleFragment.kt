@@ -16,6 +16,7 @@ import com.example.attendify.databinding.FragmentPeopleBinding
 class PeopleFragment : Fragment() {
 
     private lateinit var binding: FragmentPeopleBinding
+    private var mainActivity: MainActivity? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,16 +26,9 @@ class PeopleFragment : Fragment() {
         binding = FragmentPeopleBinding.inflate(inflater)
 
         binding.back.setOnClickListener{
-            // Memeriksa dan kembali ke fragment sebelumnya
-            if (parentFragmentManager.backStackEntryCount > 0) {
-                parentFragmentManager.popBackStack()
-            } else {
-                // Opsional: Jika tidak ada fragment di back stack, tutup activity
-                activity?.finish()
-            }
+            mainActivity?.replaceFragment(HomeFragment())
         }
-
-        binding.ceoMore.setOnClickListener{ //CEO ACTIVITY TIDAK TERDETEKSI
+        binding.ceoMore.setOnClickListener {
             val intent = Intent(this@PeopleFragment.requireContext(), aboutCEO::class.java)
             startActivity(intent)
         }
