@@ -32,15 +32,11 @@ class HomeFragment : Fragment() {
 
 
     private var listener: FragmentInteractionListener? = null
+    private var currentLocation: String? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = context as? FragmentInteractionListener
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("CURRENT_LOCATION", binding.location.text.toString())
     }
 
     override fun onCreateView(
@@ -50,6 +46,11 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater)
         dbHelper = DatabaseHelperProfile(requireContext())
+
+        if (savedInstanceState != null) {
+            currentLocation = savedInstanceState.getString("CURRENT_LOCATION")
+        }
+        updateLocationText(currentLocation ?: "Loading location...")
 
         // Load data from the database and update UI
         loadProfileData()
@@ -89,11 +90,18 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        savedInstanceState?.getString("CURRENT_LOCATION")?.let {
-            binding.location.text = it
-        }
         setupTimeUpdater()
         updateDate()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("CURRENT_LOCATION", binding.location.text.toString())
+    }
+
+    fun updateLocationText(text: String) {
+        binding.location.text = text
+        currentLocation = text
     }
 
     private fun setupTimeUpdater() {
@@ -143,9 +151,5 @@ class HomeFragment : Fragment() {
             binding.greetings.text = "[Greetings]"
             binding.motivations.text = "[Motivasi]"
         }
-    }
-
-    fun updateLocationText(text: String) {
-        binding.location.text = text
     }
 }

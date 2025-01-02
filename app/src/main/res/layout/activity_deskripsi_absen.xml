@@ -107,7 +107,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="8dp"
-                        android:src="@drawable/baseline_tag_faces_24"
+                        android:src="@drawable/bademote"
                         android:background="@drawable/rounded_button"/>
 
                     <ImageView
@@ -115,15 +115,15 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="8dp"
-                        android:src="@drawable/baseline_tag_faces_24"
-                        android:background="@drawable/rounded_button"/>
+                        android:background="@drawable/rounded_button"
+                        android:src="@drawable/goodemote" />
 
                     <ImageView
                         android:id="@+id/fell3"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="8dp"
-                        android:src="@drawable/baseline_tag_faces_24"
+                        android:src="@drawable/happyemote"
                         android:background="@drawable/rounded_button"/>
 
                 </LinearLayout>

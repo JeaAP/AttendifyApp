@@ -98,7 +98,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
                     } else {
                         "Anda berada di luar wilayah SMKN 24 Jakarta"
                     }
-                    homeFragment.updateLocationText(locationMessage)
+                    val homeFragment = supportFragmentManager.findFragmentById(R.id.frameLayout) as? HomeFragment
+                    homeFragment?.updateLocationText(locationMessage)
 
                 }
             }

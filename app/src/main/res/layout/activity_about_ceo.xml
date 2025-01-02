@@ -60,12 +60,14 @@
                 android:id="@+id/imageSharen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="4dp">
+                app:cardCornerRadius="4dp"
+                android:elevation="2dp"
+                app:cardElevation="2dp">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/baseline_tag_faces_24"/>
+                    android:src="@drawable/round_image_24"/>
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
@@ -147,7 +149,9 @@
                         android:id="@+id/imageEja"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp">
+                        app:cardCornerRadius="4dp"
+                        android:elevation="2dp"
+                        app:cardElevation="2dp">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -212,7 +216,9 @@
                         android:id="@+id/imageDika"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp">
+                        app:cardCornerRadius="4dp"
+                        android:elevation="2dp"
+                        app:cardElevation="2dp">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -277,7 +283,9 @@
                         android:id="@+id/imageJean"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp">
+                        app:cardCornerRadius="4dp"
+                        android:elevation="2dp"
+                        app:cardElevation="2dp">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -342,7 +350,9 @@
                         android:id="@+id/imageJerem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp">
+                        app:cardCornerRadius="4dp"
+                        android:elevation="2dp"
+                        app:cardElevation="2dp">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -408,7 +418,9 @@
                         android:id="@+id/imageKirana"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp">
+                        app:cardCornerRadius="4dp"
+                        android:elevation="2dp"
+                        app:cardElevation="2dp">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -473,7 +485,9 @@
                         android:id="@+id/imageLuky"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp">
+                        app:cardCornerRadius="4dp"
+                        android:elevation="2dp"
+                        app:cardElevation="2dp">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -538,7 +552,9 @@
                         android:id="@+id/imageSye"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp">
+                        app:cardCornerRadius="4dp"
+                        android:elevation="2dp"
+                        app:cardElevation="2dp">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -603,7 +619,9 @@
                         android:id="@+id/imageTorda"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp">
+                        app:cardCornerRadius="4dp"
+                        android:elevation="2dp"
+                        app:cardElevation="2dp">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
