@@ -35,7 +35,7 @@
         android:id="@+id/edNISN"
         android:layout_width="380dp"
         android:layout_height="50dp"
-        android:hint="Masukkan NIS"
+        android:hint="Masukkan NISN"
         android:background="@drawable/ed"
         android:paddingStart="20dp"
         android:paddingEnd="16dp"
