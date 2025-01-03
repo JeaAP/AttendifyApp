@@ -120,6 +120,8 @@ class LoginActivity : AppCompatActivity() {
             val nisn = edNisn.text.toString()
             if (nisn.isEmpty()) {
                 Toast.makeText(this, "NISN tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+            } else if (nisn.length > 10) {
+                Toast.makeText(this, "NISN tidak boleh lebih dari 10 digit!", Toast.LENGTH_SHORT).show()
             } else {
                 val userExists = db.isUserExists(nisn)
                 if (userExists) {
