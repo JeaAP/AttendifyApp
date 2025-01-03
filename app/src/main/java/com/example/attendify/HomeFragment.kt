@@ -290,7 +290,7 @@ class HomeFragment : Fragment() {
             if (bitmap != null) {
                 binding.FtProfile.setImageBitmap(bitmap)
             } else {
-                binding.FtProfile.setImageResource(R.drawable.account_circle)
+                binding.FtProfile.setImageResource(R.drawable.round_person_24)
             }
 
         } else {

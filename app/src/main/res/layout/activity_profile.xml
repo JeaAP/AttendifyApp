@@ -42,7 +42,6 @@
             app:cardElevation="2dp"
             app:cardMaxElevation="12dp"
             android:layout_centerVertical="true"
-            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="50dp">
 
             <ImageView
