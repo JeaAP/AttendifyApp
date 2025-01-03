@@ -28,10 +28,12 @@
         android:textColor="@color/black"/>
 
     <TextView
+        android:id="@+id/EasterEgg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:padding="8dp"
         android:textColor="@color/black"
         android:fontFamily="@font/inter_medium"
         android:text="Version 1.0.0"

@@ -43,6 +43,8 @@ class HomeFragment : Fragment() {
 
     private var currentLocation: String? = null
 
+    private var dialogCancelled = false
+
     //======WAKTU========
     private val calendar = Calendar.getInstance()
     private val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -102,7 +104,6 @@ class HomeFragment : Fragment() {
         }
         updateLocationText(currentLocation ?: "Loading location...")
 
-
         //POP UP NOTIFIKASI DIALOG ABSEN
         dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.absenct_notification_dialog)
@@ -117,6 +118,7 @@ class HomeFragment : Fragment() {
 
         cancelImage.setOnClickListener{
             dialog.dismiss()
+            dialogCancelled = true
         }
 
         btnAbcentDialog.setOnClickListener{
@@ -143,7 +145,7 @@ class HomeFragment : Fragment() {
 
                 //MUNCUL NOTIFIKASI
                 if (!dbHelperAbsensi.hasAbsensiToday(today)){
-                    if (isDialogShown == false) {
+                    if (!isDialogShown && !dialogCancelled) {
                         dialog.show()
                         isDialogShown = true
                     }
@@ -219,12 +221,6 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        setupTimeUpdater()
-        updateDate()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupTimeUpdater()
@@ -234,6 +230,12 @@ class HomeFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("CURRENT_LOCATION", binding.location.text.toString())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupTimeUpdater()
+        updateDate()
     }
 
     fun numberToWords(number: Int): String { //ANGKA DALAM HURUF BAHASA INGGRIS
