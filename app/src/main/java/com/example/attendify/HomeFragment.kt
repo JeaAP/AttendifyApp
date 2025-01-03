@@ -29,23 +29,54 @@ class HomeFragment : Fragment() {
     private lateinit var dbHelperProfile: DatabaseHelperProfile
     private lateinit var dbHelperAbsensi: DatabaseHelperAbsensi
     private val handler = android.os.Handler(Looper.getMainLooper())
-    private lateinit var timeUpdater: Runnable
 
+    private lateinit var timeUpdater: Runnable
     private lateinit var dialog: Dialog
     private lateinit var cancelImage: ImageView
+
     private lateinit var time: TextView
     private lateinit var timeText: TextView
-    private lateinit var btnAbcent: CardView
+    private lateinit var btnAbcentDialog: CardView
+
+    private var listener: FragmentInteractionListener? = null
+
+
+    private var currentLocation: String? = null
+
+    //======WAKTU========
+    private val calendar = Calendar.getInstance()
+    private val hour = calendar.get(Calendar.HOUR_OF_DAY)
+    private val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+    private val isWeekend = dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
+
+    private val jamAbsen = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 6)
+        set(Calendar.MINUTE, 24)
+    }
+    private val cutOffTimeMorning = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 6)
+        set(Calendar.MINUTE, 30)
+    }
+    private val cutOffTimeAfternoon = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 15)
+        set(Calendar.MINUTE, 0)
+    }
+    private val cutOffTimeEarlyMorning = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 5)
+        set(Calendar.MINUTE, 0)
+    }
+
+    private val remainingTimeInMinutes = ((cutOffTimeMorning.timeInMillis - calendar.timeInMillis) / 60000).toInt()
+
+    private val currentTimeFormatted = SimpleDateFormat("HH:mm", Locale.getDefault()).format(calendar.time)
+    private val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+    //======WAKTU========
 
     interface FragmentInteractionListener {
-//        fun onButtonClicked()
+        //        fun onButtonClicked()
         fun updateLocationText(text: String)
         fun isUserInGeofence(): Boolean
     }
-
-
-    private var listener: FragmentInteractionListener? = null
-    private var currentLocation: String? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -61,6 +92,15 @@ class HomeFragment : Fragment() {
         dbHelperProfile = DatabaseHelperProfile(requireContext())
         dbHelperAbsensi = DatabaseHelperAbsensi(requireContext())
 
+        // Load data from the database and update UI
+        loadProfileData()
+
+        if (savedInstanceState != null) {
+            currentLocation = savedInstanceState.getString("CURRENT_LOCATION")
+        }
+        updateLocationText(currentLocation ?: "Loading location...")
+
+
         //POP UP NOTIFIKASI DIALOG ABSEN
         dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.absenct_notification_dialog)
@@ -71,55 +111,42 @@ class HomeFragment : Fragment() {
         cancelImage = dialog.findViewById(R.id.cancelImage)
         time = dialog.findViewById(R.id.time)
         timeText = dialog.findViewById(R.id.timeText)
-        btnAbcent = dialog.findViewById(R.id.btnAbcent)
+        btnAbcentDialog = dialog.findViewById(R.id.btnAbcent)
 
         cancelImage.setOnClickListener{
             dialog.dismiss()
         }
 
-        btnAbcent.setOnClickListener{
-            dialog.dismiss()
-            val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
-            startActivity(intent)
-        }
-
-        val nowTime = Calendar.getInstance()
-        val jamAbsen = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 6)
-            set(Calendar.MINUTE, 24)
-        }
-        val lewatJamAbsen = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 6)
-            set(Calendar.MINUTE, 30)
-        }
-
-        val remainingTimeInMinutes = ((lewatJamAbsen.timeInMillis - nowTime.timeInMillis) / 60000).toInt()
-
-        val currentTimeFormatted = SimpleDateFormat("HH:mm", Locale.getDefault()).format(nowTime.time)
-        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        if(nowTime.after(jamAbsen) && nowTime.before(lewatJamAbsen)){
-            time.text = currentTimeFormatted
-
-            val remainingTimeText = if (remainingTimeInMinutes > 0) {
-                "${numberToWords(remainingTimeInMinutes)} minutes left to absence"
+        btnAbcentDialog.setOnClickListener{
+            if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
+                dialog.dismiss()
+                val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
+                startActivity(intent)
             } else {
-                "Time to absence has passed"
-            }
-            timeText.text = remainingTimeText
-
-            if (!dbHelperAbsensi.hasAbsensiToday(today)){
-                dialog.show()
+                Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
             }
         }
 
+        //-----------------------------MUNCUL NOTIFIKASI-----------------------------
+        if(!isWeekend){
+            if(calendar.after(jamAbsen) && calendar.before(cutOffTimeMorning)){
+                time.text = currentTimeFormatted
 
-        if (savedInstanceState != null) {
-            currentLocation = savedInstanceState.getString("CURRENT_LOCATION")
+                val remainingTimeText = if (remainingTimeInMinutes > 0) {
+                    "${numberToWords(remainingTimeInMinutes)} minutes left to absence"
+                } else {
+                    "Time to absence has passed"
+                }
+                timeText.text = remainingTimeText
+
+                //MUNCUL NOTIFIKASI
+                if (!dbHelperAbsensi.hasAbsensiToday(today)){
+                    dialog.show()
+                }
+            }
         }
-        updateLocationText(currentLocation ?: "Loading location...")
-
-        // Load data from the database and update UI
-        loadProfileData()
+        //-----------------------------MUNCUL NOTIFIKASI-----------------------------
+        //POP UP NOTIFIKASI DIALOG ABSEN
 
         // Set listeners for buttons and views
         binding.FtProfile.setOnClickListener {
@@ -128,55 +155,27 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnAbcent.setOnClickListener {
-            val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-            val now = Calendar.getInstance()
 
-            val cutOffTimeMorning = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, 6)
-                set(Calendar.MINUTE, 30)
-            }
 
-            val cutOffTimeAfternoon = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, 15)
-                set(Calendar.MINUTE, 0)
-            }
-
-            binding.btnAbcent.setOnClickListener {
-                val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                val now = Calendar.getInstance()
-                val cutOffTimeMorning = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, 6)
-                    set(Calendar.MINUTE, 30)
-                }
-                val cutOffTimeAfternoon = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, 15)
-                    set(Calendar.MINUTE, 0)
-                }
-                val cutOffTimeEarlyMorning = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, 5)
-                    set(Calendar.MINUTE, 0)
-                }
-
-                if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
-                    if (!dbHelperAbsensi.hasAbsensiToday(today)) { // Jika hari ini belum absen
-                        if (now.before(cutOffTimeEarlyMorning)) {
-                            Toast.makeText(context, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
-                        } else if (now.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
-                            if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
-                                val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
-                                startActivity(intent)
-                            } else {
-                                Toast.makeText(context, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
-                            }
+            if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
+                if (!dbHelperAbsensi.hasAbsensiToday(today)) { // Jika hari ini belum absen
+                    if (calendar.before(cutOffTimeEarlyMorning)) {
+                        Toast.makeText(context, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
+                    } else if (calendar.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
+                        if (calendar.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
+                            val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
+                            startActivity(intent)
                         } else {
-                            Toast.makeText(context, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
                         }
                     } else {
-                        Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
                     }
                 } else {
-                    Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
                 }
+            } else {
+                Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -299,15 +298,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setGreetings() {
-        val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-
-        // Cek apakah hari ini adalah hari libur
-        val isHoliday = dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
-
         val greeting = when {
-            isHoliday -> "Selamat berlibur!"
+            isWeekend -> "Selamat berlibur!"
             hour < 12 -> "Selamat pagi!"
             hour in 12..15 -> "Selamat siang!"
             hour in 16..18 -> "Selamat sore!"
@@ -317,11 +309,9 @@ class HomeFragment : Fragment() {
         binding.greetings.text = greeting
     }
 
-    private fun setMotivations() {
-        val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
 
+
+    private fun setMotivations() {
         val motivation = when {
             dayOfWeek == Calendar.FRIDAY && hour >= 17 -> "Terima kasih untuk 5 hari kerja kerasmu, istirahat yang nyeyak."
             dayOfWeek == Calendar.SATURDAY -> "Saatnya libur, gunakan waktumu untuk kegiatan kesukaanmu."
