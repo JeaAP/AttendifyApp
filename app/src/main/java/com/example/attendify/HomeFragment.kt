@@ -72,6 +72,8 @@ class HomeFragment : Fragment() {
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
     //======WAKTU========
 
+    private var isDialogShown = false
+
     interface FragmentInteractionListener {
         //        fun onButtonClicked()
         fun updateLocationText(text: String)
@@ -111,7 +113,7 @@ class HomeFragment : Fragment() {
         cancelImage = dialog.findViewById(R.id.cancelImage)
         time = dialog.findViewById(R.id.time)
         timeText = dialog.findViewById(R.id.timeText)
-        btnAbcentDialog = dialog.findViewById(R.id.btnAbcent)
+        btnAbcentDialog = dialog.findViewById(R.id.btnAbcentDialog)
 
         cancelImage.setOnClickListener{
             dialog.dismiss()
@@ -141,7 +143,10 @@ class HomeFragment : Fragment() {
 
                 //MUNCUL NOTIFIKASI
                 if (!dbHelperAbsensi.hasAbsensiToday(today)){
-                    dialog.show()
+                    if (isDialogShown == false) {
+                        dialog.show()
+                        isDialogShown = true
+                    }
                 }
             }
         }

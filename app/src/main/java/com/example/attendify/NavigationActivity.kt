@@ -20,7 +20,7 @@ class NavigationActivity : AppCompatActivity() {
     private lateinit var dots: Array<TextView?>
     private lateinit var dotIndicator: LinearLayout
     private lateinit var viewPagerAdapter: ViewPagerAdapter
-    private lateinit var skipButton: Button
+    private lateinit var skipButton: TextView
     private lateinit var nextButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class NavigationActivity : AppCompatActivity() {
         setDotIndicator(0)  // Set initial dot indicators
 
         // Inisialisasi dan konfigurasi tombol
-        skipButton = binding.next
+        skipButton = binding.skip
         nextButton = binding.next
         setupButtonListeners()
 
