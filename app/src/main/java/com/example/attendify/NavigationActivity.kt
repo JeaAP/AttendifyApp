@@ -87,7 +87,7 @@ class NavigationActivity : AppCompatActivity() {
         setDotIndicator(0)
     }
 
-    public fun setDotIndicator(position: Int) {
+    fun setDotIndicator(position: Int) {
         dots = arrayOfNulls(3)
         dotIndicator.removeAllViews()
 

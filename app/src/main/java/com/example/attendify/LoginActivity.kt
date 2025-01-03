@@ -4,10 +4,14 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.example.attendify.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -88,64 +92,71 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun showForgotPasswordDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Reset Password")
+        val dialogView = layoutInflater.inflate(R.layout.forgot_pass_dialog, null)
+        val dialog = AlertDialog.Builder(this).create()
 
-        val input = EditText(this)
-        input.hint = "Enter your NISN"
-        builder.setView(input)
+        // Atur agar dialog tidak dapat ditutup dengan mengetuk di luar area dialog
+        dialog.setCancelable(false)
 
-        builder.setPositiveButton("Submit") { dialog, _ ->
-            val username = input.text.toString()
-            if (username.isEmpty()) {
-                Toast.makeText(this, "NISN tidak boleh kosong!", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            } else {
-                handlePasswordReset(username)
-            }
-        }
+        // Inisialisasi elemen-elemen dalam dialog
+        val cancelImage = dialogView.findViewById<ImageView>(R.id.cancelImage)
+        val enterNISN = dialogView.findViewById<LinearLayout>(R.id.enterNISN)
+        val enterNewPass = dialogView.findViewById<LinearLayout>(R.id.enterNewPass)
+        val edNisn = dialogView.findViewById<EditText>(R.id.edNisn)
+        val btnNext = dialogView.findViewById<CardView>(R.id.btnNext)
+        val edNewPassword = dialogView.findViewById<EditText>(R.id.edNewPassword)
+        val edConfirmPassword = dialogView.findViewById<EditText>(R.id.edConfirmPassword)
+        val btnDone = dialogView.findViewById<CardView>(R.id.btnAbcent)
 
-        builder.setNegativeButton("Cancel") { dialog, _ ->
+        dialog.setView(dialogView)
+
+        cancelImage.setOnClickListener {
             dialog.dismiss()
         }
 
-        builder.create().show()
-    }
-
-    private fun handlePasswordReset(username: String) {
-        val userExists = db.isUserExists(username) // Periksa hanya berdasarkan NISN
-        if (userExists) {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Enter New Password")
-
-            val input = EditText(this)
-            input.hint = "New Password"
-            builder.setView(input)
-
-            builder.setPositiveButton("Submit") { _, _ ->
-                val newPassword = input.text.toString()
-                if (newPassword.isEmpty()) {
-                    Toast.makeText(this, "Password tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+        btnNext.setOnClickListener {
+            val nisn = edNisn.text.toString()
+            if (nisn.isEmpty()) {
+                Toast.makeText(this, "NISN tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+            } else {
+                val userExists = db.isUserExists(nisn)
+                if (userExists) {
+                    enterNISN.visibility = View.GONE
+                    enterNewPass.visibility = View.VISIBLE
                 } else {
-                    val updated = db.updatePassword(username, newPassword)
+                    Toast.makeText(this, "NISN tidak ditemukan!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        btnDone.setOnClickListener {
+            val newPassword = edNewPassword.text.toString()
+            val confirmPassword = edConfirmPassword.text.toString()
+
+            when {
+                newPassword.isEmpty() -> {
+                    Toast.makeText(this, "Password baru tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+                }
+                confirmPassword.isEmpty() -> {
+                    Toast.makeText(this, "Konfirmasi password tidak boleh kosong!", Toast.LENGTH_SHORT).show()
+                }
+                newPassword != confirmPassword -> {
+                    Toast.makeText(this, "Password dan konfirmasi password tidak cocok!", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    val nisn = edNisn.text.toString()
+                    val updated = db.updatePassword(nisn, newPassword)
                     if (updated) {
                         Toast.makeText(this, "Password berhasil diubah!", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
                     } else {
                         Toast.makeText(this, "Gagal mengubah password!", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
-
-            builder.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-
-            builder.create().show()
-        } else {
-            Toast.makeText(this, "NISN tidak ditemukan!", Toast.LENGTH_SHORT).show()
         }
+
+        dialog.show()
     }
 }
