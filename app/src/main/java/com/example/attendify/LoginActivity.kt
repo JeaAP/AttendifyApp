@@ -95,6 +95,7 @@ class LoginActivity : AppCompatActivity() {
     private fun showForgotPasswordDialog() {
         val dialogView = layoutInflater.inflate(R.layout.forgot_pass_dialog, null)
         val dialog = AlertDialog.Builder(this).create()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         // Atur agar dialog tidak dapat ditutup dengan mengetuk di luar area dialog
         dialog.setCancelable(false)
