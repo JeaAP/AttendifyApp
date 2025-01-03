@@ -60,15 +60,16 @@
                 android:id="@+id/image1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="4dp"
-                android:elevation="2dp"
-                app:cardElevation="2dp">
+                android:backgroundTint="@color/black"
+                app:cardCornerRadius="2dp"
+                android:elevation="0dp">
                 <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:layout_centerVertical="true"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:layout_margin="0.9dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/andhika"/>
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
@@ -146,25 +147,26 @@
                     android:layout_marginBottom="12dp">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/image2"
+                        android:id="@+id/imageJean"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp"
-                        android:elevation="2dp"
-                        app:cardElevation="2dp">
+                        android:backgroundTint="@color/black"
+                        app:cardCornerRadius="2dp"
+                        android:elevation="0dp">
                         <ImageView
-                            android:id="@+id/imageView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
                             android:layout_centerVertical="true"
-                            tools:srcCompat="@tools:sample/avatars" />
+                            android:layout_margin="0.9dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/jean"/>
                     </androidx.cardview.widget.CardView>
 
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image2"
+                        android:layout_toEndOf="@id/imageJean"
                         android:layout_marginStart="12dp">
                         <TextView
                             android:layout_width="wrap_content"
@@ -194,76 +196,7 @@
                     </LinearLayout>
 
                 </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardKirana"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cardJean"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:elevation="8dp"
-                app:cardCornerRadius="8dp">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/image3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp"
-                        android:elevation="2dp"
-                        app:cardElevation="2dp">
-                        <ImageView
-                            android:id="@+id/imageView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            tools:srcCompat="@tools:sample/avatars" />
-                    </androidx.cardview.widget.CardView>
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image3"
-                        android:layout_marginStart="12dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="Kirana Amanda Putri Firmansyah"
-                            android:textSize="12sp"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/inter_medium"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/xi_rpl_2"
-                            android:textSize="12sp"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/inter_medium"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="Absen 17"
-                            android:textSize="12sp"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/inter_medium"/>
-                    </LinearLayout>
-
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView> <!--Card Jean-->
 
         </LinearLayout>
 
