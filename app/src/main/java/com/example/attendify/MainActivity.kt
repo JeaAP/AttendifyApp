@@ -1,6 +1,7 @@
 package com.example.attendify
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -42,8 +43,14 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
     private val geofenceList = mutableListOf<Geofence>()
     private val GEOFENCE_ID = "MY_GEOFENCE_ID"
     private val GEOFENCE_RADIUS = 100f // in meters
-    private val GEOFENCE_LATITUDE = -6.313615160801881
-    private val GEOFENCE_LONGITUDE = 106.88713091541187
+    private val GEOFENCE_LATITUDE = -6.321740095551176
+    private val GEOFENCE_LONGITUDE = 106.89906194895687
+    //Koordinat hotel smkn 24
+//    -6.321740095551176
+//    106.89906194895687
+    //tes koordinat
+//    -6.313615160801881
+//    106.88713091541187
     private var isInsideGeofence = false // Variabel untuk menyimpan status jankauan
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -73,6 +80,12 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
     }
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
     //======WAKTU========
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+//        super.onBackPressed()
+//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

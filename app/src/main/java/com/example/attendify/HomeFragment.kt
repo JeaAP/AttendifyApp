@@ -1,5 +1,6 @@
 package com.example.attendify
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -67,6 +68,10 @@ class HomeFragment : Fragment() {
         set(Calendar.HOUR_OF_DAY, 5)
         set(Calendar.MINUTE, 0)
     }
+    private val jamIzin = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 7)
+        set(Calendar.MINUTE, 0)
+    }
 
     private val remainingTimeInMinutes = ((cutOffTimeMorning.timeInMillis - calendar.timeInMillis) / 60000).toInt()
 
@@ -80,6 +85,12 @@ class HomeFragment : Fragment() {
         //        fun onButtonClicked()
         fun updateLocationText(text: String)
         fun isUserInGeofence(): Boolean
+    }
+
+    @SuppressLint("MissingSuperCall")
+    fun onBackPressed() {
+//        super.onBackPressed()
+//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAttach(context: Context) {
@@ -124,7 +135,7 @@ class HomeFragment : Fragment() {
         btnAbcentDialog.setOnClickListener{
             if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
                 dialog.dismiss()
-                val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
+                val intent = Intent(this@HomeFragment.requireContext(), Scan::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
@@ -189,8 +200,16 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnIzin.setOnClickListener {
-            val intent = Intent(this@HomeFragment.requireContext(), IzinActivity::class.java)
-            startActivity(intent)
+            if(!isWeekend){
+                if(calendar.before(jamIzin)){
+                    val intent = Intent(this@HomeFragment.requireContext(), IzinActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(context, "Anda tidak bisa melakukan izin setelah pukul 07:00", Toast.LENGTH_LONG).show()
+                }
+            } else {
+                Toast.makeText(context, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
+            }
         }
 
         binding.cardSchedule.setOnClickListener {
@@ -206,7 +225,10 @@ class HomeFragment : Fragment() {
         }
 
         val absensiList = dbHelperAbsensi.getLimitedAbsensi()
-        val adapter = AbsensiAdapter(absensiList)
+
+        val adapter = AbsensiAdapter(absensiList) { absensi ->
+//            Toast.makeText(context, "Klik pada: ${absensi.tanggal} ${absensi.hari}", Toast.LENGTH_SHORT).show()
+        }
 
         binding.activityContent.apply {
             layoutManager = LinearLayoutManager(requireContext())

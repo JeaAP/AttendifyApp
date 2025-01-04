@@ -156,7 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:srcCompat="@drawable/baseline_camera_24"
-                android:scaleType="fitCenter" />
+                android:scaleType="centerCrop" />
         </androidx.cardview.widget.CardView>
 
         <Button

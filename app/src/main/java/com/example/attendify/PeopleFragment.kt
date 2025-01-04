@@ -18,6 +18,11 @@ class PeopleFragment : Fragment() {
     private lateinit var binding: FragmentPeopleBinding
     private lateinit var mainActivity: MainActivity
 
+    fun onBackPressed() {
+//        super.onBackPressed()
+//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
         if (context is MainActivity) {

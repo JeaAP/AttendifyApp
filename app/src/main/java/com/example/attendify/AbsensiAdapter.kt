@@ -1,6 +1,5 @@
 package com.example.attendify
 
-import android.content.Intent
 import android.media.RouteListingPreference
 import android.view.LayoutInflater
 import android.view.View
@@ -9,18 +8,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class AbsensiAdapter(private val absensiList: List<Absensi>) : RecyclerView.Adapter<AbsensiAdapter.AbsensiViewHolder>() {
+class AbsensiAdapter(
+    private val absensiList: List<Absensi>,
+    private val onItemClicked: (Absensi) -> Unit
+) : RecyclerView.Adapter<AbsensiAdapter.AbsensiViewHolder>() {
 
     class AbsensiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dayTextView: TextView = itemView.findViewById(R.id.day)
         val dateTextView: TextView = itemView.findViewById(R.id.date)
         val timeTextView: TextView = itemView.findViewById(R.id.time)
         val emoteImageView: ImageView = itemView.findViewById(R.id.emoteImage)
-
-        fun bind(absensi: RouteListingPreference.Item, listener: (RouteListingPreference.Item) -> Unit) {
-            // Update your itemView views here
-            itemView.setOnClickListener { listener(absensi) }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AbsensiViewHolder {
@@ -34,26 +31,22 @@ class AbsensiAdapter(private val absensiList: List<Absensi>) : RecyclerView.Adap
         holder.dateTextView.text = absensi.tanggal
         holder.timeTextView.text = absensi.jam
 
-        // Set drawable based on keterangan and mood
         val drawableRes = when (absensi.keterangan) {
             "Hadir" -> when (absensi.mood) {
                 "Happy" -> R.drawable.happyemote
                 "Good" -> R.drawable.goodemote
                 "Bad" -> R.drawable.bademote
-                else -> R.drawable.goodemote // Default drawable for unknown mood
+                else -> R.drawable.goodemote
             }
             "Sakit" -> R.drawable.outline_sick_24
-            else -> R.drawable.izin // Default drawable for other keterangan
+            else -> R.drawable.izin
         }
-
-        holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, viewAllAbsensi::class.java).apply {
-                putExtra("absensi_id", absensi.id) // Menggunakan objek absensi
-            }
-            holder.itemView.context.startActivity(intent)
-        }
-
         holder.emoteImageView.setImageResource(drawableRes)
+
+        // Set click listener
+        holder.itemView.setOnClickListener {
+            onItemClicked(absensi)
+        }
     }
 
     override fun getItemCount(): Int = absensiList.size

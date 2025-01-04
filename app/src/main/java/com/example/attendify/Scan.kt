@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Size
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
@@ -127,6 +128,8 @@ class Scan : AppCompatActivity() {
         val url = barcode.url?.url ?: barcode.displayValue
         if(url != null) {
             resultTextView.text = "QR can now be scanned"
+            Toast.makeText(this, "QR can now be scanned!", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "QR can now be scanned: $url", Toast.LENGTH_SHORT).show()
             binding.scan.setOnClickListener{
                 val intent = Intent(this, WebViewActivity::class.java)
                 intent.putExtra("url", url)

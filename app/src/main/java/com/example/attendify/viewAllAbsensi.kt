@@ -27,37 +27,22 @@ class viewAllAbsensi : AppCompatActivity() {
         setContentView(binding.root)
 
         databaseHelper = DatabaseHelperAbsensi(this)
-
-        // Delete old absensi exceeding 30 days
         databaseHelper.deleteOldAbsensi()
 
-        // Ambil id dari Intent
-        val absensiId = intent.getIntExtra("absensi_id", -1)
-        if (absensiId != -1) {
-            val absensi = databaseHelper.getAbsensiById(absensiId)
-            absensi?.let {
-                showDetailPopup(it)
-            } ?: run {
-                Toast.makeText(this, "Data absensi tidak ditemukan", Toast.LENGTH_SHORT).show()
-            }
-        }
-
         val absensiList = databaseHelper.getAllAbsensi()
-        val adapter = AbsensiAdapter(absensiList)
 
-        binding.activityContent.apply {
-            layoutManager = LinearLayoutManager(this@viewAllAbsensi)
-            this.adapter = adapter
-
-            val tvNoData = binding.tvNoData
-            if (adapter.itemCount == 0) {
-                tvNoData.visibility = View.VISIBLE
-            } else {
-                tvNoData.visibility = View.GONE
-            }
+        val adapter = AbsensiAdapter(absensiList) { absensi ->
+            showDetailPopup(absensi)
         }
 
         binding.activityContent.layoutManager = LinearLayoutManager(this)
+        binding.activityContent.adapter = adapter
+
+        if (adapter.itemCount == 0) {
+            binding.tvNoData.visibility = View.VISIBLE
+        } else {
+            binding.tvNoData.visibility = View.GONE
+        }
 
         binding.back.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -68,17 +53,20 @@ class viewAllAbsensi : AppCompatActivity() {
     private fun showDetailPopup(absensi: Absensi) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.detail_item)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         val dayTextView = dialog.findViewById<TextView>(R.id.day)
         val dateTextView = dialog.findViewById<TextView>(R.id.date)
         val timeTextView = dialog.findViewById<TextView>(R.id.time)
         val emoteImageView = dialog.findViewById<ImageView>(R.id.emoteImage)
+        val status = dialog.findViewById<TextView>(R.id.status)
         val descriptionTextView = dialog.findViewById<TextView>(R.id.description)
         val descriptionPhoto = dialog.findViewById<ImageView>(R.id.descriptionPhoto)
 
         dayTextView.text = absensi.hari
         dateTextView.text = absensi.tanggal
         timeTextView.text = absensi.jam
+        status.text = absensi.keterangan
         descriptionTextView.text = absensi.perasaan
 
         val drawableRes = when (absensi.keterangan) {

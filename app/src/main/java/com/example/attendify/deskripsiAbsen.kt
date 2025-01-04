@@ -97,7 +97,7 @@ class deskripsiAbsen : AppCompatActivity() {
         val currentTime = Calendar.getInstance()
         val hariFormat = SimpleDateFormat("EEEE", Locale.getDefault())
         val tanggalFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val jamFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        val jamFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
         val hari = hariFormat.format(currentTime.time)
         val tanggal = tanggalFormat.format(currentTime.time)

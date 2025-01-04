@@ -497,9 +497,9 @@
                         android:id="@+id/imageLuky"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp"
-                        android:elevation="2dp"
-                        app:cardElevation="2dp">
+                        android:backgroundTint="@color/black"
+                        app:cardCornerRadius="2dp"
+                        android:elevation="0dp">
                         <ImageView
                             android:layout_width="120dp"
                             android:layout_height="120dp"
@@ -566,9 +566,9 @@
                         android:id="@+id/imageSye"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp"
-                        android:elevation="2dp"
-                        app:cardElevation="2dp">
+                        android:backgroundTint="@color/black"
+                        app:cardCornerRadius="2dp"
+                        android:elevation="0dp">
                         <ImageView
                             android:layout_width="120dp"
                             android:layout_height="120dp"
@@ -635,9 +635,9 @@
                         android:id="@+id/imageTorda"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp"
-                        android:elevation="2dp"
-                        app:cardElevation="2dp">
+                        android:backgroundTint="@color/black"
+                        app:cardCornerRadius="2dp"
+                        android:elevation="0dp">
                         <ImageView
                             android:layout_width="120dp"
                             android:layout_height="120dp"
