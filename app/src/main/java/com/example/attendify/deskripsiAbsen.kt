@@ -38,6 +38,12 @@ class deskripsiAbsen : AppCompatActivity() {
         val llSendMessage = binding.llSendMessage
         val llFeelings = binding.llFeelings
 
+        binding.back.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         binding.btnNext.setOnClickListener {
             if (capturedPhoto == null) {
                 Snackbar.make(binding.root, "Please take a photo first!", Snackbar.LENGTH_SHORT).show()

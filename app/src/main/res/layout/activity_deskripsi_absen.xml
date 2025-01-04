@@ -21,13 +21,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="78dp"
-        android:text="Back"
+        android:text="Cancel"
         android:textSize="23sp"
         android:layout_toEndOf="@id/back"
         android:layout_marginTop="36dp"
         android:textStyle="bold"
         android:textColor="@color/black"/>
 
+    <!-- Bagian untuk mengirim foto-->
     <LinearLayout
         android:id="@+id/llPhoto"
         android:layout_width="match_parent"
@@ -49,8 +50,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardImage"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="350dp"
+            android:layout_height="400dp"
             app:cardCornerRadius="16dp"
             android:layout_gravity="center_horizontal"
             android:elevation="8dp">
@@ -59,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:srcCompat="@drawable/baseline_camera_24"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitCenter" />
         </androidx.cardview.widget.CardView>
 
         <Button
