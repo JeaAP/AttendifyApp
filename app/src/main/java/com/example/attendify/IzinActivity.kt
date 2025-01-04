@@ -6,92 +6,88 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.attendify.databinding.ActivityIzinBinding
+import com.google.android.material.snackbar.Snackbar
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class IzinActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIzinBinding
     private lateinit var dbHelper: DatabaseHelperAbsensi
-    private var capturedPhoto: ByteArray? = null
-    private var izinType: String = ""
 
-    companion object {
-        private const val CAMERA_REQUEST_CODE = 100
+    private var capturedPhoto: ByteArray? = null
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        // Back button is disabled on this screen
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityIzinBinding.inflate(layoutInflater)
         dbHelper = DatabaseHelperAbsensi(this)
         setContentView(binding.root)
 
-        setupListeners()
-    }
+        val llPhoto = binding.llPhoto
+        val llSendMessage = binding.llSendMessage
+        val llIzin = binding.llIzin
 
-    private fun setupListeners() {
-        // Tombol kembali ke MainActivity
+        var keterangan: String? = null
+
         binding.back.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        // Pilihan izin sakit
-        binding.llSick.setOnClickListener {
-            izinType = "Sakit"
-            binding.ket.text = "Please provide a sick note!"
-            binding.btnNext.text = "Send"
-            showPhotoSection()
-        }
+        binding.llSick.setOnClickListener{
+            llIzin.visibility = View.GONE
+            llPhoto.visibility = View.VISIBLE
 
-        // Pilihan izin lainnya
-        binding.llPermit.setOnClickListener {
-            izinType = "Izin"
-            binding.ket.text = "Please provide a permission note!"
-            binding.btnNext.text = "Next"
-            showPhotoSection()
-        }
-
-        // Ambil foto
-        binding.cardImage.setOnClickListener { openCamera() }
-
-        // Tombol Next/Send untuk izin
-        binding.btnNext.setOnClickListener {
-            if (capturedPhoto == null) {
-                Toast.makeText(this, "Please take a photo first!", Toast.LENGTH_SHORT).show()
-            } else {
-                if (izinType == "Izin") {
-                    showMessageSection()
+            binding.btnNext.setOnClickListener {
+                if (capturedPhoto == null) {
+                    Snackbar.make(binding.root, "Please take a photo first!", Snackbar.LENGTH_SHORT).show()
                 } else {
-                    saveToDatabase("")
+                    saveAbsensi(keterangan = "Sakit")
                 }
             }
         }
 
-        // Tombol Send untuk mengirim keterangan izin
-        binding.btnSend.setOnClickListener {
-            val keterangan = binding.edDescription.text.toString().trim()
-            if (keterangan.isEmpty()) {
-                Toast.makeText(this, "Please enter a description!", Toast.LENGTH_SHORT).show()
-            } else {
-                saveToDatabase(keterangan)
+        binding.llPermit.setOnClickListener{
+            llIzin.visibility = View.GONE
+            llPhoto.visibility = View.VISIBLE
+            binding.ket.text = "Please provide a permission note!"
+            binding.btnNext.text = "Next"
+
+            binding.btnNext.setOnClickListener {
+                if (capturedPhoto == null) {
+                    Snackbar.make(binding.root, "Please take a photo first!", Snackbar.LENGTH_SHORT).show()
+                } else {
+                    llPhoto.visibility = View.GONE
+                    llSendMessage.visibility = View.VISIBLE
+
+                    binding.btnSend.setOnClickListener {
+                        val perasaan = binding.edDescription.text.toString().trim()
+                        if (perasaan.isEmpty()) {
+                            Snackbar.make(binding.root, "Please specify the reason for your excused absence!", Snackbar.LENGTH_SHORT).show()
+                        } else {
+                            saveAbsensi(binding.edDescription.text.toString().trim())
+                        }
+                    }
+                }
             }
         }
-    }
 
-    private fun showPhotoSection() {
-        binding.llIzin.visibility = View.GONE
-        binding.llPhoto.visibility = View.VISIBLE
-        binding.llSendMessage.visibility = View.GONE
-    }
-
-    private fun showMessageSection() {
-        binding.llPhoto.visibility = View.GONE
-        binding.llSendMessage.visibility = View.VISIBLE
+        binding.cardImage.setOnClickListener {
+            openCamera()
+        }
     }
 
     private fun openCamera() {
@@ -99,9 +95,9 @@ class IzinActivity : AppCompatActivity() {
         startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             val photo = data?.extras?.get("data") as Bitmap
             binding.fotoAbsen.setImageBitmap(photo)
@@ -115,7 +111,7 @@ class IzinActivity : AppCompatActivity() {
         return stream.toByteArray()
     }
 
-    private fun saveToDatabase(keterangan: String) {
+    private fun saveAbsensi(keterangan: String) {
         val currentTime = Calendar.getInstance()
         val hariFormat = SimpleDateFormat("EEEE", Locale.getDefault())
         val tanggalFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -124,23 +120,22 @@ class IzinActivity : AppCompatActivity() {
         val hari = hariFormat.format(currentTime.time)
         val tanggal = tanggalFormat.format(currentTime.time)
         val jam = jamFormat.format(currentTime.time)
+        val mood = ""
+        val perasaan = ""
 
-        // Simpan data ke database
-        val result = dbHelper.insertAbsensi(
-            hari = hari,
-            tanggal = tanggal,
-            jam = jam,
-            keterangan = izinType,
-            mood = "", // Mood tidak digunakan dalam izin
-            perasaan = if (izinType == "Sakit") izinType else keterangan,
-            foto = capturedPhoto
-        )
+        val result = dbHelper.insertAbsensi(hari, tanggal, jam, mood, perasaan, keterangan, capturedPhoto)
 
         if (result != -1L) {
-            Toast.makeText(this, "Permission recorded successfully!", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Izin Berhasil!", Snackbar.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         } else {
-            Toast.makeText(this, "Failed to record permission.", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Izin gagal!", Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    companion object {
+        private const val CAMERA_REQUEST_CODE = 100
     }
 }
