@@ -66,6 +66,7 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
 
         cursor?.use {
             while (it.moveToNext()) {
+                val id =it.getInt(it.getColumnIndexOrThrow(COLUMN_ID))
                 val hari = it.getString(it.getColumnIndexOrThrow(COLUMN_HARI))
                 val tanggal = it.getString(it.getColumnIndexOrThrow(COLUMN_TANGGAL))
                 val mood = it.getString(it.getColumnIndexOrThrow(COLUMN_MOOD))
@@ -73,7 +74,7 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
                 val perasaan = it.getString(it.getColumnIndexOrThrow(COLUMN_PERASAAN))
                 val keterangan = it.getString(it.getColumnIndexOrThrow(COLUMN_KETERANGAN)) ?: ""
                 val foto = it.getBlob(it.getColumnIndexOrThrow(COLUMN_FOTO))
-                absensiList.add(Absensi(hari, tanggal, mood, jam, perasaan, keterangan, foto))
+                absensiList.add(Absensi(id, hari, tanggal, mood, jam, perasaan, keterangan, foto))
             }
         }
         return absensiList
@@ -86,6 +87,7 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
 
         cursor?.use {
             while (it.moveToNext()) {
+                val id = it.getInt(it.getColumnIndexOrThrow(COLUMN_ID))
                 val hari = it.getString(it.getColumnIndexOrThrow(COLUMN_HARI))
                 val tanggal = it.getString(it.getColumnIndexOrThrow(COLUMN_TANGGAL))
                 val mood = it.getString(it.getColumnIndexOrThrow(COLUMN_MOOD))
@@ -93,7 +95,7 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
                 val perasaan = it.getString(it.getColumnIndexOrThrow(COLUMN_PERASAAN))
                 val keterangan = it.getString(it.getColumnIndexOrThrow(COLUMN_KETERANGAN)) ?: ""
                 val foto = it.getBlob(it.getColumnIndexOrThrow(COLUMN_FOTO))
-                absensiList.add(Absensi(hari, tanggal, mood, jam, perasaan, keterangan, foto))
+                absensiList.add(Absensi(id, hari, tanggal, mood, jam, perasaan, keterangan, foto))
             }
         }
         return absensiList
@@ -119,4 +121,32 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         cursor.close()
         return hasEntry
     }
+
+    fun getAbsensiById(id: Int): Absensi? {
+        val db = readableDatabase
+        val cursor = db.query(
+            TABLE_NAME,
+            null,
+            "$COLUMN_ID = ?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null
+        )
+
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val hari = it.getString(it.getColumnIndexOrThrow(COLUMN_HARI))
+                val tanggal = it.getString(it.getColumnIndexOrThrow(COLUMN_TANGGAL))
+                val mood = it.getString(it.getColumnIndexOrThrow(COLUMN_MOOD))
+                val jam = it.getString(it.getColumnIndexOrThrow(COLUMN_JAM))
+                val perasaan = it.getString(it.getColumnIndexOrThrow(COLUMN_PERASAAN))
+                val keterangan = it.getString(it.getColumnIndexOrThrow(COLUMN_KETERANGAN)) ?: ""
+                val foto = it.getBlob(it.getColumnIndexOrThrow(COLUMN_FOTO))
+                return Absensi(id, hari, tanggal, mood, jam, perasaan, keterangan, foto)
+            }
+        }
+        return null
+    }
+
 }

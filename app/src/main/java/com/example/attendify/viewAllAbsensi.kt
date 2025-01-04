@@ -27,22 +27,37 @@ class viewAllAbsensi : AppCompatActivity() {
         setContentView(binding.root)
 
         databaseHelper = DatabaseHelperAbsensi(this)
+
+        // Delete old absensi exceeding 30 days
         databaseHelper.deleteOldAbsensi()
 
-        val absensiList = databaseHelper.getAllAbsensi()
+        // Ambil id dari Intent
+        val absensiId = intent.getIntExtra("absensi_id", -1)
+        if (absensiId != -1) {
+            val absensi = databaseHelper.getAbsensiById(absensiId)
+            absensi?.let {
+                showDetailPopup(it)
+            } ?: run {
+                Toast.makeText(this, "Data absensi tidak ditemukan", Toast.LENGTH_SHORT).show()
+            }
+        }
 
-        val adapter = AbsensiAdapter(absensiList) { absensi ->
-            showDetailPopup(absensi)
+        val absensiList = databaseHelper.getAllAbsensi()
+        val adapter = AbsensiAdapter(absensiList)
+
+        binding.activityContent.apply {
+            layoutManager = LinearLayoutManager(this@viewAllAbsensi)
+            this.adapter = adapter
+
+            val tvNoData = binding.tvNoData
+            if (adapter.itemCount == 0) {
+                tvNoData.visibility = View.VISIBLE
+            } else {
+                tvNoData.visibility = View.GONE
+            }
         }
 
         binding.activityContent.layoutManager = LinearLayoutManager(this)
-        binding.activityContent.adapter = adapter
-
-        if (adapter.itemCount == 0) {
-            binding.tvNoData.visibility = View.VISIBLE
-        } else {
-            binding.tvNoData.visibility = View.GONE
-        }
 
         binding.back.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

@@ -1,6 +1,7 @@
 package com.example.attendify
 
 data class Absensi(
+    val id: Int,
     val hari: String,
     val tanggal: String,
     val mood: String,
