@@ -27,13 +27,18 @@ class AbsensiAdapter(private val absensiList: List<Absensi>) : RecyclerView.Adap
         holder.dateTextView.text = absensi.tanggal
         holder.timeTextView.text = absensi.jam
 
-        // Set drawable based on mood text
-        val drawableRes = when (absensi.mood) {
-            "Happy" -> R.drawable.happyemote
-            "Good" -> R.drawable.goodemote
-            "Bad" -> R.drawable.bademote
-            else -> R.drawable.goodemote // Default drawable if mood is unknown
+        // Set drawable based on keterangan and mood
+        val drawableRes = when (absensi.keterangan) {
+            "Hadir" -> when (absensi.mood) {
+                "Happy" -> R.drawable.happyemote
+                "Good" -> R.drawable.goodemote
+                "Bad" -> R.drawable.bademote
+                else -> R.drawable.goodemote // Default drawable for unknown mood
+            }
+            "Sakit" -> R.drawable.outline_sick_24
+            else -> R.drawable.izin // Default drawable for other keterangan
         }
+
         holder.emoteImageView.setImageResource(drawableRes)
     }
 
