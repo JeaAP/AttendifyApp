@@ -1,10 +1,13 @@
 package com.example.attendify
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -20,6 +23,12 @@ import com.example.attendify.databinding.ActivityViewAllAbsensiBinding
 class viewAllAbsensi : AppCompatActivity() {
     private lateinit var databaseHelper: DatabaseHelperAbsensi
     private lateinit var binding: ActivityViewAllAbsensiBinding
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+//        super.onBackPressed()
+//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +62,10 @@ class viewAllAbsensi : AppCompatActivity() {
     private fun showDetailPopup(absensi: Absensi) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.detail_item)
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.apply{
+            setBackgroundDrawableResource(android.R.color.transparent)
+            setGravity(Gravity.CENTER_VERTICAL)
+        }
 
         val dayTextView = dialog.findViewById<TextView>(R.id.day)
         val dateTextView = dialog.findViewById<TextView>(R.id.date)
