@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +33,7 @@ class IzinActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        // Tombol back
+        // Tombol kembali ke MainActivity
         binding.back.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -60,7 +59,7 @@ class IzinActivity : AppCompatActivity() {
         // Ambil foto
         binding.cardImage.setOnClickListener { openCamera() }
 
-        // Kirim foto
+        // Tombol Next/Send untuk izin
         binding.btnNext.setOnClickListener {
             if (capturedPhoto == null) {
                 Toast.makeText(this, "Please take a photo first!", Toast.LENGTH_SHORT).show()
@@ -73,7 +72,7 @@ class IzinActivity : AppCompatActivity() {
             }
         }
 
-        // Kirim keterangan izin
+        // Tombol Send untuk mengirim keterangan izin
         binding.btnSend.setOnClickListener {
             val keterangan = binding.edDescription.text.toString().trim()
             if (keterangan.isEmpty()) {
@@ -87,6 +86,7 @@ class IzinActivity : AppCompatActivity() {
     private fun showPhotoSection() {
         binding.llIzin.visibility = View.GONE
         binding.llPhoto.visibility = View.VISIBLE
+        binding.llSendMessage.visibility = View.GONE
     }
 
     private fun showMessageSection() {
@@ -124,9 +124,17 @@ class IzinActivity : AppCompatActivity() {
         val hari = hariFormat.format(currentTime.time)
         val tanggal = tanggalFormat.format(currentTime.time)
         val jam = jamFormat.format(currentTime.time)
-        val finalKeterangan = if (izinType == "Sakit") izinType else keterangan
 
-        val result = dbHelper.insertAbsensi(hari, tanggal, jam, izinType, "", finalKeterangan, capturedPhoto)
+        // Simpan data ke database
+        val result = dbHelper.insertAbsensi(
+            hari = hari,
+            tanggal = tanggal,
+            jam = jam,
+            keterangan = izinType,
+            mood = "", // Mood tidak digunakan dalam izin
+            perasaan = if (izinType == "Sakit") izinType else keterangan,
+            foto = capturedPhoto
+        )
 
         if (result != -1L) {
             Toast.makeText(this, "Permission recorded successfully!", Toast.LENGTH_SHORT).show()
