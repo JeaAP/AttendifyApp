@@ -187,7 +187,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnIzin.setOnClickListener {
-            val intent = Intent(this@HomeFragment.requireContext(), coomingSoon::class.java)
+            val intent = Intent(this@HomeFragment.requireContext(), IzinActivity::class.java)
             startActivity(intent)
         }
 
