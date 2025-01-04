@@ -1,5 +1,6 @@
 package com.example.attendify
 
+import android.media.RouteListingPreference
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,11 @@ class AbsensiAdapter(private val absensiList: List<Absensi>) : RecyclerView.Adap
         val dateTextView: TextView = itemView.findViewById(R.id.date)
         val timeTextView: TextView = itemView.findViewById(R.id.time)
         val emoteImageView: ImageView = itemView.findViewById(R.id.emoteImage)
+
+        fun bind(absensi: RouteListingPreference.Item, listener: (RouteListingPreference.Item) -> Unit) {
+            // Update your itemView views here
+            itemView.setOnClickListener { listener(absensi) }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AbsensiViewHolder {

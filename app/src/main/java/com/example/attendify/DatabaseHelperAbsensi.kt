@@ -62,7 +62,7 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
     fun getAllAbsensi(): List<Absensi> {
         val absensiList = mutableListOf<Absensi>()
         val db = readableDatabase
-        val cursor = db.query(TABLE_NAME, null, null, null, null, null, "$COLUMN_ID ASC")
+        val cursor = db.query(TABLE_NAME, null, null, null, null, null, "$COLUMN_ID DESC")
 
         cursor?.use {
             while (it.moveToNext()) {

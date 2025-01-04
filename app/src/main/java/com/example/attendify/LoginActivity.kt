@@ -109,6 +109,8 @@ class LoginActivity : AppCompatActivity() {
         val edNewPassword = dialogView.findViewById<EditText>(R.id.edNewPassword)
         val edConfirmPassword = dialogView.findViewById<EditText>(R.id.edConfirmPassword)
         val btnDone = dialogView.findViewById<CardView>(R.id.btnAbcent)
+        val btnShowPass = dialogView.findViewById<ImageView>(R.id.showPass)
+        val btnShowConfirmPass = dialogView.findViewById<ImageView>(R.id.showConfirmPass)
 
         dialog.setView(dialogView)
 
@@ -158,6 +160,30 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        btnShowPass.setOnClickListener {
+            if (edNewPassword.inputType == android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                edNewPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                btnShowPass.setImageResource(R.drawable.baseline_visibility_off_24)
+            } else {
+                edNewPassword.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                btnShowPass.setImageResource(R.drawable.baseline_visibility_24)
+            }
+
+            edNewPassword.setSelection(edNewPassword.text.length)
+        }
+
+        btnShowConfirmPass.setOnClickListener {
+            if (edConfirmPassword.inputType == android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                edConfirmPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                btnShowConfirmPass.setImageResource(R.drawable.baseline_visibility_off_24)
+            } else {
+                edConfirmPassword.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                btnShowConfirmPass.setImageResource(R.drawable.baseline_visibility_24)
+            }
+
+            edConfirmPassword.setSelection(edConfirmPassword.text.length)
         }
 
         dialog.show()

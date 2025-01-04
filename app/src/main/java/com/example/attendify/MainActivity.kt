@@ -49,6 +49,31 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
+    //======WAKTU========
+    private val now = Calendar.getInstance()
+    private val hour = now.get(Calendar.HOUR_OF_DAY)
+    private val dayOfWeek = now.get(Calendar.DAY_OF_WEEK)
+    private val isWeekend = dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
+
+    private val jamAbsen = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 6)
+        set(Calendar.MINUTE, 24)
+    }
+    private val cutOffTimeMorning = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 6)
+        set(Calendar.MINUTE, 30)
+    }
+    private val cutOffTimeAfternoon = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 15)
+        set(Calendar.MINUTE, 0)
+    }
+    private val cutOffTimeEarlyMorning = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 5)
+        set(Calendar.MINUTE, 0)
+    }
+    private val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+    //======WAKTU========
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
@@ -79,40 +104,29 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
             }
 
             binding.fab.setOnClickListener {
-                val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                val now = Calendar.getInstance()
-                val cutOffTimeMorning = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, 6)
-                    set(Calendar.MINUTE, 30)
-                }
-                val cutOffTimeAfternoon = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, 15)
-                    set(Calendar.MINUTE, 0)
-                }
-                val cutOffTimeEarlyMorning = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, 5)
-                    set(Calendar.MINUTE, 0)
-                }
-
-                if (isInsideGeofence) {
-                    if (!dbHelperAbsensi.hasAbsensiToday(today)) { // Jika hari ini belum absen
-                        if (now.before(cutOffTimeEarlyMorning)) {
-                            Toast.makeText(this@MainActivity, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
-                        } else if (now.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
-                            if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
-                                val intent = Intent(this@MainActivity, Scan::class.java)
-                                startActivity(intent)
+                if(!isWeekend){
+                    if (isInsideGeofence) {
+                        if (!dbHelperAbsensi.hasAbsensiToday(today)) { // Jika hari ini belum absen
+                            if (now.before(cutOffTimeEarlyMorning)) {
+                                Toast.makeText(this@MainActivity, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
+                            } else if (now.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
+                                if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
+                                    val intent = Intent(this@MainActivity, Scan::class.java)
+                                    startActivity(intent)
+                                } else {
+                                    Toast.makeText(this@MainActivity, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
+                                }
                             } else {
-                                Toast.makeText(this@MainActivity, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@MainActivity, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
                             }
                         } else {
-                            Toast.makeText(this@MainActivity, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@MainActivity, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
                         }
                     } else {
-                        Toast.makeText(this@MainActivity, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@MainActivity, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
                     }
                 } else {
-                    Toast.makeText(this@MainActivity, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MainActivity, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: Exception) {

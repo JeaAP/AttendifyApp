@@ -3,6 +3,7 @@ package com.example.attendify
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -40,6 +41,8 @@ class viewAllAbsensi : AppCompatActivity() {
                 tvNoData.visibility = View.GONE
             }
         }
+
+        binding.activityContent.layoutManager = LinearLayoutManager(this)
 
         binding.back.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

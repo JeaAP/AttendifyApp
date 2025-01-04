@@ -52,10 +52,8 @@
             android:id="@+id/scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/fab_for_scan_qr_code"
             android:padding="0dp"
-            android:src="@drawable/baseline_qr_code_scanner_24"
-            android:tint="@android:color/white"
+            android:src="@drawable/baseline_document_scanner_24"
             app:backgroundTint="@color/MikadoYellow"
             app:layout_anchor="@+id/bottomAppBar"
             app:layout_anchorGravity="top|center" />
