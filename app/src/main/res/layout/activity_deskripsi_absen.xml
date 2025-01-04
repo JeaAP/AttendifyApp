@@ -28,13 +28,60 @@
         android:textStyle="bold"
         android:textColor="@color/black"/>
 
+    <LinearLayout
+        android:id="@+id/llPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:layout_below="@id/head">
+
+        <TextView
+            android:id="@+id/ket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Photo as proof that you are in the school area!"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_medium"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardImage"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:cardCornerRadius="16dp"
+            android:layout_gravity="center_horizontal"
+            android:elevation="8dp">
+            <ImageView
+                android:id="@+id/fotoAbsen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/baseline_camera_24"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/rectangle"
+            android:text="Next"
+            app:backgroundTint="@color/text"/>
+
+    </LinearLayout>
+
     <!-- Bagian untuk mengirim pesan -->
     <LinearLayout
         android:id="@+id/llSendMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_below="@id/head">
 
         <EditText

@@ -25,6 +25,9 @@
         android:theme="@style/Theme.Attendify"
         tools:targetApi="31">
         <activity
+            android:name=".IzinActivity"
+            android:exported="false" />
+        <activity
             android:name=".GetStarted"
             android:exported="false" />
         <activity
@@ -89,8 +92,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
-        <!-- CropImageActivity -->
+            android:exported="false" /> <!-- CropImageActivity -->
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

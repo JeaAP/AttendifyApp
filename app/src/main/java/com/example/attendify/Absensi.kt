@@ -5,5 +5,7 @@ data class Absensi(
     val tanggal: String,
     val mood: String,
     val jam: String,
-    val perasaan: String
+    val perasaan: String,
+    val keterangan: String,
+    val foto: ByteArray? = null
 )

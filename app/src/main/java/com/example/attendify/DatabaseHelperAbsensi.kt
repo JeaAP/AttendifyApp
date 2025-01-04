@@ -20,6 +20,8 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         private const val COLUMN_MOOD = "mood"
         private const val COLUMN_JAM = "jam"
         private const val COLUMN_PERASAAN = "perasaan"
+        private const val COLUMN_KETERANGAN = "keterangan"
+        private const val COLUMN_FOTO = "foto"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -30,7 +32,9 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
                 $COLUMN_TANGGAL TEXT,
                 $COLUMN_MOOD TEXT,
                 $COLUMN_JAM TEXT,
-                $COLUMN_PERASAAN TEXT
+                $COLUMN_PERASAAN TEXT,
+                $COLUMN_KETERANGAN TEXT,
+                $COLUMN_FOTO BLOB
             )
         """.trimIndent()
         db.execSQL(createTableQuery)
@@ -41,7 +45,7 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         onCreate(db)
     }
 
-    fun insertAbsensi(hari: String, tanggal: String, jam: String, mood: String, perasaan: String): Long {
+    fun insertAbsensi(hari: String, tanggal: String, jam: String, mood: String, perasaan: String, keterangan: String, foto: ByteArray?): Long {
         val db = writableDatabase
         val values = ContentValues().apply {
             put(COLUMN_HARI, hari)
@@ -49,6 +53,8 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
             put(COLUMN_MOOD, mood)
             put(COLUMN_JAM, jam)
             put(COLUMN_PERASAAN, perasaan)
+            put(COLUMN_KETERANGAN, keterangan)
+            put(COLUMN_FOTO, foto)
         }
         return db.insert(TABLE_NAME, null, values)
     }
@@ -65,7 +71,9 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
                 val mood = it.getString(it.getColumnIndexOrThrow(COLUMN_MOOD))
                 val jam = it.getString(it.getColumnIndexOrThrow(COLUMN_JAM))
                 val perasaan = it.getString(it.getColumnIndexOrThrow(COLUMN_PERASAAN))
-                absensiList.add(Absensi(hari, tanggal, mood, jam, perasaan))
+                val keterangan = it.getString(it.getColumnIndexOrThrow(COLUMN_KETERANGAN)) ?: ""
+                val foto = it.getBlob(it.getColumnIndexOrThrow(COLUMN_FOTO))
+                absensiList.add(Absensi(hari, tanggal, mood, jam, perasaan, keterangan, foto))
             }
         }
         return absensiList
@@ -83,7 +91,9 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
                 val mood = it.getString(it.getColumnIndexOrThrow(COLUMN_MOOD))
                 val jam = it.getString(it.getColumnIndexOrThrow(COLUMN_JAM))
                 val perasaan = it.getString(it.getColumnIndexOrThrow(COLUMN_PERASAAN))
-                absensiList.add(Absensi(hari, tanggal, mood, jam, perasaan))
+                val keterangan = it.getString(it.getColumnIndexOrThrow(COLUMN_KETERANGAN)) ?: ""
+                val foto = it.getBlob(it.getColumnIndexOrThrow(COLUMN_FOTO))
+                absensiList.add(Absensi(hari, tanggal, mood, jam, perasaan, keterangan, foto))
             }
         }
         return absensiList
@@ -94,13 +104,12 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         db.execSQL("DELETE FROM $TABLE_NAME WHERE $COLUMN_ID NOT IN (SELECT $COLUMN_ID FROM $TABLE_NAME ORDER BY $COLUMN_ID DESC LIMIT 30)")
     }
 
-    //Cek data hari ini
     fun hasAbsensiToday(date: String): Boolean {
         val db = readableDatabase
         val cursor = db.query(
             TABLE_NAME,
-            arrayOf("id"),  // Cukup ambil kolom id atau kolom yang menunjukkan record
-            "tanggal = ?",   // Kolom 'tanggal' harus dalam format YYYY-MM-DD jika menggunakan SQLite
+            arrayOf("id"),
+            "$COLUMN_TANGGAL = ?",
             arrayOf(date),
             null,
             null,
@@ -110,5 +119,4 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         cursor.close()
         return hasEntry
     }
-
 }
