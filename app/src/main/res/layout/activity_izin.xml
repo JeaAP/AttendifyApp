@@ -155,8 +155,19 @@
                 android:id="@+id/fotoAbsen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/baseline_camera_24"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/textAbsen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableTop="@drawable/baseline_camera_24"
+                android:text="Tap here to upload proof or documents"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"/>
         </androidx.cardview.widget.CardView>
 
         <Button

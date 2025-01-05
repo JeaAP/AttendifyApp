@@ -51,9 +51,10 @@
         android:elevation="8dp">
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:srcCompat="@drawable/baseline_camera_24"
+            android:layout_gravity="center"
             android:scaleType="centerCrop" />
     </androidx.cardview.widget.CardView>
 

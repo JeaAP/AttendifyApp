@@ -87,6 +87,7 @@ class IzinActivity : AppCompatActivity() {
 
         binding.cardImage.setOnClickListener {
             openCamera()
+            binding.textAbsen.visibility = View.GONE
         }
     }
 

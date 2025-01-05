@@ -119,4 +119,24 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         cursor.close()
         return hasEntry
     }
+
+    fun getAbsensiStatus(date: String): String? {
+        val db = readableDatabase
+        val cursor = db.query(
+            TABLE_NAME,
+            arrayOf(COLUMN_KETERANGAN),  // Mengambil hanya kolom keterangan
+            "$COLUMN_TANGGAL = ?",
+            arrayOf(date),
+            null,
+            null,
+            null
+        )
+        var keterangan: String? = null
+        if (cursor.moveToFirst()) {
+            keterangan = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_KETERANGAN))
+        }
+        cursor.close()
+        return keterangan
+    }
+
 }

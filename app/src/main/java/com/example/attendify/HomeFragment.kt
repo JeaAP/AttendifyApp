@@ -44,8 +44,6 @@ class HomeFragment : Fragment() {
 
     private var currentLocation: String? = null
 
-    private var dialogCancelled = false
-
     //======WAKTU========
     private val calendar = Calendar.getInstance()
     private val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -129,7 +127,6 @@ class HomeFragment : Fragment() {
 
         cancelImage.setOnClickListener{
             dialog.dismiss()
-            dialogCancelled = true
         }
 
         btnAbcentDialog.setOnClickListener{
@@ -156,7 +153,7 @@ class HomeFragment : Fragment() {
 
                 //MUNCUL NOTIFIKASI
                 if (!dbHelperAbsensi.hasAbsensiToday(today)){
-                    if (!isDialogShown && !dialogCancelled) {
+                    if (!isDialogShown) {
                         dialog.show()
                         isDialogShown = true
                     }
@@ -175,7 +172,8 @@ class HomeFragment : Fragment() {
         binding.btnAbcent.setOnClickListener {
             if(!isWeekend){
                 if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
-                    if (!dbHelperAbsensi.hasAbsensiToday(today)) { // Jika hari ini belum absen
+                    val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
+                    if (absensiStatus == null) { // Jika hari ini belum absen
                         if (calendar.before(cutOffTimeEarlyMorning)) {
                             Toast.makeText(context, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
                         } else if (calendar.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
@@ -188,8 +186,10 @@ class HomeFragment : Fragment() {
                         } else {
                             Toast.makeText(context, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
                         }
-                    } else {
+                    } else if (absensiStatus == "Hadir"){
                         Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(context, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
                     }
                 } else {
                     Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
@@ -201,11 +201,18 @@ class HomeFragment : Fragment() {
 
         binding.btnIzin.setOnClickListener {
             if(!isWeekend){
-                if(calendar.before(jamIzin)){
-                    val intent = Intent(this@HomeFragment.requireContext(), IzinActivity::class.java)
-                    startActivity(intent)
+                val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
+                if (absensiStatus == null) { // Jika hari ini belum absen
+                    if(calendar.before(jamIzin)){
+                        val intent = Intent(this@HomeFragment.requireContext(), IzinActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(context, "Anda tidak bisa melakukan izin setelah pukul 07:00", Toast.LENGTH_LONG).show()
+                    }
+                } else if (absensiStatus == "Hadir"){
+                    Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(context, "Anda tidak bisa melakukan izin setelah pukul 07:00", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
                 }
             } else {
                 Toast.makeText(context, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
@@ -227,7 +234,7 @@ class HomeFragment : Fragment() {
         val absensiList = dbHelperAbsensi.getLimitedAbsensi()
 
         val adapter = AbsensiAdapter(absensiList) { absensi ->
-//            Toast.makeText(context, "Klik pada: ${absensi.tanggal} ${absensi.hari}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, " ${absensi.hari}, ${absensi.tanggal}", Toast.LENGTH_SHORT).show()
         }
 
         binding.activityContent.apply {

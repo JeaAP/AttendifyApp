@@ -119,7 +119,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
             binding.fab.setOnClickListener {
                 if(!isWeekend){
                     if (isInsideGeofence) {
-                        if (!dbHelperAbsensi.hasAbsensiToday(today)) { // Jika hari ini belum absen
+                        val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
+                        if (absensiStatus == null) { // Jika hari ini belum absen
                             if (now.before(cutOffTimeEarlyMorning)) {
                                 Toast.makeText(this@MainActivity, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
                             } else if (now.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
@@ -132,8 +133,10 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
                             } else {
                                 Toast.makeText(this@MainActivity, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
                             }
-                        } else {
+                        } else if(absensiStatus == "Hadir") {
                             Toast.makeText(this@MainActivity, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this@MainActivity, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
                         }
                     } else {
                         Toast.makeText(this@MainActivity, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
