@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
@@ -22,7 +21,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import java.util.logging.Handler
 
 class HomeFragment : Fragment() {
 
@@ -42,7 +40,7 @@ class HomeFragment : Fragment() {
     private var listener: FragmentInteractionListener? = null
 
 
-    private var currentLocation: String? = null
+//    private var currentLocation: String? = null
 
     //======WAKTU========
     private val calendar = Calendar.getInstance()
@@ -108,10 +106,10 @@ class HomeFragment : Fragment() {
         // Load data from the database and update UI
         loadProfileData()
 
-        if (savedInstanceState != null) {
-            currentLocation = savedInstanceState.getString("CURRENT_LOCATION")
-        }
-        updateLocationText(currentLocation ?: "Loading location...")
+//        if (savedInstanceState != null) {
+//            currentLocation = savedInstanceState.getString("CURRENT_LOCATION")
+//        }
+//        updateLocationText(currentLocation ?: "Loading location...")
 
         //POP UP NOTIFIKASI DIALOG ABSEN
         dialog = Dialog(requireContext())
@@ -249,6 +247,14 @@ class HomeFragment : Fragment() {
             }
         }
 
+        if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
+            binding.location.text = "Anda berada di wilayah SMKN 24 Jakarta"
+        } else if (listener?.isUserInGeofence() == false) {
+            binding.location.text = "Anda berada di luar wilayah SMKN 24 Jakarta"
+        } else {
+            binding.location.text = "Loading location..."
+        }
+
         return binding.root
     }
 
@@ -258,10 +264,10 @@ class HomeFragment : Fragment() {
         updateDate()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("CURRENT_LOCATION", binding.location.text.toString())
-    }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        outState.putString("CURRENT_LOCATION", binding.location.text.toString())
+//    }
 
     override fun onResume() {
         super.onResume()
@@ -283,7 +289,7 @@ class HomeFragment : Fragment() {
 
     fun updateLocationText(text: String) {
         binding.location.text = text
-        currentLocation = text
+//        currentLocation = text
     }
 
     private fun setupTimeUpdater() {
@@ -338,7 +344,7 @@ class HomeFragment : Fragment() {
     private fun setGreetings() {
         val greeting = when {
             isWeekend -> "Selamat berlibur!"
-            hour < 12 -> "Selamat pagi!"
+            hour in 4 .. 12 -> "Selamat pagi!"
             hour in 12..15 -> "Selamat siang!"
             hour in 16..18 -> "Selamat sore!"
             else -> "Selamat malam!"
@@ -347,17 +353,15 @@ class HomeFragment : Fragment() {
         binding.greetings.text = greeting
     }
 
-
-
     private fun setMotivations() {
         val motivation = when {
-            dayOfWeek == Calendar.FRIDAY && hour >= 17 -> "Terima kasih untuk 5 hari kerja kerasmu, istirahat yang nyeyak."
-            dayOfWeek == Calendar.SATURDAY -> "Saatnya libur, gunakan waktumu untuk kegiatan kesukaanmu."
-            dayOfWeek == Calendar.SUNDAY -> "Pilihlah untuk bersantai atau bersiap untuk minggu baru, selamat libur"
-            hour < 12 -> "Pagi yang indah, hadapi dengan semangat dan kegembiraan yang baru."
-            hour in 12..16 -> "Lanjutkan energimu, kamu sudah melakukan banyak hal hari ini."
-            hour in 17..20 -> "Sore yang tenang, kamu telah bekerja keras hari ini."
-            else -> "Terima kasih telah berusaha hari ini, sekarang waktunya untuk istirahat yang nyenyak."
+            dayOfWeek == Calendar.FRIDAY && hour > 17 && hour < 20 -> getString(R.string.Motivasi_Friday_Evening)
+            dayOfWeek == Calendar.SATURDAY -> getString(R.string.Motivation_Saturday)
+            dayOfWeek == Calendar.SUNDAY -> getString(R.string.Motivation_Sunday)
+            hour in 4 .. 12 -> getString(R.string.Motivation_Weekday_Morning)
+            hour in 12..16 -> getString(R.string.Motivation_Weekday_Afternoon)
+            hour in 17..20 -> getString(R.string.Motivation_Weekday_Night)
+            else -> getString(R.string.Motivation_Weekday_Midnight)
         }
 
         binding.motivations.text = motivation

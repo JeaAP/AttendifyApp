@@ -86,8 +86,8 @@
         sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
-
     </string>
+
     <string name="xi_rpl_2">XI RPL 2</string>
     <string name="screen1">Punctually</string>
     <string name="screen1desc">Punctuality in attending school\nDemonstrates responsibility and discipline.</string>
@@ -95,4 +95,13 @@
     <string name="screen2desc">Focus ensures that students excel both\n in punctuality and in their studies.</string>
     <string name="screen3">Self-Discipline</string>
     <string name="screen3desc">Self-discipline helps students manage\n their time and excel in learning.</string>
+
+    <string name="Motivasi_Friday_Evening">Terima kasih atas kerja kerasmu. Beristirahatlah, isi ulang energimu. Kamu pantas mendapatkannya.</string>
+    <string name="Motivation_Saturday">Gunakan hari ini untuk melakukan hal-hal yang kamu cintai. Selamat menikmati waktu bebasmu!</string>
+    <string name="Motivation_Sunday">Selamat menikmati liburanmu! Semoga kesempatan ini menjadi waktu istirahatmu dan momen bahagiamu!</string>
+    <string name="Motivation_Weekday_Morning">Hadapi hari dengan optimisme dan jangan lupa untuk tersenyum. Semangat, kamu bisa melakukannya!</string>
+    <string name="Motivation_Weekday_Afternoon">Tetap semangat! Setiap usahamu akan membawamu satu langkah lebih dekat ke tujuanmu. Kamu hebat.</string>
+    <string name="Motivation_Weekday_Night">Kamu sudah berusaha hari ini. Saatnya merasa bangga dengan apa yang telah kamu capai.</string>
+    <string name="Motivation_Weekday_Midnight">Usahamu hari ini tidak sia-sia. Terima kasih telah berusaha hari ini. Istirahatlah, kamu telah melakukan yang terbaik.</string>
+
 </resources>

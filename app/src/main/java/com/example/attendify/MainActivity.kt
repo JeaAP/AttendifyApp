@@ -159,10 +159,13 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
                     setupGeofence()
                     isInsideGeofence = isUserInsideGeofence(userLatitude, userLongitude)
 
-                    val locationMessage = if (isInsideGeofence) {
+                    val locationMessage =
+                    if (isInsideGeofence) {
                         "Anda berada di wilayah SMKN 24 Jakarta"
-                    } else {
+                    } else if (!isInsideGeofence){
                         "Anda berada di luar wilayah SMKN 24 Jakarta"
+                    } else {
+                        "Loading location..."
                     }
                     val homeFragment = supportFragmentManager.findFragmentById(R.id.frameLayout) as? HomeFragment
                     homeFragment?.updateLocationText(locationMessage)
