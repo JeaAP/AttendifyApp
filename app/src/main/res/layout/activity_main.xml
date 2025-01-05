@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             app:menu="@menu/bottom_navigation"
-            app:itemIconTint="@color/white"
+            app:itemIconTint="@color/bottom_navigation_colors"
             app:itemIconSize="28dp"
             app:labelVisibilityMode="unlabeled"
             app:elevation="0dp"/>
