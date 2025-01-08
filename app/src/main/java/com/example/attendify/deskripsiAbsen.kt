@@ -49,7 +49,7 @@ class deskripsiAbsen : AppCompatActivity() {
                 Snackbar.make(binding.root, "Please take a photo first!", Snackbar.LENGTH_SHORT).show()
             } else {
                 llPhoto.visibility = View.GONE
-                llSendMessage.visibility = View.VISIBLE
+                llFeelings.visibility = View.VISIBLE
 //                llFeelings.visibility = View.VISIBLE
             }
         }
@@ -59,8 +59,8 @@ class deskripsiAbsen : AppCompatActivity() {
             if (perasaan.isEmpty()) {
                 Snackbar.make(binding.root, "Please describe your day!", Snackbar.LENGTH_SHORT).show()
             } else {
-                llSendMessage.visibility = View.GONE
-                llFeelings.visibility = View.VISIBLE
+                llFeelings.visibility = View.GONE
+                llSendMessage.visibility = View.VISIBLE
             }
         }
 
