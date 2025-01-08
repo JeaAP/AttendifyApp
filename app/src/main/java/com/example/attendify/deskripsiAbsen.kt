@@ -50,6 +50,7 @@ class deskripsiAbsen : AppCompatActivity() {
             } else {
                 llPhoto.visibility = View.GONE
                 llSendMessage.visibility = View.VISIBLE
+//                llFeelings.visibility = View.VISIBLE
             }
         }
 

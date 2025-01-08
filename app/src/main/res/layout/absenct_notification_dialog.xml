@@ -14,12 +14,12 @@
 
         <ImageView
             android:id="@+id/cancelImage"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:paddingEnd="12dp"
             android:src="@drawable/outline_cancel_24"
-            android:layout_margin="8dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            />
 
         <LinearLayout
             android:id="@+id/PopupLayout"

@@ -65,17 +65,17 @@ class HomeFragment : Fragment() {
         set(Calendar.MINUTE, 0)
     }
     private val jamIzin = Calendar.getInstance().apply {
-        set(Calendar.HOUR_OF_DAY, 7)
+        set(Calendar.HOUR_OF_DAY, 15)
         set(Calendar.MINUTE, 0)
     }
+
+    //WAKTU TELAT (TAMBAHAN KALAU MAU)
 
     private val remainingTimeInMinutes = ((cutOffTimeMorning.timeInMillis - calendar.timeInMillis) / 60000).toInt()
 
     private val currentTimeFormatted = SimpleDateFormat("HH:mm", Locale.getDefault()).format(calendar.time)
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
     //======WAKTU========
-
-    private var isDialogShown = false
 
     interface FragmentInteractionListener {
         //        fun onButtonClicked()
@@ -150,11 +150,8 @@ class HomeFragment : Fragment() {
                 timeText.text = remainingTimeText
 
                 //MUNCUL NOTIFIKASI
-                if (!dbHelperAbsensi.hasAbsensiToday(today)){
-                    if (!isDialogShown) {
-                        dialog.show()
-                        isDialogShown = true
-                    }
+                if (!dbHelperAbsensi.hasAbsensiToday(today)) {
+                    dialog.show()
                 }
             }
         }

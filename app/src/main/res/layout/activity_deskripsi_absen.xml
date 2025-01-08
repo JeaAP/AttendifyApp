@@ -59,7 +59,7 @@
                 android:id="@+id/fotoAbsen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitCenter" />
+                android:scaleType="centerCrop" />
             <TextView
                 android:id="@+id/textAbsen"
                 android:layout_width="wrap_content"
@@ -81,39 +81,6 @@
             android:layout_marginTop="18dp"
             android:background="@drawable/rectangle"
             android:text="Next"
-            app:backgroundTint="@color/text"/>
-
-    </LinearLayout>
-
-    <!-- Bagian untuk mengirim pesan -->
-    <LinearLayout
-        android:id="@+id/llSendMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_below="@id/head">
-
-        <EditText
-            android:id="@+id/edDescription"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="24dp"
-            android:padding="12dp"
-            android:background="@drawable/ed"
-            android:hint="Whatever about today..."
-            android:textSize="16sp"
-            android:textColorHint="#A9A9A9"
-            android:textColor="#000000"
-            android:gravity="top"/>
-
-        <Button
-            android:id="@+id/btnSend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@drawable/rectangle"
-            android:text="Send"
             app:backgroundTint="@color/text"/>
 
     </LinearLayout>
@@ -186,6 +153,39 @@
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <!-- Bagian untuk mengirim pesan -->
+    <LinearLayout
+        android:id="@+id/llSendMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_below="@id/head">
+
+        <EditText
+            android:id="@+id/edDescription"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="24dp"
+            android:padding="12dp"
+            android:background="@drawable/ed"
+            android:hint="Whatever about today..."
+            android:textSize="16sp"
+            android:textColorHint="#A9A9A9"
+            android:textColor="#000000"
+            android:gravity="top"/>
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/rectangle"
+            android:text="Send"
+            app:backgroundTint="@color/text"/>
 
     </LinearLayout>
 

@@ -36,8 +36,8 @@ class IzinActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val llPhoto = binding.llPhoto
-        val llSendMessage = binding.llSendMessage
         val llIzin = binding.llIzin
+        val llSendMessage = binding.llSendMessage
 
         var keterangan: String? = null
 

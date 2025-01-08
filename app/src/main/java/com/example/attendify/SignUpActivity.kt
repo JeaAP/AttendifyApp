@@ -85,7 +85,7 @@ class SignUpActivity : AppCompatActivity() {
             binding.sgCPassword.setSelection(binding.sgCPassword.text.length)
         }
 
-        binding.txtLogin.setOnClickListener {
+        binding.loginLayout.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }

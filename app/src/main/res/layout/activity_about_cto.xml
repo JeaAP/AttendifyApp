@@ -20,7 +20,7 @@
         android:id="@+id/head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About"
+        android:text="About Attendify Team"
         android:textSize="23sp"
         android:layout_toEndOf="@+id/back"
         android:layout_marginTop="36dp"
@@ -35,7 +35,9 @@
         android:layout_below="@id/back"
         android:layout_marginTop="12dp"
         android:text="Leader"
+        android:textStyle="bold"
         android:textColor="@color/black"
+        android:textSize="18sp"
         android:fontFamily="@font/inter_medium"/>
 
     <androidx.cardview.widget.CardView
@@ -53,21 +55,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp">
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/image1"
+                android:id="@+id/imageDika"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/black"
-                app:cardCornerRadius="2dp"
+                app:cardCornerRadius="100dp"
                 android:elevation="0dp">
                 <ImageView
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_centerVertical="true"
-                    android:layout_margin="0.9dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/andhika"/>
             </androidx.cardview.widget.CardView>
@@ -76,14 +77,14 @@
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/image1"
+                android:layout_toEndOf="@id/imageDika"
                 android:layout_marginStart="12dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="Andhika Dani Natawidjaja"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:fontFamily="@font/inter_medium"/>
@@ -106,7 +107,7 @@
             </LinearLayout>
 
         </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView> <!--Card Dika-->
 
     <TextView
         android:id="@+id/teamText"
@@ -117,6 +118,8 @@
         android:layout_marginTop="12dp"
         android:text="Team"
         android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"
         android:fontFamily="@font/inter_medium"/>
 
     <ScrollView
@@ -143,21 +146,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="16dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp">
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/imageJean"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/black"
-                        app:cardCornerRadius="2dp"
+                        app:cardCornerRadius="100dp"
                         android:elevation="0dp">
                         <ImageView
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_centerVertical="true"
-                            android:layout_margin="0.9dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/jean"/>
                     </androidx.cardview.widget.CardView>
@@ -173,7 +175,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:text="Jean Arby Putra"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:fontFamily="@font/inter_medium"/>
