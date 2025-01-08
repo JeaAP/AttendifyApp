@@ -108,7 +108,7 @@ class IzinActivity : AppCompatActivity() {
 
     private fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
         val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream)
         return stream.toByteArray()
     }
 

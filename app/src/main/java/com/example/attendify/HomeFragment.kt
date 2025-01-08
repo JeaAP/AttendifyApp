@@ -39,7 +39,6 @@ class HomeFragment : Fragment() {
 
     private var listener: FragmentInteractionListener? = null
 
-
 //    private var currentLocation: String? = null
 
     //======WAKTU========
@@ -202,7 +201,7 @@ class HomeFragment : Fragment() {
                         val intent = Intent(this@HomeFragment.requireContext(), IzinActivity::class.java)
                         startActivity(intent)
                     } else {
-                        Toast.makeText(context, "Anda tidak bisa melakukan izin setelah pukul 07:00", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Anda tidak bisa melakukan izin setelah pukul 15:00", Toast.LENGTH_LONG).show()
                     }
                 } else if (absensiStatus == "Hadir"){
                     Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()

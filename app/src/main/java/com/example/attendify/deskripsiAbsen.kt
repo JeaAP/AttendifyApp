@@ -86,7 +86,7 @@ class deskripsiAbsen : AppCompatActivity() {
 
     private fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
         val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream)
         return stream.toByteArray()
     }
 
