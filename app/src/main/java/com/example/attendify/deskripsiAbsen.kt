@@ -50,23 +50,18 @@ class deskripsiAbsen : AppCompatActivity() {
             } else {
                 llPhoto.visibility = View.GONE
                 llFeelings.visibility = View.VISIBLE
-//                llFeelings.visibility = View.VISIBLE
             }
         }
 
-        binding.btnSend.setOnClickListener {
-            val perasaan = binding.edDescription.text.toString().trim()
-            if (perasaan.isEmpty()) {
-                Snackbar.make(binding.root, "Please describe your day!", Snackbar.LENGTH_SHORT).show()
-            } else {
-                llFeelings.visibility = View.GONE
-                llSendMessage.visibility = View.VISIBLE
-            }
+        binding.Happy.setOnClickListener {
+            navigateToSendMessage("Happy")
         }
-
-        binding.Happy.setOnClickListener { saveAbsensi("Happy") }
-        binding.Good.setOnClickListener { saveAbsensi("Good") }
-        binding.Bad.setOnClickListener { saveAbsensi("Bad") }
+        binding.Good.setOnClickListener {
+            navigateToSendMessage("Good")
+        }
+        binding.Bad.setOnClickListener {
+            navigateToSendMessage("Bad")
+        }
 
         binding.cardImage.setOnClickListener {
             openCamera()
@@ -93,6 +88,19 @@ class deskripsiAbsen : AppCompatActivity() {
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
         return stream.toByteArray()
+    }
+
+    private fun navigateToSendMessage(mood: String) {
+        binding.llFeelings.visibility = View.GONE
+        binding.llSendMessage.visibility = View.VISIBLE
+        binding.btnSend.setOnClickListener {
+            val description = binding.edDescription.text.toString().trim()
+            if (description.isNotEmpty()) {
+                saveAbsensi(mood)
+            } else {
+                Snackbar.make(binding.root, "Please describe your day!", Snackbar.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun saveAbsensi(mood: String) {
