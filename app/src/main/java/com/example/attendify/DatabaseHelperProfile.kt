@@ -121,15 +121,23 @@ class DatabaseHelperProfile(context: Context) : SQLiteOpenHelper(context, DATABA
 //        return stream.toByteArray()
 //    }
 
-   fun imageViewToByte(imageView: ImageView): ByteArray? {
-        imageView.drawable?.let {
-            val bitmap = (it as BitmapDrawable).bitmap
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-            return byteArrayOutputStream.toByteArray()
+    fun imageViewToByte(img: ImageView): ByteArray {
+        val bitmap: Bitmap = if (img.drawable is BitmapDrawable) {
+            (img.drawable as BitmapDrawable).bitmap
+        } else {
+            val vectorDrawable = img.drawable
+            val width = vectorDrawable.intrinsicWidth
+            val height = vectorDrawable.intrinsicHeight
+            Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).apply {
+                val canvas = Canvas(this)
+                vectorDrawable.setBounds(0, 0, width, height)
+                vectorDrawable.draw(canvas)
+            }
         }
-        return null
-    }
 
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream)
+        return stream.toByteArray()
+    }
 
 }
