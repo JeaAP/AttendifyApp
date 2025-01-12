@@ -104,7 +104,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="24dp"
+                android:padding="12dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp">
 
@@ -126,28 +126,39 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/Happy"
+                        android:id="@+id/Sad"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="8dp"
-                        android:src="@drawable/happyemote"
-                        android:background="@drawable/rounded_button"/>
+                        android:src="@drawable/sademote"/>
+
+                    <ImageView
+                        android:id="@+id/notGood"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/confusedemote" />
 
                     <ImageView
                         android:id="@+id/Good"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="8dp"
-                        android:background="@drawable/rounded_button"
-                        android:src="@drawable/goodemote" />
+                        android:src="@drawable/smileemote"/>
 
                     <ImageView
-                        android:id="@+id/Bad"
+                        android:id="@+id/Happy"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="8dp"
-                        android:src="@drawable/bademote"
-                        android:background="@drawable/rounded_button"/>
+                        android:src="@drawable/salutingemote" />
+
+                    <ImageView
+                        android:id="@+id/Anggry"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/angryemote"/>
 
                 </LinearLayout>
 

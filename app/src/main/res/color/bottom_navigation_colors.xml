@@ -2,5 +2,5 @@
 <selector
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="@color/MikadoYellow" android:state_checked="true"/> <!-- Warna terpilih -->
-    <item android:color="@color/white"/> <!-- Default color -->
+    <item android:color="@color/black"/> <!-- Default color -->
 </selector>

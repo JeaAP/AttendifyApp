@@ -8,16 +8,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="29dp"
-        android:backgroundTint="@color/OxfordBlue"
-        app:cardCornerRadius="0dp"/>
-
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="26dp"
         android:background="@color/white" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -25,9 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/OxfordBlue"
-        android:outlineProvider="none"
+        android:background="@color/white"
         app:fabAlignmentMode="center"
+        app:elevation="0dp"
         app:fabCradleMargin="12dp"
         app:fabCradleRoundedCornerRadius="36dp">
 
@@ -39,7 +34,8 @@
             app:menu="@menu/bottom_navigation"
             app:itemIconTint="@color/bottom_navigation_colors"
             app:itemIconSize="28dp"
-            app:labelVisibilityMode="unlabeled"
+            app:labelVisibilityMode="labeled"
+            app:itemTextColor="@color/bottom_navigation_colors"
             app:elevation="0dp"/>
 
     </com.google.android.material.bottomappbar.BottomAppBar>
@@ -51,7 +47,7 @@
         android:contentDescription="@string/fab_for_scan_qr_code"
         app:layout_anchor="@id/bottomAppBar"
         app:layout_anchorGravity="center"
-        android:src="@drawable/baseline_qr_code_scanner_24"
+        android:src="@drawable/qr_code"
         app:tint="@android:color/white"
         app:backgroundTint="@color/MikadoYellow"
         app:maxImageSize="28dp" />

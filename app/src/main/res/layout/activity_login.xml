@@ -37,6 +37,7 @@
     </RelativeLayout>
 
     <ImageView
+        android:id="@+id/image1"
         android:layout_width="230dp"
         android:layout_height="230dp"
         android:src="@drawable/koreanguy"
@@ -66,6 +67,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
+        android:layout_marginTop="-20dp"
+        android:layout_below="@id/image1"
         android:layout_alignParentBottom="true">
 
         <RelativeLayout

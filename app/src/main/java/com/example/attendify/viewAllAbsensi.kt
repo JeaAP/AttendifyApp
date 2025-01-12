@@ -83,10 +83,10 @@ class viewAllAbsensi : AppCompatActivity() {
 
         val drawableRes = when (absensi.keterangan) {
             "Hadir" -> when (absensi.mood) {
-                "Happy" -> R.drawable.happyemote
-                "Good" -> R.drawable.goodemote
-                "Bad" -> R.drawable.bademote
-                else -> R.drawable.goodemote
+                "Happy" -> R.drawable.salutingemote
+                "Good" -> R.drawable.smileemote
+                "Bad" -> R.drawable.smileemote
+                else -> R.drawable.sademote
             }
             "Sakit" -> R.drawable.outline_sick_24
             else -> R.drawable.izin
@@ -98,7 +98,7 @@ class viewAllAbsensi : AppCompatActivity() {
             val bitmap = BitmapFactory.decodeByteArray(absensi.foto, 0, absensi.foto.size)
             descriptionPhoto.setImageBitmap(bitmap)
         } else {
-            descriptionPhoto.setImageResource(R.drawable.round_person_24)
+            descriptionPhoto.setImageResource(R.drawable.profile___iconly_pro)
         }
 
         dialog.show()

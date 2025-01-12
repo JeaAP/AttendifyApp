@@ -33,10 +33,10 @@ class AbsensiAdapter(
 
         val drawableRes = when (absensi.keterangan) {
             "Hadir" -> when (absensi.mood) {
-                "Happy" -> R.drawable.happyemote
-                "Good" -> R.drawable.goodemote
-                "Bad" -> R.drawable.bademote
-                else -> R.drawable.goodemote
+                "Happy" -> R.drawable.salutingemote
+                "Good" -> R.drawable.smileemote
+                "Bad" -> R.drawable.sademote
+                else -> R.drawable.smileemote
             }
             "Sakit" -> R.drawable.outline_sick_24
             else -> R.drawable.izin

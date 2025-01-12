@@ -193,24 +193,29 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.btnIzin.setOnClickListener {
-            if(!isWeekend){
-                val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
-                if (absensiStatus == null) { // Jika hari ini belum absen
-                    if(calendar.before(jamIzin)){
-                        val intent = Intent(this@HomeFragment.requireContext(), IzinActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(context, "Anda tidak bisa melakukan izin setelah pukul 15:00", Toast.LENGTH_LONG).show()
-                    }
-                } else if (absensiStatus == "Hadir"){
-                    Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(context, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
-                }
-            } else {
-                Toast.makeText(context, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
-            }
+//        binding.btnIzin.setOnClickListener {
+//            if(!isWeekend){
+//                val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
+//                if (absensiStatus == null) { // Jika hari ini belum absen
+//                    if(calendar.before(jamIzin)){
+//                        val intent = Intent(this@HomeFragment.requireContext(), IzinActivity::class.java)
+//                        startActivity(intent)
+//                    } else {
+//                        Toast.makeText(context, "Anda tidak bisa melakukan izin setelah pukul 15:00", Toast.LENGTH_LONG).show()
+//                    }
+//                } else if (absensiStatus == "Hadir"){
+//                    Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
+//                } else {
+//                    Toast.makeText(context, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
+//                }
+//            } else {
+//                Toast.makeText(context, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
+//            }
+//        }
+
+        binding.lainnya.setOnClickListener {
+            val intent = Intent(this@HomeFragment.requireContext(), coomingSoon::class.java)
+            startActivity(intent)
         }
 
         binding.cardSchedule.setOnClickListener {
@@ -220,10 +225,10 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.linkText.setOnClickListener {
-            val intent = Intent(this@HomeFragment.requireContext(), viewAllAbsensi::class.java)
-            startActivity(intent)
-        }
+//        binding.linkText.setOnClickListener {
+//            val intent = Intent(this@HomeFragment.requireContext(), viewAllAbsensi::class.java)
+//            startActivity(intent)
+//        }
 
         val absensiList = dbHelperAbsensi.getLimitedAbsensi()
 
@@ -244,11 +249,11 @@ class HomeFragment : Fragment() {
         }
 
         if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
-            binding.location.text = "Anda berada di wilayah SMKN 24 Jakarta"
+            binding.locatioan.text = "Anda berada di wilayah SMKN 24 Jakarta"
         } else if (listener?.isUserInGeofence() == false) {
-            binding.location.text = "Anda berada di luar wilayah SMKN 24 Jakarta"
+            binding.locatioan.text = "Anda berada di luar wilayah SMKN 24 Jakarta"
         } else {
-            binding.location.text = "Loading location..."
+            binding.locatioan.text = "Loading location..."
         }
 
         return binding.root
@@ -284,7 +289,7 @@ class HomeFragment : Fragment() {
     }
 
     fun updateLocationText(text: String) {
-        binding.location.text = text
+        binding.locatioan.text = text
 //        currentLocation = text
     }
 
@@ -313,8 +318,8 @@ class HomeFragment : Fragment() {
     private fun loadProfileData() {
         val profile = dbHelperProfile.getProfile()
         if (profile != null) {
-            binding.accountName.text = profile.nama
-            binding.accountClass.text = profile.kelas
+//            binding.accountName.text = profile.nama
+//            binding.accountClass.text = profile.kelas
             binding.username.text = "Hi ${profile.username},"
             setGreetings()
             setMotivations()
@@ -325,12 +330,12 @@ class HomeFragment : Fragment() {
             if (bitmap != null) {
                 binding.FtProfile.setImageBitmap(bitmap)
             } else {
-                binding.FtProfile.setImageResource(R.drawable.round_person_24)
+                binding.FtProfile.setImageResource(R.drawable.profile___iconly_pro)
             }
 
         } else {
-            binding.accountName.text = "[Nama tidak ditemukan]"
-            binding.accountClass.text = "[Kelas tidak ditemukan]"
+//            binding.accountName.text = "[Nama tidak ditemukan]"
+//            binding.accountClass.text = "[Kelas tidak ditemukan]"
             binding.username.text = "Hi [Nama],"
             binding.greetings.text = "[Greetings]"
             binding.motivations.text = "[Motivasi]"

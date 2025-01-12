@@ -2,14 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home"
-        android:icon="@drawable/baseline_home_filled_24"
-        android:title="home"/>
+        android:icon="@drawable/rounded_home_24"
+        android:title="Home"/>
+    <item
+        android:id="@+id/abcent"
+        android:icon="@drawable/round_insert_chart_outlined_24"
+        android:title="Absensi"/>
     <item
         android:id="@+id/middle"
         android:title=""
         android:enabled="false"/>
     <item
+        android:id="@+id/calender"
+        android:icon="@drawable/outline_calendar_month_24"
+        android:title="Jadwal"/>
+    <item
         android:id="@+id/people"
-        android:icon="@drawable/round_people_alt_24"
-        android:title="people"/>
+        android:icon="@drawable/round_people_outline_24"
+        android:title="About"/>
 </menu>

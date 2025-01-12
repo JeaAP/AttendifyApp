@@ -53,14 +53,20 @@ class deskripsiAbsen : AppCompatActivity() {
             }
         }
 
+        binding.Anggry.setOnClickListener {
+            navigateToSendMessage("Anggry")
+        }
         binding.Happy.setOnClickListener {
             navigateToSendMessage("Happy")
         }
         binding.Good.setOnClickListener {
             navigateToSendMessage("Good")
         }
-        binding.Bad.setOnClickListener {
-            navigateToSendMessage("Bad")
+        binding.notGood.setOnClickListener {
+            navigateToSendMessage("Not Good")
+        }
+        binding.Sad.setOnClickListener {
+            navigateToSendMessage("Sad")
         }
 
         binding.cardImage.setOnClickListener {
