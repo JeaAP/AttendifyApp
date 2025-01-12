@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -111,6 +112,7 @@ class LoginActivity : AppCompatActivity() {
         val btnDone = dialogView.findViewById<CardView>(R.id.btnAbcent)
         val btnShowPass = dialogView.findViewById<ImageView>(R.id.showPass)
         val btnShowConfirmPass = dialogView.findViewById<ImageView>(R.id.showConfirmPass)
+        val judul = dialogView.findViewById<TextView>(R.id.head)
 
         dialog.setView(dialogView)
 
@@ -129,6 +131,7 @@ class LoginActivity : AppCompatActivity() {
                 if (userExists) {
                     enterNISN.visibility = View.GONE
                     enterNewPass.visibility = View.VISIBLE
+                    judul.text = "Reset Password"
                 } else {
                     Toast.makeText(this, "NISN tidak ditemukan!", Toast.LENGTH_SHORT).show()
                 }
