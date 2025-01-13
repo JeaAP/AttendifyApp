@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
     private val geofenceList = mutableListOf<Geofence>()
     private val GEOFENCE_ID = "MY_GEOFENCE_ID"
     private val GEOFENCE_RADIUS = 100f // in meters
-    private val GEOFENCE_LATITUDE = -6.313615160801881
-    private val GEOFENCE_LONGITUDE = 106.88713091541187
+    private val GEOFENCE_LATITUDE = -6.321740095551176
+    private val GEOFENCE_LONGITUDE = 106.89906194895687
     //Koordinat hotel smkn 24
 //    -6.321740095551176
 //    106.89906194895687
@@ -106,6 +106,14 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
                         replaceFragment(HomeFragment())
                         true
                     }
+                    R.id.abcent -> {
+                        replaceFragment(AbsensiFragment())
+                        true
+                    }
+//                    R.id.calender -> {
+//                        replaceFragment(CalenderFragment())
+//                        true
+//                    }
                     R.id.people -> {
                         replaceFragment(PeopleFragment())
                         true
@@ -283,7 +291,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
 
         try {
             geofencingClient.addGeofences(getGeofencingRequest(), pendingIntent)
-                .addOnCompleteListener {
+//                .addOnCompleteListener {
 //                    if (it.isSuccessful) {
 //                        Toast.makeText(this, "Geofence added", Toast.LENGTH_SHORT).show()
 //                    } else {
@@ -293,7 +301,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
 //                            Toast.LENGTH_SHORT
 //                        ).show()
 //                    }
-                }
+//                }
         } catch (e: SecurityException) {
             Toast.makeText(this, "SecurityException: ${e.message}", Toast.LENGTH_SHORT).show()
             Log.d("Geofence", "SecurityException: ${e.message}")
