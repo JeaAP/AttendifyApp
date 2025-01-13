@@ -1,41 +1,30 @@
 package com.example.attendify
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.Gravity
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.attendify.databinding.ActivityViewAllAbsensiBinding
+import com.example.attendify.databinding.FragmentAbsensiBinding
 
-class viewAllAbsensi : AppCompatActivity() {
+class AbsensiFragment : Fragment() {
+
+    private lateinit var binding: FragmentAbsensiBinding
     private lateinit var databaseHelper: DatabaseHelperAbsensi
-    private lateinit var binding: ActivityViewAllAbsensiBinding
 
-    @SuppressLint("MissingSuperCall")
-    override fun onBackPressed() {
-//        super.onBackPressed()
-//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityViewAllAbsensiBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        databaseHelper = DatabaseHelperAbsensi(this)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentAbsensiBinding.inflate(layoutInflater)
+        databaseHelper = DatabaseHelperAbsensi(this@AbsensiFragment.requireContext())
         databaseHelper.deleteOldAbsensi()
 
         val absensiList = databaseHelper.getAllAbsensi()
@@ -44,7 +33,8 @@ class viewAllAbsensi : AppCompatActivity() {
             showDetailPopup(absensi)
         }
 
-        binding.activityContent.layoutManager = LinearLayoutManager(this)
+        binding.activityContent.layoutManager =
+            LinearLayoutManager(this@AbsensiFragment.requireContext())
         binding.activityContent.adapter = adapter
 
         if (adapter.itemCount == 0) {
@@ -54,13 +44,14 @@ class viewAllAbsensi : AppCompatActivity() {
         }
 
         binding.back.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this@AbsensiFragment.requireContext(), MainActivity::class.java)
             startActivity(intent)
         }
+        return binding.root
     }
 
     private fun showDetailPopup(absensi: Absensi) {
-        val dialog = Dialog(this)
+        val dialog = Dialog(this@AbsensiFragment.requireContext())
         dialog.setContentView(R.layout.detail_item)
         dialog.window?.apply{
             setBackgroundDrawableResource(android.R.color.transparent)
@@ -103,4 +94,5 @@ class viewAllAbsensi : AppCompatActivity() {
 
         dialog.show()
     }
+
 }

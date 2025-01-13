@@ -193,7 +193,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-//        binding.btnIzin.setOnClickListener {
+        binding.btnIzin.setOnClickListener {
+            val intent = Intent(this@HomeFragment.requireContext(), coomingSoon::class.java)
+            startActivity(intent)
 //            if(!isWeekend){
 //                val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
 //                if (absensiStatus == null) { // Jika hari ini belum absen
@@ -211,7 +213,7 @@ class HomeFragment : Fragment() {
 //            } else {
 //                Toast.makeText(context, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
 //            }
-//        }
+        }
 
         binding.lainnya.setOnClickListener {
             val intent = Intent(this@HomeFragment.requireContext(), coomingSoon::class.java)
