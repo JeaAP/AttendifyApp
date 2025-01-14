@@ -1,7 +1,6 @@
 package com.example.attendify
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -15,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.attendify.databinding.ActivityLoginBinding
 
-class LoginActivity : AppCompatActivity() {
+class ActivityLogin : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var db: DatabaseHelperLogin
 
@@ -67,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         binding.registerLayout.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
+            val intent = Intent(this, ActivitySignUp::class.java)
             startActivity(intent)
         }
 
@@ -85,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
                     apply()
                 }
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
-                startActivity(Intent(this, CreateProfileActivity::class.java))
+                startActivity(Intent(this, ActivityCreateProfile::class.java))
                 finish()
             }
             1 -> Toast.makeText(this, "NISN tidak ditemukan", Toast.LENGTH_LONG).show()

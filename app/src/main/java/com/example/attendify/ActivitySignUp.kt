@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.attendify.databinding.ActivitySignUpBinding
 
-class SignUpActivity : AppCompatActivity() {
+class ActivitySignUp : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var db: DatabaseHelperLogin
 
@@ -27,7 +27,7 @@ class SignUpActivity : AppCompatActivity() {
         // Periksa apakah database penuh
         if (db.isDatabaseFull()) {
             Toast.makeText(this, "Anda sudah pernah membuat akun sebelumnya", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, ActivityLogin::class.java)
             startActivity(intent)
             finish()
         }
@@ -86,7 +86,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         binding.loginLayout.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, ActivityLogin::class.java)
             startActivity(intent)
         }
     }
@@ -95,12 +95,12 @@ class SignUpActivity : AppCompatActivity() {
         val insertedRowId = db.insertUser(username, password)
         if (insertedRowId != -1L) {
             Toast.makeText(this, "Pendaftaran Berhasil", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, ActivityLogin::class.java)
             startActivity(intent)
             finish()
         } else {
             Toast.makeText(this, "Anda sudah pernah membuat akun sebelumnya", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, ActivityLogin::class.java)
             startActivity(intent)
             finish()
         }

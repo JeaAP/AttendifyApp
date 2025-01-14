@@ -5,15 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.attendify.databinding.ActivityWebViewBinding
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class WebViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWebViewBinding
@@ -41,7 +35,7 @@ class WebViewActivity : AppCompatActivity() {
         }
 
         binding.done.setOnClickListener {
-            val intent = Intent(this, deskripsiAbsen::class.java)
+            val intent = Intent(this, ActivityDeskripsiAbsen::class.java)
             startActivity(intent)
             finish()
         }

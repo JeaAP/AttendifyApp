@@ -8,14 +8,11 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.attendify.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -27,20 +24,17 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListener {
+class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var dbHelperAbsensi: DatabaseHelperAbsensi
-    private val homeFragment: HomeFragment by lazy {
-        supportFragmentManager.findFragmentById(R.id.frameLayout) as HomeFragment
+    private val fragmentHome: FragmentHome by lazy {
+        supportFragmentManager.findFragmentById(R.id.frameLayout) as FragmentHome
     }
 
     private lateinit var geofencingClient: GeofencingClient
@@ -103,11 +97,11 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.home -> {
-                        replaceFragment(HomeFragment())
+                        replaceFragment(FragmentHome())
                         true
                     }
                     R.id.abcent -> {
-                        replaceFragment(AbsensiFragment())
+                        replaceFragment(FragmentAbsensi())
                         true
                     }
 //                    R.id.calender -> {
@@ -115,16 +109,16 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
 //                        true
 //                    }
                     R.id.people -> {
-                        replaceFragment(PeopleFragment())
+                        replaceFragment(FragmentPeople())
                         true
                     }
                     else -> false
                 }
             }
-            replaceFragment(HomeFragment()) // Set HomeFragment as the default fragment
+            replaceFragment(FragmentHome()) // Set HomeFragment as the default fragment
             if (savedInstanceState == null) {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, HomeFragment())
+                    .replace(R.id.frameLayout, FragmentHome())
                     .commitNow() // Ini akan memastikan bahwa fragment ditambahkan segera.
             }
 
@@ -134,27 +128,27 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
                         val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
                         if (absensiStatus == null) { // Jika hari ini belum absen
                             if (now.before(cutOffTimeEarlyMorning)) {
-                                Toast.makeText(this@MainActivity, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@ActivityMain, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
                             } else if (now.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
                                 if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
-                                    val intent = Intent(this@MainActivity, Scan::class.java)
+                                    val intent = Intent(this@ActivityMain, Scan::class.java)
                                     startActivity(intent)
                                 } else {
-                                    Toast.makeText(this@MainActivity, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(this@ActivityMain, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
                                 }
                             } else {
-                                Toast.makeText(this@MainActivity, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@ActivityMain, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
                             }
                         } else if(absensiStatus == "Hadir") {
-                            Toast.makeText(this@MainActivity, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@ActivityMain, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
                         } else {
-                            Toast.makeText(this@MainActivity, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@ActivityMain, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
                         }
                     } else {
-                        Toast.makeText(this@MainActivity, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@ActivityMain, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
                     }
                 } else {
-                    Toast.makeText(this@MainActivity, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@ActivityMain, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: Exception) {
@@ -179,8 +173,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
                     } else {
                         "Loading location..."
                     }
-                    val homeFragment = supportFragmentManager.findFragmentById(R.id.frameLayout) as? HomeFragment
-                    homeFragment?.updateLocationText(locationMessage)
+                    val fragmentHome = supportFragmentManager.findFragmentById(R.id.frameLayout) as? FragmentHome
+                    fragmentHome?.updateLocationText(locationMessage)
                 }
             }
         }
@@ -219,7 +213,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.FragmentInteractionListen
 
     override fun updateLocationText(text: String) {
         // Ini akan dipanggil jika Anda perlu memperbarui teks dari MainActivity
-        homeFragment.updateLocationText(text)
+        fragmentHome.updateLocationText(text)
     }
 
     //GEOFENCING

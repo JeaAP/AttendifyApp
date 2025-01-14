@@ -4,22 +4,19 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.canhub.cropper.CropImage
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
 import com.example.attendify.databinding.ActivityEditProfileBinding
 import com.squareup.picasso.Picasso
-import androidx.core.app.ActivityCompat
 
-class editProfile : AppCompatActivity() {
+class ActivityEditProfile : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var dbHelper: DatabaseHelperProfile
     val CAMERA_REQUEST = 100
@@ -53,7 +50,7 @@ class editProfile : AppCompatActivity() {
         loadProfileData()
 
         binding.back.setOnClickListener {
-            val intent = Intent(this, PersonalInfoActivity::class.java)
+            val intent = Intent(this, ActivityPersonalInfo::class.java)
             startActivity(intent)
         }
 
@@ -168,7 +165,7 @@ class editProfile : AppCompatActivity() {
         Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
 
         // Return to previous activity
-        val intent = Intent(this, PersonalInfoActivity::class.java)
+        val intent = Intent(this, ActivityPersonalInfo::class.java)
         startActivity(intent)
     }
 

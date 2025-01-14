@@ -21,10 +21,7 @@ import androidx.camera.core.resolutionselector.ResolutionStrategy
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.attendify.databinding.ActivityScan2Binding
-import com.example.attendify.databinding.ActivityScanBinding
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
@@ -69,7 +66,7 @@ class Scan : AppCompatActivity() {
         requestPermissionLauncher.launch(Manifest.permission.CAMERA)
 
         binding.back.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, ActivityMain::class.java)
             startActivity(intent)
         }
     }

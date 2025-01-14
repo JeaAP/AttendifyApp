@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.attendify.databinding.ActivityCreateProfileBinding
 
-class CreateProfileActivity : AppCompatActivity() {
+class ActivityCreateProfile : AppCompatActivity() {
     private lateinit var binding: ActivityCreateProfileBinding
     private lateinit var db: DatabaseHelperProfile
     private lateinit var dbLogin: DatabaseHelperLogin
@@ -59,10 +59,10 @@ class CreateProfileActivity : AppCompatActivity() {
                 id: Long
             ) {
                 if (position == 0) {
-                    Toast.makeText(this@CreateProfileActivity, "Harap pilih kelas.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ActivityCreateProfile, "Harap pilih kelas.", Toast.LENGTH_SHORT).show()
                 } else {
                     val selectedClass = kelasArray[position]
-                    Toast.makeText(this@CreateProfileActivity, "Kelas dipilih: $selectedClass", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ActivityCreateProfile, "Kelas dipilih: $selectedClass", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -108,7 +108,7 @@ class CreateProfileActivity : AppCompatActivity() {
         db.upsertProfile(profile)
         Toast.makeText(this, "Profil berhasil dibuat.", Toast.LENGTH_SHORT).show()
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, ActivityMain::class.java)
         startActivity(intent)
         finish()
     }

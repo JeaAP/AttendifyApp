@@ -25,13 +25,13 @@
         android:theme="@style/Theme.Attendify"
         tools:targetApi="31">
         <activity
-            android:name=".IzinActivity"
+            android:name=".ActivityIzin"
             android:exported="false" />
         <activity
             android:name=".GetStarted"
             android:exported="false" />
         <activity
-            android:name=".NavigationActivity"
+            android:name=".ActivityNavigation"
             android:exported="false" />
         <activity
             android:name=".aboutCEO"
@@ -46,10 +46,10 @@
             android:name=".WebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".coomingSoon"
+            android:name=".ActivityCoomingSoon"
             android:exported="false" />
         <activity
-            android:name=".deskripsiAbsen"
+            android:name=".ActivityDeskripsiAbsen"
             android:exported="false" />
         <activity
             android:name=".viewAllAbsensi"
@@ -58,25 +58,25 @@
             android:name=".aboutApp"
             android:exported="false" />
         <activity
-            android:name=".PersonalInfoActivity"
+            android:name=".ActivityPersonalInfo"
             android:exported="false" />
         <activity
-            android:name=".editProfile"
+            android:name=".ActivityEditProfile"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ActivityProfile"
             android:exported="false" />
         <activity
-            android:name=".ScanActivity"
+            android:name=".ActivityScan"
             android:exported="false" />
         <activity
             android:name=".Scan"
             android:exported="false" />
         <activity
-            android:name=".CreateProfileActivity"
+            android:name=".ActivityCreateProfile"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".ActivitySignUp"
             android:exported="false" />
         <activity
             android:name=".splashscreen"
@@ -88,10 +88,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".ActivityLogin"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ActivityMain"
             android:exported="false" /> <!-- CropImageActivity -->
         <activity
             android:name="com.canhub.cropper.CropImageActivity"

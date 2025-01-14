@@ -8,8 +8,6 @@ import android.provider.MediaStore
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.attendify.databinding.ActivityIzinBinding
 import com.google.android.material.snackbar.Snackbar
 import java.io.ByteArrayOutputStream
@@ -17,7 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class IzinActivity : AppCompatActivity() {
+class ActivityIzin : AppCompatActivity() {
     private lateinit var binding: ActivityIzinBinding
     private lateinit var dbHelper: DatabaseHelperAbsensi
 
@@ -42,7 +40,7 @@ class IzinActivity : AppCompatActivity() {
         var keterangan: String? = null
 
         binding.back.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, ActivityMain::class.java)
             startActivity(intent)
             finish()
         }
@@ -128,7 +126,7 @@ class IzinActivity : AppCompatActivity() {
 
         if (result != -1L) {
             Snackbar.make(binding.root, "Izin Berhasil!", Snackbar.LENGTH_SHORT).show()
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, ActivityMain::class.java)
             startActivity(intent)
             finish()
         } else {

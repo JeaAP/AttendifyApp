@@ -10,13 +10,13 @@ import com.example.attendify.databinding.FragmentPeopleBinding
 
 /**
  * A simple [Fragment] subclass.
- * Use the [PeopleFragment.newInstance] factory method to
+ * Use the [FragmentPeople.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PeopleFragment : Fragment() {
+class FragmentPeople : Fragment() {
 
     private lateinit var binding: FragmentPeopleBinding
-    private lateinit var mainActivity: MainActivity
+    private lateinit var activityMain: ActivityMain
 
     fun onBackPressed() {
 //        super.onBackPressed()
@@ -25,8 +25,8 @@ class PeopleFragment : Fragment() {
 
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
-            mainActivity = context
+        if (context is ActivityMain) {
+            activityMain = context
         } else {
             throw IllegalStateException("PeopleFragment must be attached to MainActivity")
         }
@@ -39,7 +39,7 @@ class PeopleFragment : Fragment() {
         binding = FragmentPeopleBinding.inflate(inflater)
 
         binding.back.setOnClickListener {
-            mainActivity.replaceFragment(HomeFragment())
+            activityMain.replaceFragment(FragmentHome())
         }
         binding.ceoMore.setOnClickListener {
             val intent = Intent(requireContext(), aboutCEO::class.java)

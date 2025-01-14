@@ -4,11 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.attendify.databinding.ActivityScanBinding
 
-class ScanActivity : AppCompatActivity() {
+class ActivityScan : AppCompatActivity() {
 
     private lateinit var binding:  ActivityScanBinding
 
@@ -19,7 +17,7 @@ class ScanActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.back.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, ActivityMain::class.java)
             startActivity(intent)
         }
 

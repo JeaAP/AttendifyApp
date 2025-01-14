@@ -22,11 +22,11 @@ class splashscreen : AppCompatActivity() {
             val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
             if (isLoggedIn) {
                 // Jika sudah login, pindah ke MainActivity
-                val intent = Intent(this@splashscreen, MainActivity::class.java)
+                val intent = Intent(this@splashscreen, ActivityMain::class.java)
                 startActivity(intent)
             } else {
                 // Jika belum login, pindah ke about1Activity
-                val intent = Intent(this@splashscreen, NavigationActivity::class.java)
+                val intent = Intent(this@splashscreen, ActivityNavigation::class.java)
                 startActivity(intent)
             }
             finish()

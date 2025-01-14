@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class deskripsiAbsen : AppCompatActivity() {
+class ActivityDeskripsiAbsen : AppCompatActivity() {
 
     private lateinit var binding: ActivityDeskripsiAbsenBinding
     private lateinit var dbHelper: DatabaseHelperAbsensi
@@ -39,7 +38,7 @@ class deskripsiAbsen : AppCompatActivity() {
         val llFeelings = binding.llFeelings
 
         binding.back.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, ActivityMain::class.java)
             startActivity(intent)
             finish()
         }
@@ -125,7 +124,7 @@ class deskripsiAbsen : AppCompatActivity() {
 
         if (result != -1L) {
             Snackbar.make(binding.root, "Absensi berhasil!", Snackbar.LENGTH_SHORT).show()
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, ActivityMain::class.java)
             startActivity(intent)
             finish()
         } else {

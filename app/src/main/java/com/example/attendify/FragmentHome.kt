@@ -22,7 +22,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class HomeFragment : Fragment() {
+class FragmentHome : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var dbHelperProfile: DatabaseHelperProfile
@@ -129,7 +129,7 @@ class HomeFragment : Fragment() {
         btnAbcentDialog.setOnClickListener{
             if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
                 dialog.dismiss()
-                val intent = Intent(this@HomeFragment.requireContext(), Scan::class.java)
+                val intent = Intent(this@FragmentHome.requireContext(), Scan::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
@@ -159,7 +159,7 @@ class HomeFragment : Fragment() {
 
         // Set listeners for buttons and views
         binding.FtProfile.setOnClickListener {
-            val intent = Intent(this@HomeFragment.requireContext(), ProfileActivity::class.java)
+            val intent = Intent(this@FragmentHome.requireContext(), ActivityProfile::class.java)
             startActivity(intent)
         }
 
@@ -172,7 +172,7 @@ class HomeFragment : Fragment() {
                             Toast.makeText(context, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
                         } else if (calendar.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
                             if (calendar.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
-                                val intent = Intent(this@HomeFragment.requireContext(), ScanActivity::class.java)
+                                val intent = Intent(this@FragmentHome.requireContext(), ActivityScan::class.java)
                                 startActivity(intent)
                             } else {
                                 Toast.makeText(context, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
@@ -194,7 +194,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnIzin.setOnClickListener {
-            val intent = Intent(this@HomeFragment.requireContext(), coomingSoon::class.java)
+            val intent = Intent(this@FragmentHome.requireContext(), ActivityCoomingSoon::class.java)
             startActivity(intent)
 //            if(!isWeekend){
 //                val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
@@ -216,7 +216,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.lainnya.setOnClickListener {
-            val intent = Intent(this@HomeFragment.requireContext(), coomingSoon::class.java)
+            val intent = Intent(this@FragmentHome.requireContext(), ActivityCoomingSoon::class.java)
             startActivity(intent)
         }
 

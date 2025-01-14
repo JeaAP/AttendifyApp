@@ -8,12 +8,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager.widget.ViewPager
 import com.example.attendify.databinding.ActivityNavigationBinding
 
-class NavigationActivity : AppCompatActivity() {
+class ActivityNavigation : AppCompatActivity() {
 
     private lateinit var binding: ActivityNavigationBinding
     private lateinit var slideViewPager: ViewPager
@@ -62,7 +60,7 @@ class NavigationActivity : AppCompatActivity() {
 
     private fun setupButtonListeners() {
         skipButton.setOnClickListener {
-            val intent = Intent(this@NavigationActivity, LoginActivity::class.java)
+            val intent = Intent(this@ActivityNavigation, ActivityLogin::class.java)
             startActivity(intent)
             finish()
         }
@@ -72,7 +70,7 @@ class NavigationActivity : AppCompatActivity() {
             if (nextSlide < viewPagerAdapter.count) {
                 slideViewPager.currentItem = nextSlide
             } else {
-                val intent = Intent(this@NavigationActivity, LoginActivity::class.java)
+                val intent = Intent(this@ActivityNavigation, ActivityLogin::class.java)
                 startActivity(intent)
                 finish()
             }

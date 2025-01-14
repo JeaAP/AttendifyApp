@@ -5,13 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.attendify.databinding.ActivityPersonalInfoBinding
+import com.example.attendify.databinding.ActivityProfileBinding
 
-class PersonalInfoActivity : AppCompatActivity() {
+class ActivityProfile : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPersonalInfoBinding
+    private lateinit var binding: ActivityProfileBinding
     private lateinit var dbHelper: DatabaseHelperProfile
 
     @SuppressLint("MissingSuperCall")
@@ -24,17 +22,23 @@ class PersonalInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         dbHelper = DatabaseHelperProfile(this)
-        binding = ActivityPersonalInfoBinding.inflate(layoutInflater)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         loadProfileData()
-        binding.back.setOnClickListener{
-            val intent = Intent(this, ProfileActivity::class.java)
+
+        binding.back.setOnClickListener {
+            val intent = Intent(this, ActivityMain::class.java)
             startActivity(intent)
         }
 
-        binding.editText.setOnClickListener{
-            val intent = Intent(this, editProfile::class.java)
+        binding.PersonalInfo.setOnClickListener{
+            val intent = Intent(this, ActivityPersonalInfo::class.java)
+            startActivity(intent)
+        }
+
+        binding.About.setOnClickListener{
+            val intent = Intent(this, aboutApp::class.java)
             startActivity(intent)
         }
     }
@@ -43,9 +47,6 @@ class PersonalInfoActivity : AppCompatActivity() {
         val profile = dbHelper.getProfile()
         if (profile != null) {
             binding.nama.text = profile.nama
-            binding.kelas.text = profile.kelas
-            binding.abcent.text = profile.absen.toString()
-            binding.nisn.text = profile.nisn
             if (!profile.bio.isNullOrEmpty() && profile.bio != "null") {
                 binding.bio.text = profile.bio
             } else {
@@ -56,16 +57,14 @@ class PersonalInfoActivity : AppCompatActivity() {
                 DatabaseHelperProfile.byteArrayToBitmap(it)
             }
             if (bitmap != null) {
-                binding.FotoProfile.setImageBitmap(bitmap)
+                binding.FProfile.setImageBitmap(bitmap)
             } else {
-                binding.FotoProfile.setImageResource(R.drawable.profile___iconly_pro)
+                binding.FProfile.setImageResource(R.drawable.profile___iconly_pro)
             }
 
         } else {
             binding.nama.text = "[Nama tidak ditemukan]"
-            binding.kelas.text = "[Kelas tidak ditemukan]"
-            binding.abcent.text = "[Absen tidak ditemukan]"
-            binding.nisn.text = "[Nisn tidak ditemukan]"
+            binding.bio.text = "[Bio tidak ditemukan]"
         }
     }
 }

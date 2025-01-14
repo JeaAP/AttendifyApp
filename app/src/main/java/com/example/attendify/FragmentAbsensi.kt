@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.attendify.databinding.FragmentAbsensiBinding
 
-class AbsensiFragment : Fragment() {
+class FragmentAbsensi : Fragment() {
 
     private lateinit var binding: FragmentAbsensiBinding
     private lateinit var databaseHelper: DatabaseHelperAbsensi
@@ -24,7 +24,7 @@ class AbsensiFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAbsensiBinding.inflate(layoutInflater)
-        databaseHelper = DatabaseHelperAbsensi(this@AbsensiFragment.requireContext())
+        databaseHelper = DatabaseHelperAbsensi(this@FragmentAbsensi.requireContext())
         databaseHelper.deleteOldAbsensi()
 
         val absensiList = databaseHelper.getAllAbsensi()
@@ -34,7 +34,7 @@ class AbsensiFragment : Fragment() {
         }
 
         binding.activityContent.layoutManager =
-            LinearLayoutManager(this@AbsensiFragment.requireContext())
+            LinearLayoutManager(this@FragmentAbsensi.requireContext())
         binding.activityContent.adapter = adapter
 
         if (adapter.itemCount == 0) {
@@ -44,14 +44,14 @@ class AbsensiFragment : Fragment() {
         }
 
         binding.back.setOnClickListener {
-            val intent = Intent(this@AbsensiFragment.requireContext(), MainActivity::class.java)
+            val intent = Intent(this@FragmentAbsensi.requireContext(), ActivityMain::class.java)
             startActivity(intent)
         }
         return binding.root
     }
 
     private fun showDetailPopup(absensi: Absensi) {
-        val dialog = Dialog(this@AbsensiFragment.requireContext())
+        val dialog = Dialog(this@FragmentAbsensi.requireContext())
         dialog.setContentView(R.layout.detail_item)
         dialog.window?.apply{
             setBackgroundDrawableResource(android.R.color.transparent)
