@@ -17,7 +17,17 @@ import com.example.attendify.databinding.FragmentAbsensiBinding
 class FragmentAbsensi : Fragment() {
 
     private lateinit var binding: FragmentAbsensiBinding
+    private lateinit var activityMain: ActivityMain
     private lateinit var databaseHelper: DatabaseHelperAbsensi
+
+    override fun onAttach(context: android.content.Context) {
+        super.onAttach(context)
+        if (context is ActivityMain) {
+            activityMain = context
+        } else {
+            throw IllegalStateException("AbsensiFragment must be attached to MainActivity")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,8 +54,7 @@ class FragmentAbsensi : Fragment() {
         }
 
         binding.back.setOnClickListener {
-            val intent = Intent(this@FragmentAbsensi.requireContext(), ActivityMain::class.java)
-            startActivity(intent)
+            activityMain.replaceFragment(FragmentHome())
         }
         return binding.root
     }

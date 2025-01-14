@@ -18,7 +18,7 @@
         android:layout_marginStart="20dp" />
 
     <EditText
-        android:id="@+id/createNotes"
+        android:id="@+id/edtNote"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="24dp"
@@ -36,14 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/make_new_note"
-        app:layout_anchorGravity="center"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="26dp"
-        android:layout_marginBottom="26dp"
-        android:src="@drawable/baseline_done_24"
+        android:layout_margin="26dp"
+        android:src="@drawable/tick"
         app:tint="@android:color/white"
         app:backgroundTint="@color/MikadoYellow"
-        app:maxImageSize="28dp" />
+        app:maxImageSize="24dp" />
 
 </RelativeLayout>

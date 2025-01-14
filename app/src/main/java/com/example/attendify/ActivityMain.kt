@@ -104,10 +104,10 @@ class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListen
                         replaceFragment(FragmentAbsensi())
                         true
                     }
-//                    R.id.calender -> {
-//                        replaceFragment(CalenderFragment())
-//                        true
-//                    }
+                    R.id.note -> {
+                        replaceFragment(FragmentNotes())
+                        true
+                    }
                     R.id.people -> {
                         replaceFragment(FragmentPeople())
                         true

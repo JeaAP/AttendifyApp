@@ -13,9 +13,9 @@
         android:title=""
         android:enabled="false"/>
     <item
-        android:id="@+id/calender"
-        android:icon="@drawable/outline_calendar_month_24"
-        android:title="Jadwal"/>
+        android:id="@+id/note"
+        android:icon="@drawable/paper___iconly_pro"
+        android:title="Note"/>
     <item
         android:id="@+id/people"
         android:icon="@drawable/round_people_outline_24"

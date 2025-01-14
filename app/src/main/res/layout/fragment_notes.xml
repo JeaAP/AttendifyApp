@@ -28,23 +28,20 @@
         android:textColor="@color/black"/>
 
     <ScrollView
-        android:id="@+id/scrollAct"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_below="@id/head">
+        android:layout_below="@id/head"
+        android:padding="16dp"
+        android:layout_marginTop="15dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/notesContent"
+                android:id="@+id/activityContent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
 
@@ -52,15 +49,13 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/make_new_note"
-        app:layout_anchorGravity="center"
+        android:layout_margin="30dp"
+        android:layout_below="@id/scrollView"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="26dp"
-        android:layout_marginBottom="26dp"
-        android:src="@drawable/round_add_box_24"
+        android:contentDescription="@string/make_new_note"
+        android:src="@drawable/plus___iconly_pro"
         app:tint="@android:color/white"
         app:backgroundTint="@color/MikadoYellow"
-        app:maxImageSize="28dp" />
+        app:maxImageSize="24dp" />
 
 </RelativeLayout>

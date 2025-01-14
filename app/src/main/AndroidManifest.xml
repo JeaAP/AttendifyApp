@@ -55,9 +55,6 @@
             android:name=".ActivityDeskripsiAbsen"
             android:exported="false" />
         <activity
-            android:name=".viewAllAbsensi"
-            android:exported="false" />
-        <activity
             android:name=".aboutApp"
             android:exported="false" />
         <activity

@@ -131,13 +131,23 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activityContent"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layputWeak"
         android:padding="16dp"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activityContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/tvNoData"
@@ -148,5 +158,6 @@
         android:text="Tidak ada data"
         android:textColor="@color/black"
         android:fontFamily="@font/inter_medium" />
+
 
 </RelativeLayout>
