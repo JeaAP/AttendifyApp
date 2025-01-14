@@ -25,6 +25,9 @@
         android:theme="@style/Theme.Attendify"
         tools:targetApi="31">
         <activity
+            android:name=".ActivityAddNotes"
+            android:exported="false" />
+        <activity
             android:name=".ActivityIzin"
             android:exported="false" />
         <activity
