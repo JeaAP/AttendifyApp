@@ -43,7 +43,7 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
         dbHelper = DatabaseHelperAbsensi(this)
         setContentView(binding.root)
 
-        val syncHelper = SyncHelper(this)
+        syncHelper = SyncHelper(this)
 
         val llPhoto = binding.llPhoto
         val llSendMessage = binding.llSendMessage
@@ -65,19 +65,19 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
         }
 
         binding.Anggry.setOnClickListener {
-            navigateToSendMessage("Anggry")
+            handleMoodSelection("Angry")
         }
         binding.Happy.setOnClickListener {
-            navigateToSendMessage("Happy")
+            handleMoodSelection("Happy")
         }
         binding.Good.setOnClickListener {
-            navigateToSendMessage("Good")
+            handleMoodSelection("Good")
         }
         binding.notGood.setOnClickListener {
-            navigateToSendMessage("Not Good")
+            handleMoodSelection("Not Good")
         }
         binding.Sad.setOnClickListener {
-            navigateToSendMessage("Sad")
+            handleMoodSelection("Sad")
         }
 
         binding.cardImage.setOnClickListener {
@@ -107,23 +107,26 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
         return stream.toByteArray()
     }
 
-    private fun navigateToSendMessage(mood: String) {
-        syncHelper = SyncHelper(this)
-
-        binding.llFeelings.visibility = View.GONE
-        binding.llSendMessage.visibility = View.VISIBLE
-        binding.btnSend.setOnClickListener {
-            val description = binding.edDescription.text.toString().trim()
-            if (description.isNotEmpty()) {
-                saveAbsensi(mood)
-                syncHelper.syncData()
-            } else {
-                Snackbar.make(binding.root, "Please describe your day!", Snackbar.LENGTH_SHORT).show()
+    private fun handleMoodSelection(mood: String) {
+        if (mood == "Happy" || mood == "Good") {
+            saveAbsensi(mood, "Baik")
+            syncHelper.syncData()
+        } else {
+            binding.llFeelings.visibility = View.GONE
+            binding.llSendMessage.visibility = View.VISIBLE
+            binding.btnSend.setOnClickListener {
+                val description = binding.edDescription.text.toString().trim()
+                if (description.isNotEmpty()) {
+                    saveAbsensi(mood, description)
+                    syncHelper.syncData()
+                } else {
+                    Snackbar.make(binding.root, "Please describe your day!", Snackbar.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
-    private fun saveAbsensi(mood: String) {
+    private fun saveAbsensi(mood: String, perasaan: String) {
         val currentTime = Calendar.getInstance()
         val hariFormat = SimpleDateFormat("EEEE", Locale.getDefault())
         val tanggalFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -132,8 +135,7 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
         val hari = hariFormat.format(currentTime.time)
         val tanggal = tanggalFormat.format(currentTime.time)
         val jam = jamFormat.format(currentTime.time)
-        val perasaan = binding.edDescription.text.toString().trim()
-        val keterangan = if(currentTime.after(waktuBatasAbsen)) "Hadir" else "Terlambat"
+        val keterangan = if (currentTime.after(waktuBatasAbsen)) "Hadir" else "Terlambat"
 
         val result = dbHelper.insertAbsensi(hari, tanggal, jam, mood, perasaan, keterangan, capturedPhoto)
 

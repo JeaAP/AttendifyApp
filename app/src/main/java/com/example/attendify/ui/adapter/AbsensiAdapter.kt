@@ -36,7 +36,9 @@ class AbsensiAdapter(
             "Hadir" -> when (absensi.mood) {
                 "Happy" -> R.drawable.salutingemote
                 "Good" -> R.drawable.smileemote
-                "Bad" -> R.drawable.sademote
+                "Sad" -> R.drawable.sademote
+                "Angry" -> R.drawable.angryemote
+                "Not Good" -> R.drawable.confusedemote
                 else -> R.drawable.smileemote
             }
             "Sakit" -> R.drawable.outline_sick_24
