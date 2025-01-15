@@ -147,7 +147,7 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         return if (waktuAbsen != null && waktuAbsen.after(batasWaktu)) {
             "Terlambat"
         } else {
-            "Hadir"
+            "Tepat Waktu"
         }
     }
 
@@ -162,7 +162,7 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
             while (it.moveToNext()) {
                 val jam = it.getString(it.getColumnIndexOrThrow(COLUMN_JAM))
                 val status = checkKeterlambatan(jam)
-                if (status == "Hadir") {
+                if (status == "Tepat Waktu") {
                     tepatWaktu++
                 } else {
                     terlambat++
