@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -17,9 +18,16 @@ import java.util.Locale
 class ActivityDeskripsiAbsen : AppCompatActivity() {
 
     private lateinit var binding: ActivityDeskripsiAbsenBinding
+    private lateinit var syncHelper: SyncHelper
     private lateinit var dbHelper: DatabaseHelperAbsensi
 
     private var capturedPhoto: ByteArray? = null
+
+    private val waktuBatasAbsen = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 6)
+        set(Calendar.MINUTE, 30)
+        set(Calendar.SECOND, 0)
+    }
 
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
@@ -32,6 +40,8 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
         binding = ActivityDeskripsiAbsenBinding.inflate(layoutInflater)
         dbHelper = DatabaseHelperAbsensi(this)
         setContentView(binding.root)
+
+        val syncHelper = SyncHelper(this)
 
         val llPhoto = binding.llPhoto
         val llSendMessage = binding.llSendMessage
@@ -96,12 +106,15 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
     }
 
     private fun navigateToSendMessage(mood: String) {
+        syncHelper = SyncHelper(this)
+
         binding.llFeelings.visibility = View.GONE
         binding.llSendMessage.visibility = View.VISIBLE
         binding.btnSend.setOnClickListener {
             val description = binding.edDescription.text.toString().trim()
             if (description.isNotEmpty()) {
                 saveAbsensi(mood)
+                syncHelper.syncData()
             } else {
                 Snackbar.make(binding.root, "Please describe your day!", Snackbar.LENGTH_SHORT).show()
             }
@@ -118,7 +131,7 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
         val tanggal = tanggalFormat.format(currentTime.time)
         val jam = jamFormat.format(currentTime.time)
         val perasaan = binding.edDescription.text.toString().trim()
-        val keterangan = "Hadir"
+        val keterangan = if(currentTime.after(waktuBatasAbsen)) "Hadir" else "Terlambat"
 
         val result = dbHelper.insertAbsensi(hari, tanggal, jam, mood, perasaan, keterangan, capturedPhoto)
 

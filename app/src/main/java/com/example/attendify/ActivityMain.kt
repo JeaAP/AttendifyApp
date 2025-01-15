@@ -128,25 +128,8 @@ class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListen
             }
 
             binding.fab.setOnClickListener {
-                val nisn = "0088365036"
-                val nama = "Jean Arby Putra"
-                val kelas = "XI RPL 2"
-                val mood = "tes"
-                val perasaan = "tes"
-                val keterangan = "tes"
-                val status = "Hadir"
-                val waktu = "2025-01-15 07:20:00"
-
-                // Mengupload data absensi ke server
-                sendDataToServer(
-                    nisn = nisn,
-                    nama = nama,
-                    kelas = kelas,
-                    mood = mood,
-                    perasaan = perasaan,
-                    keterangan = keterangan,
-                    status = status,
-                )
+                val intent = Intent(this@ActivityMain, Scan::class.java)
+                startActivity(intent)
 //                if(!isWeekend){
 //                    if (isInsideGeofence) {
 //                        val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
@@ -324,56 +307,6 @@ class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListen
             Toast.makeText(this, "SecurityException: ${e.message}", Toast.LENGTH_SHORT).show()
             Log.d("Geofence", "SecurityException: ${e.message}")
         }
-    }
-
-    fun sendDataToServer(
-        nisn: String,
-        nama: String,
-        kelas: String,
-        mood: String,
-        perasaan: String,
-        keterangan: String,
-        status: String
-    ) {
-        val url =
-            "https://backend24.site/Rian/XI/attendify/absensi_attendify.php"
-        val requestQueue = Volley.newRequestQueue(this)
-
-        // Membuat request POST untuk mengirimkan data
-        val postRequest = object : StringRequest(
-            Request.Method.POST, url,
-            Response.Listener { response ->
-                // Tanggapan dari server
-                Toast.makeText(
-                    this@ActivityMain,
-                    "Data berhasil dikirim ke server",
-                    Toast.LENGTH_SHORT
-                ).show()
-            },
-            Response.ErrorListener { error ->
-                // Menampilkan pesan jika terjadi error
-                Toast.makeText(
-                    this@ActivityMain,
-                    "Gagal mengirim data: ${error.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        ) {
-            // Menyertakan parameter dalam request POST
-            override fun getParams(): MutableMap<String, String> {
-                return hashMapOf(
-                    "nisn" to nisn,
-                    "nama" to nama,
-                    "kelas" to kelas,
-                    "mood" to mood,
-                    "perasaan" to perasaan,
-                    "keterangan" to keterangan,
-                    "status" to status,
-                )
-            }
-        }
-        // Menambahkan request ke antrian request Volley
-        requestQueue.add(postRequest)
     }
 
     fun setFragment(fragment: Fragment){

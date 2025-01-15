@@ -146,7 +146,7 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         return if (waktuAbsen != null && waktuAbsen.after(batasWaktu)) {
             "Terlambat"
         } else {
-            "Tepat"
+            "Hadir"
         }
     }
 
@@ -161,7 +161,7 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
             while (it.moveToNext()) {
                 val jam = it.getString(it.getColumnIndexOrThrow(COLUMN_JAM))
                 val status = checkKeterlambatan(jam)
-                if (status == "Tepat Waktu") {
+                if (status == "Hadir") {
                     tepatWaktu++
                 } else {
                     terlambat++
@@ -210,4 +210,22 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         return Pair(persentaseTepatWaktu, persentaseTerlambat)
     }
 
+    fun getLastestAbsensi(): Absensi? {
+        val db = readableDatabase
+        val cursor = db.query(TABLE_NAME, null, null, null, null, null, "$COLUMN_ID DESC", "1")
+
+        var lastAbsensi: Absensi? = null
+        if (cursor.moveToFirst()) {
+            val hari = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HARI))
+            val tanggal = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TANGGAL))
+            val mood = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MOOD))
+            val jam = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_JAM))
+            val perasaan = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PERASAAN))
+            val keterangan = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_KETERANGAN))
+            val foto = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_FOTO))
+            lastAbsensi = Absensi(hari, tanggal, mood, jam, perasaan, keterangan, foto)
+        }
+        cursor.close()
+        return lastAbsensi
+    }
 }
