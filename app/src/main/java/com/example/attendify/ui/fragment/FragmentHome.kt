@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
@@ -16,16 +18,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.attendify.databasehelper.DatabaseHelperAbsensi
 import com.example.attendify.databasehelper.DatabaseHelperProfile
 import com.example.attendify.R
 import com.example.attendify.ui.adapter.AbsensiAdapter
 import com.example.attendify.databinding.FragmentHomeBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import android.Manifest
+import java.io.IOException
 
 class FragmentHome : Fragment() {
 
@@ -44,6 +52,10 @@ class FragmentHome : Fragment() {
     private lateinit var btnAbcentDialog: CardView
 
     private var listener: FragmentInteractionListener? = null
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val LOCATION_PERMISSION_REQUEST_CODE = 1001
+    private val REQUEST_CODE = 1002
 
 //    private var currentLocation: String? = null
 
@@ -103,6 +115,7 @@ class FragmentHome : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater)
         dbHelperProfile = DatabaseHelperProfile(requireContext())
         dbHelperAbsensi = DatabaseHelperAbsensi(requireContext())
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         // Load data from the database and update UI
         loadProfileData()
@@ -240,10 +253,10 @@ class FragmentHome : Fragment() {
 
         if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
             binding.locatioan.text = "Anda berada di wilayah SMKN 24 Jakarta"
-        } else if (listener?.isUserInGeofence() == false) {
-            binding.locatioan.text = "Anda berada di luar wilayah SMKN 24 Jakarta"
         } else {
-            binding.locatioan.text = "Loading location..."
+            binding.locatioan.text = "Anda berada di luar wilayah SMKN 24 Jakarta"
+            binding.dtLocation.visibility = View.VISIBLE
+            checkLocationPermissionAndFetch()
         }
 
         return binding.root
@@ -262,6 +275,78 @@ class FragmentHome : Fragment() {
     override fun onResume() {
         super.onResume()
         updateDate()
+    }
+
+    //lokasi
+    private fun checkLocationPermissionAndFetch() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            getLastLocation()
+        } else {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+
+    private fun getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val latitude = location.latitude
+                    val longitude = location.longitude
+
+                    val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                    try {
+                        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                        val address = addresses?.get(0)?.getAddressLine(0)
+                        if (address != null) {
+                            binding.dtLocation.text = "Lokasi Anda: $address"
+                        } else {
+                            binding.dtLocation.text = "Tidak dapat menemukan nama lokasi."
+                        }
+                    } catch (e: IOException) {
+                        binding.dtLocation.text = "Error mendapatkan alamat: ${e.message}"
+                    }
+                } else {
+                    binding.dtLocation.text = "Gagal mendapatkan lokasi."
+                }
+            }.addOnFailureListener {
+                binding.dtLocation.text = "Gagal mendapatkan lokasi."
+            }
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
+        }
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE &&
+            grantResults.isNotEmpty() &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        ) {
+            getLastLocation()
+        } else {
+            binding.dtLocation.text = "Izin lokasi ditolak."
+        }
     }
 
     fun updateLocationText(text: String) {
