@@ -139,4 +139,75 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
         return keterangan
     }
 
+    fun checkKeterlambatan(jam: String): String {
+        val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val batasWaktu = formatter.parse("06:30")
+        val waktuAbsen = formatter.parse(jam)
+        return if (waktuAbsen != null && waktuAbsen.after(batasWaktu)) {
+            "Terlambat"
+        } else {
+            "Tepat"
+        }
+    }
+
+    fun hitungAbsensi(): Pair<Int, Int> {
+        val db = readableDatabase
+        val cursor = db.query(TABLE_NAME, arrayOf(COLUMN_JAM), null, null, null, null, null)
+
+        var tepatWaktu = 0
+        var terlambat = 0
+
+        cursor?.use {
+            while (it.moveToNext()) {
+                val jam = it.getString(it.getColumnIndexOrThrow(COLUMN_JAM))
+                val status = checkKeterlambatan(jam)
+                if (status == "Tepat Waktu") {
+                    tepatWaktu++
+                } else {
+                    terlambat++
+                }
+            }
+        }
+        return Pair(tepatWaktu, terlambat)
+    }
+
+
+    fun hitungPersentaseAbsensi(): Pair<Double, Double> {
+        val db = readableDatabase
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("yyyy-MM", Locale.getDefault())
+        val bulanIni = dateFormat.format(calendar.time) // Format: 2025-01
+
+        val cursor = db.query(
+            TABLE_NAME,
+            arrayOf(COLUMN_JAM, COLUMN_TANGGAL),
+            "$COLUMN_TANGGAL LIKE ?",
+            arrayOf("$bulanIni%"),
+            null,
+            null,
+            null
+        )
+
+        var tepatWaktu = 0
+        var terlambat = 0
+
+        cursor?.use {
+            while (it.moveToNext()) {
+                val jam = it.getString(it.getColumnIndexOrThrow(COLUMN_JAM))
+                val status = checkKeterlambatan(jam)
+                if (status == "Tepat Waktu") {
+                    tepatWaktu++
+                } else {
+                    terlambat++
+                }
+            }
+        }
+
+        val total = tepatWaktu + terlambat
+        val persentaseTepatWaktu = if (total > 0) (tepatWaktu.toDouble() / total) * 100 else 0.0
+        val persentaseTerlambat = if (total > 0) (terlambat.toDouble() / total) * 100 else 0.0
+
+        return Pair(persentaseTepatWaktu, persentaseTerlambat)
+    }
+
 }

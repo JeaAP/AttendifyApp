@@ -14,6 +14,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.attendify.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
@@ -77,6 +81,7 @@ class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListen
         set(Calendar.MINUTE, 0)
     }
     private val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+    val monthYear = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(Date())
     //======WAKTU========
 
     @SuppressLint("MissingSuperCall")
@@ -123,33 +128,52 @@ class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListen
             }
 
             binding.fab.setOnClickListener {
-                if(!isWeekend){
-                    if (isInsideGeofence) {
-                        val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
-                        if (absensiStatus == null) { // Jika hari ini belum absen
-                            if (now.before(cutOffTimeEarlyMorning)) {
-                                Toast.makeText(this@ActivityMain, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
-                            } else if (now.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
-                                if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
-                                    val intent = Intent(this@ActivityMain, Scan::class.java)
-                                    startActivity(intent)
-                                } else {
-                                    Toast.makeText(this@ActivityMain, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
-                                }
-                            } else {
-                                Toast.makeText(this@ActivityMain, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
-                            }
-                        } else if(absensiStatus == "Hadir") {
-                            Toast.makeText(this@ActivityMain, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
-                        } else {
-                            Toast.makeText(this@ActivityMain, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
-                        }
-                    } else {
-                        Toast.makeText(this@ActivityMain, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
-                    }
-                } else {
-                    Toast.makeText(this@ActivityMain, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
-                }
+                val nisn = "0088365036"
+                val nama = "Jean Arby Putra"
+                val kelas = "XI RPL 2"
+                val mood = "tes"
+                val perasaan = "tes"
+                val keterangan = "tes"
+                val status = "Hadir"
+                val waktu = "2025-01-15 07:20:00"
+
+                // Mengupload data absensi ke server
+                sendDataToServer(
+                    nisn = nisn,
+                    nama = nama,
+                    kelas = kelas,
+                    mood = mood,
+                    perasaan = perasaan,
+                    keterangan = keterangan,
+                    status = status,
+                )
+//                if(!isWeekend){
+//                    if (isInsideGeofence) {
+//                        val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
+//                        if (absensiStatus == null) { // Jika hari ini belum absen
+//                            if (now.before(cutOffTimeEarlyMorning)) {
+//                                Toast.makeText(this@ActivityMain, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
+//                            } else if (now.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
+//                                if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
+//                                    val intent = Intent(this@ActivityMain, Scan::class.java)
+//                                    startActivity(intent)
+//                                } else {
+//                                    Toast.makeText(this@ActivityMain, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
+//                                }
+//                            } else {
+//                                Toast.makeText(this@ActivityMain, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
+//                            }
+//                        } else if(absensiStatus == "Hadir") {
+//                            Toast.makeText(this@ActivityMain, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
+//                        } else {
+//                            Toast.makeText(this@ActivityMain, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
+//                        }
+//                    } else {
+//                        Toast.makeText(this@ActivityMain, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
+//                    }
+//                } else {
+//                    Toast.makeText(this@ActivityMain, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
+//                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -299,6 +323,64 @@ class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListen
         } catch (e: SecurityException) {
             Toast.makeText(this, "SecurityException: ${e.message}", Toast.LENGTH_SHORT).show()
             Log.d("Geofence", "SecurityException: ${e.message}")
+        }
+    }
+
+    fun sendDataToServer(
+        nisn: String,
+        nama: String,
+        kelas: String,
+        mood: String,
+        perasaan: String,
+        keterangan: String,
+        status: String
+    ) {
+        val url =
+            "https://backend24.site/Rian/XI/attendify/absensi_attendify.php"
+        val requestQueue = Volley.newRequestQueue(this)
+
+        // Membuat request POST untuk mengirimkan data
+        val postRequest = object : StringRequest(
+            Request.Method.POST, url,
+            Response.Listener { response ->
+                // Tanggapan dari server
+                Toast.makeText(
+                    this@ActivityMain,
+                    "Data berhasil dikirim ke server",
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            Response.ErrorListener { error ->
+                // Menampilkan pesan jika terjadi error
+                Toast.makeText(
+                    this@ActivityMain,
+                    "Gagal mengirim data: ${error.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        ) {
+            // Menyertakan parameter dalam request POST
+            override fun getParams(): MutableMap<String, String> {
+                return hashMapOf(
+                    "nisn" to nisn,
+                    "nama" to nama,
+                    "kelas" to kelas,
+                    "mood" to mood,
+                    "perasaan" to perasaan,
+                    "keterangan" to keterangan,
+                    "status" to status,
+                )
+            }
+        }
+        // Menambahkan request ke antrian request Volley
+        requestQueue.add(postRequest)
+    }
+
+    fun setFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction().apply{
+            replace(R.id.frameLayout, fragment)
+            addToBackStack(null)
+            commit()
         }
     }
 

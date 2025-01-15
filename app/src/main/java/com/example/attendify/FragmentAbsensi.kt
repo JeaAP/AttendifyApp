@@ -1,5 +1,6 @@
 package com.example.attendify
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -13,12 +14,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.attendify.databinding.FragmentAbsensiBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class FragmentAbsensi : Fragment() {
 
     private lateinit var binding: FragmentAbsensiBinding
     private lateinit var activityMain: ActivityMain
     private lateinit var databaseHelper: DatabaseHelperAbsensi
+
+    //======WAKTU========
+    private val now = Calendar.getInstance()
+    private val monthYear = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(Date())
 
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
@@ -29,6 +38,12 @@ class FragmentAbsensi : Fragment() {
         }
     }
 
+    @SuppressLint("MissingSuperCall")
+    fun onBackPressed() {
+//        super.onBackPressed()
+//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +51,8 @@ class FragmentAbsensi : Fragment() {
         binding = FragmentAbsensiBinding.inflate(layoutInflater)
         databaseHelper = DatabaseHelperAbsensi(this@FragmentAbsensi.requireContext())
         databaseHelper.deleteOldAbsensi()
+
+        binding.tvMonthYear.text = monthYear
 
         val absensiList = databaseHelper.getAllAbsensi()
 
@@ -103,5 +120,4 @@ class FragmentAbsensi : Fragment() {
 
         dialog.show()
     }
-
 }

@@ -1,5 +1,6 @@
 package com.example.attendify
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -24,6 +25,12 @@ class FragmentNotes : Fragment() {
         }
     }
 
+    @SuppressLint("MissingSuperCall")
+    fun onBackPressed() {
+//        super.onBackPressed()
+//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,7 +39,7 @@ class FragmentNotes : Fragment() {
         databaseHelper = DatabaseHelperNote(this@FragmentNotes.requireContext())
 
         binding.back.setOnClickListener {
-            activityMain = ActivityMain()
+//            onBackPressed()
             activityMain.replaceFragment(FragmentHome())
         }
 

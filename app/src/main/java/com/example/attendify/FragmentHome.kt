@@ -25,6 +25,7 @@ import java.util.Locale
 class FragmentHome : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var activityMain: ActivityMain
     private lateinit var dbHelperProfile: DatabaseHelperProfile
     private lateinit var dbHelperAbsensi: DatabaseHelperAbsensi
     private val handler = android.os.Handler(Looper.getMainLooper())
@@ -193,9 +194,9 @@ class FragmentHome : Fragment() {
             }
         }
 
-        binding.btnIzin.setOnClickListener {
-            val intent = Intent(this@FragmentHome.requireContext(), ActivityCoomingSoon::class.java)
-            startActivity(intent)
+        binding.btnNote.setOnClickListener {
+            activityMain = (requireActivity() as ActivityMain)
+            activityMain.replaceFragment(FragmentNotes())
 //            if(!isWeekend){
 //                val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
 //                if (absensiStatus == null) { // Jika hari ini belum absen
@@ -227,12 +228,15 @@ class FragmentHome : Fragment() {
             startActivity(intent)
         }
 
-//        binding.linkText.setOnClickListener {
-//            val intent = Intent(this@HomeFragment.requireContext(), viewAllAbsensi::class.java)
-//            startActivity(intent)
-//        }
-
         val absensiList = dbHelperAbsensi.getLimitedAbsensi()
+
+        val (tepatWaktu, terlambat) = dbHelperAbsensi.hitungAbsensi()
+        binding.txtKehadiran.text = "${tepatWaktu} Times"
+        binding.txtKeterlambatan.text = "${terlambat} Times"
+
+        val (persenTepatWaktu, persenTerlambat) = dbHelperAbsensi.hitungPersentaseAbsensi()
+        binding.persentaseKehadiran.text = "Persentase kehadiran bulan ini ${persenTepatWaktu.toInt()}%"
+        binding.persentaseKeterlembatan.text = "Persentase terlambat bulan ini ${persenTerlambat.toInt()}%"
 
         val adapter = AbsensiAdapter(absensiList) { absensi ->
             Toast.makeText(context, " ${absensi.hari}, ${absensi.tanggal}", Toast.LENGTH_SHORT).show()
@@ -276,18 +280,6 @@ class FragmentHome : Fragment() {
         super.onResume()
         setupTimeUpdater()
         updateDate()
-    }
-
-    fun numberToWords(number: Int): String { //ANGKA DALAM HURUF BAHASA INGGRIS
-        val words = arrayOf(
-            "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
-            "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
-            "twenty", "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine",
-            "thirty", "thirty-one", "thirty-two", "thirty-three", "thirty-four", "thirty-five", "thirty-six", "thirty-seven", "thirty-eight", "thirty-nine",
-            "forty", "forty-one", "forty-two", "forty-three", "forty-four", "forty-five", "forty-six", "forty-seven", "forty-eight", "forty-nine",
-            "fifty", "fifty-one", "fifty-two", "fifty-three", "fifty-four", "fifty-five", "fifty-six", "fifty-seven", "fifty-eight", "fifty-nine"
-        )
-        return if (number in 0..59) words[number] else "Invalid number"
     }
 
     fun updateLocationText(text: String) {
@@ -370,4 +362,15 @@ class FragmentHome : Fragment() {
         binding.motivations.text = motivation
     }
 
+    fun numberToWords(number: Int): String { //ANGKA DALAM HURUF BAHASA INGGRIS
+        val words = arrayOf(
+            "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+            "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
+            "twenty", "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine",
+            "thirty", "thirty-one", "thirty-two", "thirty-three", "thirty-four", "thirty-five", "thirty-six", "thirty-seven", "thirty-eight", "thirty-nine",
+            "forty", "forty-one", "forty-two", "forty-three", "forty-four", "forty-five", "forty-six", "forty-seven", "forty-eight", "forty-nine",
+            "fifty", "fifty-one", "fifty-two", "fifty-three", "fifty-four", "fifty-five", "fifty-six", "fifty-seven", "fifty-eight", "fifty-nine"
+        )
+        return if (number in 0..59) words[number] else "Invalid number"
+    }
 }

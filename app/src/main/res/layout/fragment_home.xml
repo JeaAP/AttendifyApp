@@ -225,7 +225,7 @@
             android:padding="16dp">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btnIzin"
+                android:id="@+id/btnNote"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:backgroundTint="@color/white"
@@ -243,7 +243,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="Izin"
+                android:text="Note"
                 android:textSize="16sp"
                 android:textColor="@color/black"/>
 
@@ -324,7 +324,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text1"
-                    android:text="10 Times"
+                    android:text="0 Times"
                     android:textSize="20sp"
                     android:textColor="@color/MikadoYellow"/>
 
@@ -333,7 +333,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtKehadiran"
-                    android:text="Persentase kehadiran bulan ini 50%"
+                    android:text="Persentase kehadiran bulan ini 0%"
                     android:textSize="10sp"/>
 
             </RelativeLayout>
@@ -370,7 +370,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text2"
-                    android:text="2 Times"
+                    android:text="0 Times"
                     android:textSize="20sp"
                     android:textColor="@color/Red"/>
 
@@ -379,7 +379,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtKeterlambatan"
-                    android:text="Persentase kehadiran bulan ini 10%"
+                    android:text="Persentase terlambat bulan ini 0%"
                     android:textSize="10sp"/>
 
             </RelativeLayout>
