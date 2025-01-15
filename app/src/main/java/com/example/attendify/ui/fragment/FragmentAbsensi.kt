@@ -33,6 +33,8 @@ class FragmentAbsensi : Fragment() {
     private val now = Calendar.getInstance()
     private val monthYear = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(Date())
 
+    private var absensiList: List<Absensi> = listOf() // Daftar absensi
+
     override fun onAttach(context: android.content.Context) {
         super.onAttach(context)
         if (context is ActivityMain) {
@@ -58,7 +60,7 @@ class FragmentAbsensi : Fragment() {
 
         binding.tvMonthYear.text = monthYear
 
-        val absensiList = databaseHelper.getAllAbsensi()
+        absensiList = databaseHelper.getAllAbsensi()
 
         val adapter = AbsensiAdapter(absensiList) { absensi ->
             showDetailPopup(absensi)
@@ -67,6 +69,28 @@ class FragmentAbsensi : Fragment() {
         binding.activityContent.layoutManager =
             LinearLayoutManager(this@FragmentAbsensi.requireContext())
         binding.activityContent.adapter = adapter
+
+        val currentWeek = Calendar.getInstance().get(Calendar.WEEK_OF_MONTH)
+        when (currentWeek) {
+            1 -> {
+                binding.week1button.visibility = View.VISIBLE
+            }
+            2 -> {
+                binding.week1button.visibility = View.VISIBLE
+                binding.week2button.visibility = View.VISIBLE
+            }
+            3 -> {
+                binding.week1button.visibility = View.VISIBLE
+                binding.week2button.visibility = View.VISIBLE
+                binding.week3button.visibility = View.VISIBLE
+            }
+            4 -> {
+                binding.week1button.visibility = View.VISIBLE
+                binding.week2button.visibility = View.VISIBLE
+                binding.week3button.visibility = View.VISIBLE
+                binding.week4button.visibility = View.VISIBLE
+            }
+        }
 
         if (adapter.itemCount == 0) {
             binding.tvNoData.visibility = View.VISIBLE
@@ -77,6 +101,8 @@ class FragmentAbsensi : Fragment() {
         binding.back.setOnClickListener {
             activityMain.replaceFragment(FragmentHome())
         }
+
+        setupWeekButtons(adapter)
         return binding.root
     }
 
@@ -121,5 +147,38 @@ class FragmentAbsensi : Fragment() {
         }
 
         dialog.show()
+    }
+
+    private fun setupWeekButtons(adapter: AbsensiAdapter) {
+        binding.week1button.setOnClickListener {
+            val filteredData = filterDataByWeek(1)
+            adapter.updateData(filteredData)
+        }
+
+        binding.week2button.setOnClickListener {
+            val filteredData = filterDataByWeek(2)
+            adapter.updateData(filteredData)
+        }
+
+        binding.week3button.setOnClickListener {
+            val filteredData = filterDataByWeek(3)
+            adapter.updateData(filteredData)
+        }
+
+        binding.week1button.setOnClickListener {
+            val filteredData = filterDataByWeek(4)
+            adapter.updateData(filteredData)
+        }
+    }
+
+    private fun filterDataByWeek(week: Int): List<Absensi> {
+        val calendar = Calendar.getInstance()
+        val filteredList = absensiList.filter { absensi ->
+            val absensiDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(absensi.tanggal)
+            calendar.time = absensiDate ?: Date()
+            val weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH)
+            weekOfMonth == week
+        }
+        return filteredList
     }
 }

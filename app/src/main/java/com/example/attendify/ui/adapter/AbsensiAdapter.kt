@@ -10,11 +10,11 @@ import com.example.attendify.R
 import com.example.attendify.model.Absensi
 
 class AbsensiAdapter(
-    private val absensiList: List<Absensi>,
+    private var absensiList: List<Absensi>,
     private val onItemClicked: (Absensi) -> Unit
 ) : RecyclerView.Adapter<AbsensiAdapter.AbsensiViewHolder>() {
 
-    class AbsensiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class AbsensiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dayTextView: TextView = itemView.findViewById(R.id.day)
         val dateTextView: TextView = itemView.findViewById(R.id.date)
         val timeTextView: TextView = itemView.findViewById(R.id.time)
@@ -49,4 +49,9 @@ class AbsensiAdapter(
     }
 
     override fun getItemCount(): Int = absensiList.size
+
+    fun updateData(newData: List<Absensi>) {
+        absensiList = newData
+        notifyDataSetChanged()
+    }
 }

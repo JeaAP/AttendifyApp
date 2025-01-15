@@ -135,7 +135,7 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
         val hari = hariFormat.format(currentTime.time)
         val tanggal = tanggalFormat.format(currentTime.time)
         val jam = jamFormat.format(currentTime.time)
-        val keterangan = if (currentTime.after(waktuBatasAbsen)) "Hadir" else "Terlambat"
+        val keterangan = dbHelper.checkKeterlambatan(jam)
 
         val result = dbHelper.insertAbsensi(hari, tanggal, jam, mood, perasaan, keterangan, capturedPhoto)
 
