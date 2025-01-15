@@ -25,5 +25,4 @@
         android:fontFamily="@font/inter_medium"
         android:text="Cooming Soon. Stay Tune!"
         android:textSize="16sp"/>
-
 </RelativeLayout>
