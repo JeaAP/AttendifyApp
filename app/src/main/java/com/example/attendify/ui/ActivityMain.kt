@@ -46,8 +46,8 @@ class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListen
     private val geofenceList = mutableListOf<Geofence>()
     private val GEOFENCE_ID = "MY_GEOFENCE_ID"
     private val GEOFENCE_RADIUS = 100f // in meters
-    private val GEOFENCE_LATITUDE = -6.321740095551176
-    private val GEOFENCE_LONGITUDE = 106.89906194895687
+    private val GEOFENCE_LATITUDE = -6.313615160801881
+    private val GEOFENCE_LONGITUDE = 106.88713091541187
     //Koordinat hotel smkn 24
 //    -6.321740095551176
 //    106.89906194895687
