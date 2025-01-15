@@ -110,7 +110,7 @@ class FragmentHome : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater)
         dbHelperProfile = DatabaseHelperProfile(requireContext())
@@ -164,7 +164,7 @@ class FragmentHome : Fragment() {
                 timeText.text = remainingTimeText
 
                 //MUNCUL NOTIFIKASI
-                if (!dbHelperAbsensi.hasAbsensiToday(today)) {
+                if (isAdded && !dbHelperAbsensi.hasAbsensiToday(today)) {
                     dialog.show()
                 }
             }
@@ -350,8 +350,9 @@ class FragmentHome : Fragment() {
     }
 
     fun updateLocationText(text: String) {
-        binding.locatioan.text = text
-//        currentLocation = text
+        if (isAdded) {
+            binding.locatioan.text = text
+        }
     }
 
     private fun updateDate() {
