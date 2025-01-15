@@ -39,9 +39,9 @@ class FragmentPeople : Fragment() {
     ): View? {
         binding = FragmentPeopleBinding.inflate(inflater)
 
-        binding.back.setOnClickListener {
-            activityMain.replaceFragment(FragmentHome())
-        }
+//        binding.back.setOnClickListener {
+//            activityMain.replaceFragment(FragmentHome())
+//        }
         binding.ceoMore.setOnClickListener {
             val intent = Intent(requireContext(), aboutCEO::class.java)
             startActivity(intent)

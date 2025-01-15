@@ -42,10 +42,10 @@ class FragmentNotes : Fragment() {
         binding = FragmentNotesBinding.inflate(layoutInflater)
         databaseHelper = DatabaseHelperNote(this@FragmentNotes.requireContext())
 
-        binding.back.setOnClickListener {
+//        binding.back.setOnClickListener {
 //            onBackPressed()
-            activityMain.replaceFragment(FragmentHome())
-        }
+//            activityMain.replaceFragment(FragmentHome())
+//        }
 
         val noteList = databaseHelper.getAllNotes()
         binding.activityContent.layoutManager = LinearLayoutManager(this@FragmentNotes.requireContext())

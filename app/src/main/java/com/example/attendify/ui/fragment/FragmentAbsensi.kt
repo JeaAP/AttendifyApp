@@ -98,9 +98,9 @@ class FragmentAbsensi : Fragment() {
             binding.tvNoData.visibility = View.GONE
         }
 
-        binding.back.setOnClickListener {
-            activityMain.replaceFragment(FragmentHome())
-        }
+//        binding.back.setOnClickListener {
+//            activityMain.replaceFragment(FragmentHome())
+//        }
 
         setupWeekButtons(adapter)
         return binding.root

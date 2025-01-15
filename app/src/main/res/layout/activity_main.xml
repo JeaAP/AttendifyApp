@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/white"
+        android:background="@android:color/transparent"
         app:fabAlignmentMode="center"
         app:elevation="0dp"
         app:fabCradleMargin="12dp"
