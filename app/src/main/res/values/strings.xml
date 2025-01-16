@@ -66,13 +66,14 @@
     <string name="screen3">Self-Discipline</string>
     <string name="screen3desc">Self-discipline helps students manage\n their time and excel in learning.</string>
 
-    <string name="Motivasi_Friday_Evening">Terima kasih atas kerja kerasmu. Beristirahatlah, isi ulang energimu. Kamu pantas mendapatkannya.</string>
-    <string name="Motivation_Saturday">Gunakan hari ini untuk melakukan hal-hal yang kamu cintai. Selamat menikmati waktu bebasmu!</string>
-    <string name="Motivation_Sunday">Selamat menikmati liburanmu! Semoga kesempatan ini menjadi waktu istirahatmu dan momen bahagiamu!</string>
-    <string name="Motivation_Weekday_Morning">Hadapi hari dengan optimisme dan jangan lupa untuk tersenyum. Semangat, kamu bisa melakukannya!</string>
-    <string name="Motivation_Weekday_Afternoon">Tetap semangat! Setiap usahamu akan membawamu satu langkah lebih dekat ke tujuanmu. Kamu hebat.</string>
-    <string name="Motivation_Weekday_Night">Kamu sudah berusaha hari ini. Saatnya merasa bangga dengan apa yang telah kamu capai.</string>
-    <string name="Motivation_Weekday_Midnight">Usahamu hari ini tidak sia-sia. Terima kasih telah berusaha hari ini. Istirahatlah, kamu telah melakukan yang terbaik.</string>
+    <string name="Motivasi_Friday_Evening">Terima kasih, istirahatlah. Kamu pantas mendapatkannya.</string>
+    <string name="Motivation_Saturday">Nikmati hari dengan hal yang kamu suka!</string>
+    <string name="Motivation_Sunday">Selamat liburan! Isi waktumu dengan bahagia.</string>
+    <string name="Motivation_Weekday_Morning">Awali hari dengan senyuman. Semangat!</string>
+    <string name="Motivation_Weekday_Afternoon">Tetap semangat, tujuanmu semakin dekat!</string>
+    <string name="Motivation_Weekday_Night">Banggailah dirimu. Kamu hebat!</string>
+    <string name="Motivation_Weekday_Midnight">Terima kasih, istirahatlah. Kamu sudah berusaha.</string>
+
     <string name="make_new_note">Make new note</string>
 
 </resources>

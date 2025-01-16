@@ -161,7 +161,7 @@ class FragmentHome : Fragment() {
                     Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                AlertDialog.Builder(requireContext()) // Ganti this@FragmentHome dengan requireContext()
+                AlertDialog.Builder(requireContext())
                     .setTitle("Koneksi Internet Tidak Tersedia")
                     .setMessage("Silakan periksa koneksi internet Anda dan coba lagi.")
                     .setPositiveButton("Coba Lagi") { dialog, _ ->
