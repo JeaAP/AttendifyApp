@@ -6,15 +6,18 @@ import com.example.attendify.ui.fragment.*
 import com.example.attendify.geofence.*
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -46,8 +49,8 @@ class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListen
     private val geofenceList = mutableListOf<Geofence>()
     private val GEOFENCE_ID = "MY_GEOFENCE_ID"
     private val GEOFENCE_RADIUS = 100f // in meters
-    private val GEOFENCE_LATITUDE = -6.313615160801881
-    private val GEOFENCE_LONGITUDE = 106.88713091541187
+    private val GEOFENCE_LATITUDE = -6.321740095551176
+    private val GEOFENCE_LONGITUDE = 106.89906194895687
     //Koordinat hotel smkn 24
 //    -6.321740095551176
 //    106.89906194895687
@@ -106,18 +109,22 @@ class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListen
                         replaceFragment(FragmentHome())
                         true
                     }
+
                     R.id.abcent -> {
                         replaceFragment(FragmentAbsensi())
                         true
                     }
+
                     R.id.note -> {
                         replaceFragment(FragmentNotes())
                         true
                     }
+
                     R.id.people -> {
                         replaceFragment(FragmentPeople())
                         true
                     }
+
                     else -> false
                 }
             }
@@ -129,36 +136,64 @@ class ActivityMain : AppCompatActivity(), FragmentHome.FragmentInteractionListen
             }
 
             binding.fab.setOnClickListener {
-                val intent = Intent(this@ActivityMain, Scan::class.java)
-                startActivity(intent)
-//                if(!isWeekend){
-//                    if (isInsideGeofence) {
-//                        val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
-//                        if (absensiStatus == null) { // Jika hari ini belum absen
-//                            if (now.before(cutOffTimeEarlyMorning)) {
-//                                Toast.makeText(this@ActivityMain, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
-//                            } else if (now.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
-//                                if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
-//                                    val intent = Intent(this@ActivityMain, Scan::class.java)
-//                                    startActivity(intent)
-//                                } else {
-//                                    Toast.makeText(this@ActivityMain, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
-//                                }
-//                            } else {
-//                                Toast.makeText(this@ActivityMain, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
-//                            }
-//                        } else if(absensiStatus == "Hadir") {
-//                            Toast.makeText(this@ActivityMain, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
-//                        } else {
-//                            Toast.makeText(this@ActivityMain, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
-//                        }
-//                    } else {
-//                        Toast.makeText(this@ActivityMain, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
-//                    }
-//                } else {
-//                    Toast.makeText(this@ActivityMain, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
-//                }
+//                val intent = Intent(this@ActivityMain, Scan::class.java)
+//                startActivity(intent)
+
+                val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val networkInfo = connectivityManager.activeNetworkInfo
+
+                if (!isWeekend) {
+                    if (networkInfo != null && networkInfo.isConnected) { // Cek koneksi internet
+                        if (isInsideGeofence) {
+                            val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
+                            if (absensiStatus == null) { // Jika hari ini belum absen
+                            if (now.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
+                                val intent = Intent(this@ActivityMain, Scan::class.java)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(
+                                    this@ActivityMain,
+                                    "Waktu sekolah selesai",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                                Toast.makeText(
+                                    this@ActivityMain,
+                                    "Anda sudah melakukan absen hari ini",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                            Toast.makeText(
+                                this@ActivityMain,
+                                "Anda harus berada di dalam wilayah SMKN 24 Jakarta",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else {
+                        AlertDialog.Builder(this@ActivityMain)
+                            .setTitle("Koneksi Internet Tidak Tersedia")
+                            .setMessage("Silakan periksa koneksi internet Anda dan coba lagi.")
+                            .setPositiveButton("Coba Lagi") { dialog, _ ->
+                                recreate() // Reload activity untuk mencoba kembali
+                                dialog.dismiss()
+                            }
+                            .setNegativeButton("Tutup") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .setCancelable(false)
+                            .show()
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ActivityMain,
+                        "Hari ini adalah hari libur",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

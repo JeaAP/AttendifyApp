@@ -61,7 +61,7 @@ class ActivityProfile : AppCompatActivity() {
             if (bitmap != null) {
                 binding.FProfile.setImageBitmap(bitmap)
             } else {
-                binding.FProfile.setImageResource(R.drawable.profile___iconly_pro)
+                binding.FProfile.setImageResource(R.drawable.round_image_24)
             }
 
         } else {

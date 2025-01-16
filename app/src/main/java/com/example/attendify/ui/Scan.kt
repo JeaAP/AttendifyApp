@@ -1,30 +1,24 @@
 package com.example.attendify.ui
 
+import androidx.annotation.OptIn
+import com.google.mlkit.vision.barcode.common.Barcode
 import android.Manifest
-import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Size
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.OptIn
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ExperimentalGetImage
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
-import androidx.camera.core.resolutionselector.ResolutionSelector
-import androidx.camera.core.resolutionselector.ResolutionStrategy
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import com.example.attendify.databinding.ActivityScan2Binding
-import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -35,13 +29,7 @@ class Scan : AppCompatActivity() {
     private lateinit var previewView: PreviewView
     private lateinit var resultTextView: TextView
     private lateinit var cameraExecutor: ExecutorService
-    private lateinit var barcodeScanner: BarcodeScanner
-
-    @SuppressLint("MissingSuperCall")
-    override fun onBackPressed() {
-//        super.onBackPressed()
-//        Toast.makeText(this, "Back button is disabled on this screen.", Toast.LENGTH_SHORT).show()
-    }
+    private val TARGET_URL = "https://get-qr.com/cpBKH0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,89 +40,102 @@ class Scan : AppCompatActivity() {
         previewView = binding.previewView
         resultTextView = binding.info
         cameraExecutor = Executors.newSingleThreadExecutor()
-        barcodeScanner = BarcodeScanning.getClient()
 
         val requestPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission())
-        { isGranted: Boolean ->
-            if(isGranted) {
-                startCamera()
-            } else {
-                resultTextView.text = "Camera permission is required"
-            }
+            ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) startCamera() else resultTextView.text = "Camera permission is required"
         }
         requestPermissionLauncher.launch(Manifest.permission.CAMERA)
 
         binding.back.setOnClickListener {
-            val intent = Intent(this, ActivityMain::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, ActivityMain::class.java))
         }
     }
 
-    private fun startCamera(){
+    private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-        val screenSize = Size(1280,720)
-        val resolutionSelector = ResolutionSelector.Builder().setResolutionStrategy(
-            ResolutionStrategy(screenSize, ResolutionStrategy.FALLBACK_RULE_NONE)
-        ).build()
-
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
-            val preview = Preview.Builder().setResolutionSelector(resolutionSelector)
-                .build()
-                .also {
-                    it.setSurfaceProvider(previewView.surfaceProvider)
-                }
-
-            val imageAnalyzer =  ImageAnalysis.Builder()
+            val preview = Preview.Builder().build().also {
+                it.setSurfaceProvider(previewView.surfaceProvider)
+            }
+            val imageAnalyzer = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .build()
-                .also {
-                    it.setAnalyzer(cameraExecutor,{ imageProxy ->
-                        processImageProxy(imageProxy)
-                    })
+                .build().also {
+                    it.setAnalyzer(cameraExecutor, ::processImageProxy)
                 }
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-            cameraProvider.bindToLifecycle(
-                this,cameraSelector,preview,imageAnalyzer
-            )
+            cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageAnalyzer)
         }, ContextCompat.getMainExecutor(this))
     }
 
     @OptIn(ExperimentalGetImage::class)
-    private fun processImageProxy(imageProxy: ImageProxy){
-        val mediaImage = imageProxy.image
-        if(mediaImage != null){
-            val image = InputImage.fromMediaImage(mediaImage,imageProxy.imageInfo.rotationDegrees)
-            barcodeScanner.process(image)
+    private fun processImageProxy(imageProxy: ImageProxy) {
+        imageProxy.image?.let {
+            val image = InputImage.fromMediaImage(it, imageProxy.imageInfo.rotationDegrees)
+            BarcodeScanning.getClient().process(image)
                 .addOnSuccessListener { barcodes ->
-                    for(barcode in barcodes){
-                        handleBarcode(barcode)
-                    }
+                    barcodes.forEach { handleBarcode(it) }
                 }
-                .addOnFailureListener{
+                .addOnFailureListener {
                     resultTextView.text = "Failed to Scan QR Code"
                 }
-                .addOnCompleteListener{
-                    imageProxy.close()
-                }
+                .addOnCompleteListener { imageProxy.close() }
         }
     }
 
     private fun handleBarcode(barcode: Barcode) {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+
         val url = barcode.url?.url ?: barcode.displayValue
-        if(url != null) {
-            resultTextView.text = "QR can now be scanned"
-            Toast.makeText(this, "QR can now be scanned!", Toast.LENGTH_SHORT).show()
-//            Toast.makeText(this, "QR can now be scanned: $url", Toast.LENGTH_SHORT).show()
-            binding.scan.setOnClickListener{
-                val intent = Intent(this, WebViewActivity::class.java)
-                intent.putExtra("url", url)
-                startActivity(intent)
+        if (url != null) {
+            binding.scan.setOnClickListener {
+                if (isConnected()) {
+                    if (networkInfo != null && networkInfo.isConnected) { // Cek koneksi internet
+                        if (url == TARGET_URL) {
+                            resultTextView.text = "QR Detected"
+                            Toast.makeText(this, "QR Detected!", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this, ActivityDeskripsiAbsen::class.java))
+                        } else {
+                            resultTextView.text = "QR tidak valid untuk absen"
+                            Toast.makeText(this, "URL tidak valid untuk absen.", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        AlertDialog.Builder(this@Scan)
+                            .setTitle("Koneksi Internet Tidak Tersedia")
+                            .setMessage("Silakan periksa koneksi internet Anda dan coba lagi.")
+                            .setPositiveButton("Coba Lagi") { dialog, _ ->
+                                recreate() // Reload activity untuk mencoba kembali
+                                dialog.dismiss()
+                            }
+                            .setNegativeButton("Tutup") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .setCancelable(false)
+                            .show()
+                    }
+                } else {
+                    showNoInternetDialog()
+                }
             }
         } else {
             resultTextView.text = "No QR Code detected"
         }
+    }
+
+    private fun isConnected(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connectivityManager.activeNetworkInfo?.isConnected == true
+    }
+
+    private fun showNoInternetDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Koneksi Internet Tidak Tersedia")
+            .setMessage("Periksa koneksi internet Anda.")
+            .setPositiveButton("Coba Lagi") { dialog, _ -> recreate(); dialog.dismiss() }
+            .setNegativeButton("Tutup") { dialog, _ -> dialog.dismiss() }
+            .setCancelable(false)
+            .show()
     }
 
     override fun onDestroy() {

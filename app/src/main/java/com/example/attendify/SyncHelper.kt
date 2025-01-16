@@ -23,7 +23,7 @@ class SyncHelper(private val context: Context) {
                 "kelas" to profile.kelas,
                 "mood" to absensi.mood,
                 "perasaan" to absensi.perasaan,
-                "keterangan" to absensi.keterangan
+//                "keterangan" to absensi.keterangan
             )
             apiController = ApiController("absensi_attendify.php", "POST")
             apiController.execute(postData) { response, error ->

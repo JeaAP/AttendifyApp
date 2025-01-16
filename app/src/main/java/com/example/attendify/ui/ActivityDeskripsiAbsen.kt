@@ -2,12 +2,15 @@ package com.example.attendify.ui
 
 import com.example.attendify.databasehelper.*
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.attendify.SyncHelper
@@ -108,17 +111,49 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
     }
 
     private fun handleMoodSelection(mood: String) {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+
         if (mood == "Happy" || mood == "Good") {
-            saveAbsensi(mood, "Baik")
-            syncHelper.syncData()
+            if(networkInfo != null && networkInfo.isConnected){
+                saveAbsensi(mood, "Baik")
+                syncHelper.syncData()
+            } else {
+                AlertDialog.Builder(this@ActivityDeskripsiAbsen)
+                    .setTitle("Koneksi Internet Tidak Tersedia")
+                    .setMessage("Silakan periksa koneksi internet Anda dan coba lagi.")
+                    .setPositiveButton("Coba Lagi") { dialog, _ ->
+                        recreate() // Reload activity untuk mencoba kembali
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("Tutup") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setCancelable(false)
+                    .show()
+            }
         } else {
             binding.llFeelings.visibility = View.GONE
             binding.llSendMessage.visibility = View.VISIBLE
             binding.btnSend.setOnClickListener {
-                val description = binding.edDescription.text.toString().trim()
-                if (description.isNotEmpty()) {
-                    saveAbsensi(mood, description)
-                    syncHelper.syncData()
+                if (binding.edDescription.text.toString().trim().isNotEmpty()) {
+                    if(networkInfo != null && networkInfo.isConnected){
+                        saveAbsensi(mood, binding.edDescription.text.toString().trim())
+                        syncHelper.syncData()
+                    } else {
+                        AlertDialog.Builder(this@ActivityDeskripsiAbsen)
+                            .setTitle("Koneksi Internet Tidak Tersedia")
+                            .setMessage("Silakan periksa koneksi internet Anda dan coba lagi.")
+                            .setPositiveButton("Coba Lagi") { dialog, _ ->
+                                recreate() // Reload activity untuk mencoba kembali
+                                dialog.dismiss()
+                            }
+                            .setNegativeButton("Tutup") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .setCancelable(false)
+                            .show()
+                    }
                 } else {
                     Snackbar.make(binding.root, "Please describe your day!", Snackbar.LENGTH_SHORT).show()
                 }

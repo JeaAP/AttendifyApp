@@ -58,7 +58,7 @@ class ActivityPersonalInfo : AppCompatActivity() {
             if (bitmap != null) {
                 binding.FotoProfile.setImageBitmap(bitmap)
             } else {
-                binding.FotoProfile.setImageResource(R.drawable.profile___iconly_pro)
+                binding.FotoProfile.setImageResource(R.drawable.baseline_camera_24)
             }
 
         } else {

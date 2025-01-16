@@ -33,6 +33,9 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import android.Manifest
+import android.net.ConnectivityManager
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getSystemService
 import java.io.IOException
 
 class FragmentHome : Fragment() {
@@ -121,6 +124,7 @@ class FragmentHome : Fragment() {
         loadProfileData()
 
         //POP UP NOTIFIKASI DIALOG ABSEN
+
         dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.absenct_notification_dialog)
         dialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -137,12 +141,38 @@ class FragmentHome : Fragment() {
         }
 
         btnAbcentDialog.setOnClickListener{
+            val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connectivityManager.activeNetworkInfo
+
             if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
-                dialog.dismiss()
-                val intent = Intent(this@FragmentHome.requireContext(), Scan::class.java)
-                startActivity(intent)
+                if (networkInfo != null && networkInfo.isConnected) { // Cek koneksi internet
+                    val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
+                    if (absensiStatus == null) { // Jika hari ini belum absen
+                        if (calendar.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
+                            val intent = Intent(this@FragmentHome.requireContext(), ActivityScan::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(context, "Waktu sekolah selesai", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
+                AlertDialog.Builder(requireContext()) // Ganti this@FragmentHome dengan requireContext()
+                    .setTitle("Koneksi Internet Tidak Tersedia")
+                    .setMessage("Silakan periksa koneksi internet Anda dan coba lagi.")
+                    .setPositiveButton("Coba Lagi") { dialog, _ ->
+                        requireActivity().recreate() // Ganti recreate() dengan requireActivity().recreate()
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("Tutup") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setCancelable(false)
+                    .show()
             }
         }
 
@@ -174,32 +204,42 @@ class FragmentHome : Fragment() {
         }
 
         binding.btnAbcent.setOnClickListener {
+            val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connectivityManager.activeNetworkInfo
+
             if(!isWeekend){
                 if (listener?.isUserInGeofence() == true) { // Jika dalam wilayah
-                    val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
-                    if (absensiStatus == null) { // Jika hari ini belum absen
-                        if (calendar.before(cutOffTimeEarlyMorning)) {
-                            Toast.makeText(context, "Belum bisa absen, masih jam 5 pagi", Toast.LENGTH_LONG).show()
-                        } else if (calendar.before(cutOffTimeMorning)) { // Jika sudah lewat jam absen pagi
+                    if (networkInfo != null && networkInfo.isConnected) { // Cek koneksi internet
+                        val absensiStatus = dbHelperAbsensi.getAbsensiStatus(today)
+                        if (absensiStatus == null) { // Jika hari ini belum absen
                             if (calendar.before(cutOffTimeAfternoon)) { // Sebelum jam 3 sore
                                 val intent = Intent(this@FragmentHome.requireContext(), ActivityScan::class.java)
                                 startActivity(intent)
                             } else {
-                                Toast.makeText(context, "Waktu sekolah selesai", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, "Waktu sekolah selesai", Toast.LENGTH_SHORT).show()
                             }
                         } else {
-                            Toast.makeText(context, "Anda tidak bisa absen setelah pukul 06:30", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_SHORT).show()
                         }
-                    } else if (absensiStatus == "Hadir"){
-                        Toast.makeText(context, "Anda sudah melakukan absen hari ini", Toast.LENGTH_LONG).show()
                     } else {
-                        Toast.makeText(context, "Anda sudah mengajukan izin hari ini", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "Anda harus berada di dalam wilayah SMKN 24 Jakarta", Toast.LENGTH_LONG).show()
+                    AlertDialog.Builder(requireContext()) // Ganti this@FragmentHome dengan requireContext()
+                        .setTitle("Koneksi Internet Tidak Tersedia")
+                        .setMessage("Silakan periksa koneksi internet Anda dan coba lagi.")
+                        .setPositiveButton("Coba Lagi") { dialog, _ ->
+                            requireActivity().recreate() // Ganti recreate() dengan requireActivity().recreate()
+                            dialog.dismiss()
+                        }
+                        .setNegativeButton("Tutup") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .setCancelable(false)
+                        .show()
                 }
             } else {
-                Toast.makeText(context, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Hari ini hari libur, silahkan beristirahat", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -377,7 +417,7 @@ class FragmentHome : Fragment() {
             if (bitmap != null) {
                 binding.FtProfile.setImageBitmap(bitmap)
             } else {
-                binding.FtProfile.setImageResource(R.drawable.profile___iconly_pro)
+                binding.FtProfile.setImageResource(R.drawable.round_person_24)
             }
 
         } else {
