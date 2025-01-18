@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -71,26 +72,14 @@ class FragmentAbsensi : Fragment() {
         binding.activityContent.adapter = adapter
 
         val currentWeek = Calendar.getInstance().get(Calendar.WEEK_OF_MONTH)
-        when (currentWeek) {
-            1 -> {
-                binding.week1button.visibility = View.VISIBLE
-            }
-            2 -> {
-                binding.week1button.visibility = View.VISIBLE
-                binding.week2button.visibility = View.VISIBLE
-            }
-            3 -> {
-                binding.week1button.visibility = View.VISIBLE
-                binding.week2button.visibility = View.VISIBLE
-                binding.week3button.visibility = View.VISIBLE
-            }
-            4 -> {
-                binding.week1button.visibility = View.VISIBLE
-                binding.week2button.visibility = View.VISIBLE
-                binding.week3button.visibility = View.VISIBLE
-                binding.week4button.visibility = View.VISIBLE
-            }
-        }
+        Log.d("FragmentAbsensi", "Minggu saat ini: $currentWeek")
+
+        binding.week1button.visibility = View.VISIBLE
+        binding.week2button.visibility = if (currentWeek >= 2) View.VISIBLE else View.GONE
+        binding.week3button.visibility = if (currentWeek >= 3) View.VISIBLE else View.GONE
+        binding.week4button.visibility = if (currentWeek >= 4) View.VISIBLE else View.GONE
+
+        adapter.updateData(filterDataByWeek(currentWeek))
 
         if (adapter.itemCount == 0) {
             binding.tvNoData.visibility = View.VISIBLE
@@ -153,32 +142,63 @@ class FragmentAbsensi : Fragment() {
         binding.week1button.setOnClickListener {
             val filteredData = filterDataByWeek(1)
             adapter.updateData(filteredData)
+            updateNoDataMessage(filteredData)
         }
 
         binding.week2button.setOnClickListener {
             val filteredData = filterDataByWeek(2)
             adapter.updateData(filteredData)
+            updateNoDataMessage(filteredData)
         }
 
         binding.week3button.setOnClickListener {
             val filteredData = filterDataByWeek(3)
             adapter.updateData(filteredData)
+            updateNoDataMessage(filteredData)
         }
 
-        binding.week1button.setOnClickListener {
+        binding.week4button.setOnClickListener {
             val filteredData = filterDataByWeek(4)
             adapter.updateData(filteredData)
+            updateNoDataMessage(filteredData)
+        }
+    }
+
+    private fun updateNoDataMessage(filteredData: List<Absensi>) {
+        if (filteredData.isEmpty()) {
+            binding.tvNoData.visibility = View.VISIBLE
+        } else {
+            binding.tvNoData.visibility = View.GONE
         }
     }
 
     private fun filterDataByWeek(week: Int): List<Absensi> {
-        val calendar = Calendar.getInstance()
-        val filteredList = absensiList.filter { absensi ->
-            val absensiDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(absensi.tanggal)
-            calendar.time = absensiDate ?: Date()
-            val weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH)
-            weekOfMonth == week
+        now.firstDayOfWeek = Calendar.MONDAY // Set awal minggu ke Senin
+        now.set(Calendar.DAY_OF_MONTH, 1) // Awal bulan
+        now.set(Calendar.HOUR_OF_DAY, 0)
+        now.set(Calendar.MINUTE, 0)
+        now.set(Calendar.SECOND, 0)
+        now.set(Calendar.MILLISECOND, 0)
+
+        now.add(Calendar.MONTH, 1)
+        now.add(Calendar.DAY_OF_MONTH, -1)
+
+        return absensiList.filter { absensi ->
+            try {
+                val absensiDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(absensi.tanggal)
+                if (absensiDate != null) {
+                    now.time = absensiDate
+                    val weekOfMonth = now.get(Calendar.WEEK_OF_MONTH)
+                    weekOfMonth == week
+                } else {
+                    Log.d("FilterDataByWeek", "Tanggal tidak valid: ${absensi.tanggal}")
+                    false
+                }
+            } catch (e: Exception) {
+                Log.e("FilterDataByWeek", "Error parsing tanggal: ${absensi.tanggal}, ${e.message}")
+                false
+            }
         }
-        return filteredList
     }
+
 }
