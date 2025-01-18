@@ -3,10 +3,12 @@ package com.example.attendify.ui
 import androidx.annotation.OptIn
 import com.google.mlkit.vision.barcode.common.Barcode
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -17,6 +19,7 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
+import com.example.attendify.api.ApiController
 import com.example.attendify.databinding.ActivityScan2Binding
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
@@ -29,13 +32,15 @@ class Scan : AppCompatActivity() {
     private lateinit var previewView: PreviewView
     private lateinit var resultTextView: TextView
     private lateinit var cameraExecutor: ExecutorService
-    private val TARGET_URL = "https://get-qr.com/cpBKH0"
+    private var TARGET_URL: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityScan2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        getUrl()
 
         previewView = binding.previewView
         resultTextView = binding.info
@@ -120,6 +125,18 @@ class Scan : AppCompatActivity() {
             }
         } else {
             resultTextView.text = "No QR Code detected"
+        }
+    }
+
+    private fun getUrl() {
+        ApiController("qrcode_attendify.php", "GET").getQrCode { response, statusCode ->
+            if (statusCode == 200) {
+                // Set TARGET_URL
+                TARGET_URL = response.trim()
+                Log.d("Scan", "TARGET_URL berhasil diatur: $TARGET_URL")
+            } else {
+                Log.e("Scan", "Failed to fetch QR Code: Status Code $statusCode, Response: $response")
+            }
         }
     }
 

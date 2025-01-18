@@ -1,11 +1,11 @@
-package com.example.attendify
+package com.example.attendify.api
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.DataOutputStream
-import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
@@ -15,7 +15,7 @@ class ApiController(url: String, method: String) {
         const val BASE_URL = "https://backend24.site/Rian/XI/attendify/"
     }
 
-    private var conn: HttpURLConnection = URL(BASE_URL+url).openConnection() as HttpURLConnection
+    private var conn: HttpURLConnection = URL(BASE_URL +url).openConnection() as HttpURLConnection
 
     init {
         conn.requestMethod = method
@@ -45,6 +45,10 @@ class ApiController(url: String, method: String) {
                 }
             }
         }
+    }
+
+    fun getQrCode(onResponse: (String, Int)-> Unit) {
+        ApiController("qrcode_attendify.php", "GET").execute(onResponse = onResponse)
     }
 
 }

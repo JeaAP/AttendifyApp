@@ -49,7 +49,6 @@ dependencies {
     implementation("androidx.camera:camera-camera2:${camerax_version}")
     implementation("androidx.camera:camera-lifecycle:${camerax_version}")
     implementation("androidx.camera:camera-view:${camerax_version}")
-
     //Crop Image
     implementation("com.vanniktech:android-image-cropper:4.6.0")
     //Loading image in ImageView

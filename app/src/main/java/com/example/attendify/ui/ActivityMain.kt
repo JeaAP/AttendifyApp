@@ -6,6 +6,7 @@ import com.example.attendify.ui.fragment.*
 import com.example.attendify.geofence.*
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.attendify.R
+import com.example.attendify.api.ApiController
 import com.example.attendify.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
