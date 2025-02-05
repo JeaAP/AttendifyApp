@@ -67,20 +67,20 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
             }
         }
 
-        binding.Anggry.setOnClickListener {
+        binding.rbAngry.setOnClickListener {
             handleMoodSelection("Angry")
         }
-        binding.Happy.setOnClickListener {
+        binding.rbTired.setOnClickListener {
+            handleMoodSelection("Tired")
+        }
+        binding.rbSad.setOnClickListener {
+            handleMoodSelection("Sad")
+        }
+        binding.rbHappy.setOnClickListener {
             handleMoodSelection("Happy")
         }
-        binding.Good.setOnClickListener {
-            handleMoodSelection("Good")
-        }
-        binding.notGood.setOnClickListener {
-            handleMoodSelection("Not Good")
-        }
-        binding.Sad.setOnClickListener {
-            handleMoodSelection("Sad")
+        binding.rbExcited.setOnClickListener {
+            handleMoodSelection("Excited")
         }
 
         binding.cardImage.setOnClickListener {
