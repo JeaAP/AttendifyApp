@@ -26,6 +26,7 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
     private lateinit var binding: ActivityDeskripsiAbsenBinding
     private lateinit var syncHelper: SyncHelper
     private lateinit var dbHelper: DatabaseHelperAbsensi
+    private var selectedMood: String? = null
 
     private var capturedPhoto: ByteArray? = null
 
@@ -68,15 +69,27 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
             }
         }
 
+        binding.rbAngry.setOnClickListener{
+            selectedMood = "Angry"
+        }
+        binding.rbTired.setOnClickListener{
+            selectedMood = "Tired"
+        }
+        binding.rbSad.setOnClickListener{
+            selectedMood = "Sad"
+        }
+        binding.rbHappy.setOnClickListener{
+            selectedMood = "Happy"
+        }
+        binding.rbExcited.setOnClickListener{
+            selectedMood = "Excited"
+        }
+
         binding.btnMood.setOnClickListener{
-            binding.rgMood.setOnCheckedChangeListener { _, checkedId ->
-                when (checkedId) {
-                    R.id.rbAngry -> handleMoodSelection("Angry")
-                    R.id.rbTired -> handleMoodSelection("Tired")
-                    R.id.rbSad -> handleMoodSelection("Sad")
-                    R.id.rbHappy -> handleMoodSelection("Happy")
-                    R.id.rbExcited -> handleMoodSelection("Excited")
-                }
+            if(selectedMood == null) {
+                Snackbar.make(binding.root, "Please choose your mood!", Snackbar.LENGTH_SHORT).show()
+            } else {
+                handleMoodSelection(selectedMood!!)
             }
         }
 
