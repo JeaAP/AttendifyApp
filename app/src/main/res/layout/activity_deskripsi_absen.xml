@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_below="@id/head">
 
         <TextView
@@ -172,7 +172,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_below="@id/head"
         android:gravity="center_horizontal">
 
@@ -196,11 +196,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="20dp">
+
                 <RadioButton
                     android:id="@+id/rbAngry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
 
                 <ImageView
                     android:layout_width="50dp"
@@ -213,7 +215,6 @@
                     android:text="Angry"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"/>
             </LinearLayout>
 
@@ -222,11 +223,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="20dp">
+
                 <RadioButton
                     android:id="@+id/rbTired"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
 
                 <ImageView
                     android:layout_width="50dp"
@@ -239,7 +242,6 @@
                     android:text="Tired"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"/>
             </LinearLayout>
 
@@ -248,11 +250,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="20dp">
+
                 <RadioButton
                     android:id="@+id/rbSad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
 
                 <ImageView
                     android:layout_width="50dp"
@@ -265,7 +269,6 @@
                     android:text="Sad"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"/>
             </LinearLayout>
 
@@ -274,11 +277,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="20dp">
+
                 <RadioButton
                     android:id="@+id/rbHappy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
 
                 <ImageView
                     android:layout_width="50dp"
@@ -291,7 +296,6 @@
                     android:text="Happy"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"/>
             </LinearLayout>
 
@@ -300,11 +304,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="20dp">
+
                 <RadioButton
                     android:id="@+id/rbExcited"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
 
                 <ImageView
                     android:layout_width="50dp"
@@ -317,9 +323,9 @@
                     android:text="Excited"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="15dp"/>
             </LinearLayout>
+
         </RadioGroup>
 
         <Button
