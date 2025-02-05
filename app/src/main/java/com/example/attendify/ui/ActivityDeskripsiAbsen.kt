@@ -13,6 +13,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import com.example.attendify.R
 import com.example.attendify.SyncHelper
 import com.example.attendify.databinding.ActivityDeskripsiAbsenBinding
 import java.io.ByteArrayOutputStream
@@ -68,20 +69,14 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
         }
 
         binding.btnMood.setOnClickListener{
-            binding.rbAngry.setOnClickListener {
-                handleMoodSelection("Angry")
-            }
-            binding.rbTired.setOnClickListener {
-                handleMoodSelection("Tired")
-            }
-            binding.rbSad.setOnClickListener {
-                handleMoodSelection("Sad")
-            }
-            binding.rbHappy.setOnClickListener {
-                handleMoodSelection("Happy")
-            }
-            binding.rbExcited.setOnClickListener {
-                handleMoodSelection("Excited")
+            binding.rgMood.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.rbAngry -> handleMoodSelection("Angry")
+                    R.id.rbTired -> handleMoodSelection("Tired")
+                    R.id.rbSad -> handleMoodSelection("Sad")
+                    R.id.rbHappy -> handleMoodSelection("Happy")
+                    R.id.rbExcited -> handleMoodSelection("Excited")
+                }
             }
         }
 
@@ -116,7 +111,7 @@ class ActivityDeskripsiAbsen : AppCompatActivity() {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
 
-        if (mood == "Happy" || mood == "Good") {
+        if (mood == "Happy" || mood == "Excited") {
             if(networkInfo != null && networkInfo.isConnected){
                 saveAbsensi(mood, "Baik")
                 syncHelper.syncData()

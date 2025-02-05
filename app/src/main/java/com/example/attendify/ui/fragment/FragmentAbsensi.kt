@@ -118,11 +118,11 @@ class FragmentAbsensi : Fragment() {
         descriptionTextView.text = absensi.perasaan
 
         val drawableRes = when (absensi.mood) {
-            "Happy" -> R.drawable.salutingemote
-            "Good" -> R.drawable.smileemote
-            "Sad" -> R.drawable.sademote
+            "Excited" -> R.drawable.salutingemote
+            "Happy" -> R.drawable.smileemote
+            "Tired" -> R.drawable.sademote
             "Angry" -> R.drawable.angryemote
-            "Not Good" -> R.drawable.confusedemote
+            "Sad" -> R.drawable.confusedemote
             else -> R.drawable.smileemote
         }
         emoteImageView.setImageResource(drawableRes)
