@@ -185,175 +185,162 @@
             android:textColor="@color/black"
             android:layout_marginBottom="16dp"/>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <RadioGroup
             android:id="@+id/rgMood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- ANGRY -->
-            <LinearLayout
+            <RadioButton
+                android:id="@+id/rbAngry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="20dp">
-
-                <RadioButton
-                    android:id="@+id/rbAngry"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/angryemote"
-                    android:clickable="false"
-                    android:focusable="false"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Angry"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:layout_marginStart="15dp"/>
-            </LinearLayout>
-
-            <!-- TIRED -->
-            <LinearLayout
+                android:textSize="16sp"
+                android:layout_marginBottom="20dp"/>
+            <RadioButton
+                android:id="@+id/rbTired"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="20dp">
-
-                <RadioButton
-                    android:id="@+id/rbTired"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/sademote"
-                    android:clickable="false"
-                    android:focusable="false"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tired"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:layout_marginStart="15dp"/>
-            </LinearLayout>
-
-            <!-- SAD -->
-            <LinearLayout
+                android:textSize="16sp"
+                android:layout_marginBottom="20dp"/>
+            <RadioButton
+                android:id="@+id/rbSad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="20dp">
-
-                <RadioButton
-                    android:id="@+id/rbSad"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/confusedemote"
-                    android:clickable="false"
-                    android:focusable="false"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sad"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:layout_marginStart="15dp"/>
-            </LinearLayout>
-
-            <!-- HAPPY -->
-            <LinearLayout
+                android:textSize="16sp"
+                android:layout_marginBottom="26dp"/>
+            <RadioButton
+                android:id="@+id/rbHappy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="20dp">
-
-                <RadioButton
-                    android:id="@+id/rbHappy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/smileemote"
-                    android:clickable="false"
-                    android:focusable="false"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Happy"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:layout_marginStart="15dp"/>
-            </LinearLayout>
-
-            <!-- EXCITED -->
-            <LinearLayout
+                android:textSize="16sp"
+                android:layout_marginBottom="20dp"/>
+            <RadioButton
+                android:id="@+id/rbExcited"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="20dp">
-
-                <RadioButton
-                    android:id="@+id/rbExcited"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/salutingemote"
-                    android:clickable="false"
-                    android:focusable="false"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Excited"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:layout_marginStart="15dp"/>
-            </LinearLayout>
+                android:textSize="16sp"
+                android:layout_marginBottom="20dp"/>
 
         </RadioGroup>
+<!--            ANGRY-->
+            <ImageView
+                android:id="@+id/angry"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/angryemote"
+                android:layout_toEndOf="@id/rgMood"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="Angry"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:textSize="20sp"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/angry"
+                android:clickable="false"
+                android:focusable="false"/>
+<!--                TIRED-->
+            <ImageView
+                android:id="@+id/tired"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/sademote"
+                android:layout_toEndOf="@id/rgMood"
+                android:layout_below="@id/angry"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="Tired"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:textSize="20sp"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/tired"
+                android:layout_below="@id/angry"
+                android:clickable="false"
+                android:focusable="false"/>
+<!--            SAD-->
+            <ImageView
+                android:id="@+id/sad"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/confusedemote"
+                android:layout_toEndOf="@id/rgMood"
+                android:layout_below="@id/tired"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="Sad"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/sad"
+                android:layout_below="@id/tired"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:focusable="false"/>
+<!--            HAPPY-->
+            <ImageView
+                android:id="@+id/happy"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/smileemote"
+                android:layout_below="@id/sad"
+                android:layout_toEndOf="@id/rgMood"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="Happy"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginStart="15dp"
+                android:layout_below="@id/sad"
+                android:layout_toEndOf="@id/happy"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:focusable="false"/>
+<!--            EXCITED-->
+            <ImageView
+                android:id="@+id/excited"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/salutingemote"
+                android:layout_below="@id/happy"
+                android:layout_toEndOf="@+id/rgMood"
+                android:clickable="false"
+                android:focusable="false"/>
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="Excited"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginStart="15dp"
+                android:layout_below="@id/happy"
+                android:layout_toEndOf="@+id/excited"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:focusable="false"/>
 
 
+        </RelativeLayout>
         <Button
             android:id="@+id/btnMood"
             android:layout_width="match_parent"
