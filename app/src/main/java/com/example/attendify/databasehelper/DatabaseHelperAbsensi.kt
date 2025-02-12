@@ -169,7 +169,9 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
                 }
             }
         }
-        return Pair(tepatWaktu, terlambat)
+
+        val totalKehadiran = tepatWaktu + terlambat
+        return Pair(totalKehadiran, terlambat)
     }
 
 
@@ -204,11 +206,11 @@ class DatabaseHelperAbsensi(context: Context) : SQLiteOpenHelper(context, DATABA
             }
         }
 
-        val total = tepatWaktu + terlambat
-        val persentaseTepatWaktu = if (total > 0) (tepatWaktu.toDouble() / total) * 100 else 0.0
-        val persentaseTerlambat = if (total > 0) (terlambat.toDouble() / total) * 100 else 0.0
+        val totalKehadiran = tepatWaktu + terlambat
+        val persentaseKehadiran = if (totalKehadiran > 0) (totalKehadiran.toDouble() / totalKehadiran) * 100 else 0.0
+        val persentaseTerlambat = if (totalKehadiran > 0) (terlambat.toDouble() / totalKehadiran) * 100 else 0.0
 
-        return Pair(persentaseTepatWaktu, persentaseTerlambat)
+        return Pair(persentaseKehadiran, persentaseTerlambat)
     }
 
     fun getLastestAbsensi(): Absensi? {

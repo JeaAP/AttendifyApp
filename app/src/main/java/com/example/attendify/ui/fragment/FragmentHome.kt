@@ -262,13 +262,13 @@ class FragmentHome : Fragment() {
 
         val absensiList = dbHelperAbsensi.getLimitedAbsensi()
 
-        val (tepatWaktu, terlambat) = dbHelperAbsensi.hitungAbsensi()
-        binding.txtKehadiran.text = "${tepatWaktu} Times"
+        val (totalKehadiran, terlambat) = dbHelperAbsensi.hitungAbsensi()
+        binding.txtKehadiran.text = "${totalKehadiran} Times"
         binding.txtKeterlambatan.text = "${terlambat} Times"
 
-        val (persenTepatWaktu, persenTerlambat) = dbHelperAbsensi.hitungPersentaseAbsensi()
-        binding.persentaseKehadiran.text = "Persentase kehadiran bulan ini ${persenTepatWaktu.toInt()}%"
-        binding.persentaseKeterlembatan.text = "Persentase terlambat bulan ini ${persenTerlambat.toInt()}%"
+        val (persentaseKehadiran, persentaseTerlambat) = dbHelperAbsensi.hitungPersentaseAbsensi()
+        binding.persentaseKehadiran.text = "Persentase kehadiran bulan ini ${persentaseKehadiran.toInt()}%"
+        binding.persentaseKeterlembatan.text = "Persentase terlambat bulan ini ${persentaseTerlambat.toInt()}%"
 
         val adapter = AbsensiAdapter(absensiList) { absensi ->
             Toast.makeText(context, " ${absensi.hari}, ${absensi.tanggal}", Toast.LENGTH_SHORT).show()
